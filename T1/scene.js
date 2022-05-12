@@ -6,11 +6,11 @@ import {initRenderer,
         InfoBox,
         createGroundPlaneWired,
         onWindowResize,
-        createGroundPlaneXZ} from "../libs/util/util.js";
+        } from "../libs/util/util.js";
 
 var scene = new THREE.Scene();    // Create main scene
 var renderer = initRenderer();    // View function in util/utils
-var camera = initCamera(new THREE.Vector3(0, 30, 30)); // Init camera in this position
+var camera = initCamera(new THREE.Vector3(0, 30, -30)); // Init camera in this position
 initDefaultBasicLight(scene);
 var clock = new THREE.Clock();
 
@@ -28,14 +28,16 @@ scene.add( axesHelper );
 let plane = createGroundPlaneWired(120, 90, 10, 10);
 scene.add(plane);
 
-// create a cube
-var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-var cubeMaterial = new THREE.MeshNormalMaterial();
-var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+// create a cone
+const geometry = new THREE.ConeGeometry( 2, 10, 16 );
+const material = new THREE.MeshBasicMaterial( {color: 0xfeaa00} );
+const cone = new THREE.Mesh( geometry, material );
+cone.rotation.set(0,0,0);
+
 // position the cube
-cube.position.set(0.0, 2.0, 0.0);
+cone.position.set(0.0, 2.0, 0.0);
 // add the cube to the scene
-scene.add(cube);
+scene.add(cone);
 
 // Listen window size changes
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
@@ -50,12 +52,11 @@ function keyboardUpdate() {
   var moveDistance = speed * clock.getDelta();
 
   // Keyboard.pressed - execute while is pressed
-  if ( keyboard.pressed("A") )  cube.translateX( -moveDistance );
-  if ( keyboard.pressed("D") )  cube.translateX(  moveDistance );
-  if ( keyboard.pressed("W") )  cube.translateZ(  moveDistance );
-  if ( keyboard.pressed("S") )  cube.translateZ( -moveDistance );
-
-  if ( keyboard.pressed("space") ) cube.position.set(0.0, 2.0, 0.0);
+  if ( keyboard.pressed("A") )  cone.translateX( moveDistance );
+  if ( keyboard.pressed("D") )  cone.translateX(  -moveDistance );
+  if ( keyboard.pressed("W") )  cone.translateZ(  moveDistance );
+  if ( keyboard.pressed("S") )  cone.translateZ( -moveDistance );
+  if ( keyboard.pressed("space") ) cone.position.set(0.0, 2.0, 0.0);
 }
 
 function showInformation()
@@ -64,8 +65,8 @@ function showInformation()
   var controls = new InfoBox();
     controls.add("Keyboard Example");
     controls.addParagraph();
-    controls.add("Press WASD keys to move continuously");
-    controls.add("Press SPACE to put the cube in its original position");
+    controls.add("Press WASD keys to move");
+    controls.add("Press SPACE to put the cone in its original position");
     controls.show();
 }
 
