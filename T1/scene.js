@@ -29,7 +29,7 @@ let plane = createGroundPlaneWired(120, 90, 10, 10);
 scene.add(plane);
 
 // create a cone
-const geometry = new THREE.ConeGeometry( 2, 10, 16 );
+const geometry = new THREE.ConeGeometry( 4, 10, 16 );
 const material = new THREE.MeshBasicMaterial( {color: 0xfeaa00} );
 const cone = new THREE.Mesh( geometry, material );
 cone.rotation.set(0,0,0);
@@ -38,6 +38,13 @@ cone.rotation.set(0,0,0);
 cone.position.set(0.0, 2.0, 0.0);
 // add the cube to the scene
 scene.add(cone);
+
+// Use TextureLoader to load texture files
+var textureLoader = new THREE.TextureLoader();
+var stone = textureLoader.load('../assets/textures/floor-wood.jpg');
+
+// Add texture to the 'map' property of the object's material
+cone.material.map = stone;
 
 // Listen window size changes
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
@@ -63,8 +70,6 @@ function showInformation()
 {
   // Use this to show information onscreen
   var controls = new InfoBox();
-    controls.add("Keyboard Example");
-    controls.addParagraph();
     controls.add("Press WASD keys to move");
     controls.add("Press SPACE to put the cone in its original position");
     controls.show();
