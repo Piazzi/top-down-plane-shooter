@@ -19,6 +19,7 @@ showInformation();
 
 // create the ground plane
 let plane = createGroundPlaneWired(125, 90, 10, 10);
+let plane2 = createGroundPlaneWired(125, 90, 10, 10);
 scene.add(plane);
 
 scene.add(cone);
@@ -28,6 +29,14 @@ window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)},
 
 render();
 
+
+function movePlane(){
+  scene.add(plane)
+  plane.translateY(0.1)
+  if(plane.position.z < -45){
+      plane.position.set(0,0,45)
+  }
+}
 
 function showInformation()
 {
@@ -41,6 +50,7 @@ function showInformation()
 function render()
 {
   requestAnimationFrame(render); // Show events
+  movePlane()
   keyboardUpdate();
   renderer.render(scene, camera) // Render scene
 }
