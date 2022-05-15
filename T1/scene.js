@@ -46,13 +46,8 @@ function movePlane() {
     plane.position.set(0, 0, 40);
   }
 }
-
-function moveObject(object, speed) {
-  scene.add(object);
-  object.translateZ(speed);
-  if (object.position.z < -45) {
-    scene.remove(object);
-  }
+function projectileMovement() {
+  projectile.translateZ(4);
 }
 
 function showInformation() {
@@ -70,7 +65,7 @@ export function shoot() {
     cone.position.z + 6
   );
   scene.add(projectile);
-  moveObject(projectile, 4);
+
   // setTimeout(() => {
   //   scene.remove(projectile), 10000;
   // });
@@ -79,13 +74,17 @@ export function shoot() {
 function spawnEnemy() {
   setTimeout(() => {
     scene.add(enemy);
-  }, 5000);
-  moveObject(enemy, 0.1);
+  }, 1000);
+  enemy.translateZ(-0.3);
+  if (enemy.position.z === -45) {
+    scene.remove(enemy);
+  }
 }
 
 function render() {
   requestAnimationFrame(render); // Show events
   movePlane();
+  projectileMovement();
   spawnEnemy();
   keyboardUpdate();
   if (detectCollisionCubes(cone, enemy)) {
