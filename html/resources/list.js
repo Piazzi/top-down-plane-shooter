@@ -2,7 +2,7 @@ var list = {
 	"en": {
 		"Projects": {
 			"Main Project": {
-				"T1/scene",
+				"T1/scene": "T1/scene",
 			},
 			
 			"Basics":  {
