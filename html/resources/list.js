@@ -1,6 +1,8 @@
 var list = {
 	"en": {
 		"Projects": {
+			"Main Project:" "T1/scene"
+			
 			"Basics":  {
 				"Basic Scene": "html/basicSceneInfo",
 				"Using the keyboard": "html/keyboardExampleInfo",
