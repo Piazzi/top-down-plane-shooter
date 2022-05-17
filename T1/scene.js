@@ -80,6 +80,7 @@ function spawnEnemy() {
 }
 
 function render() {
+
   requestAnimationFrame(render); // Show events
   movePlane();
   projectileMovement();
@@ -92,4 +93,3 @@ function render() {
 
   renderer.render(scene, camera); // Render scene
 }
-a;

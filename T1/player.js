@@ -2,6 +2,7 @@ import KeyboardState from "../libs/util/KeyboardState.js";
 import * as THREE from "three";
 import { degreesToRadians } from "../libs/util/util.js";
 import { shoot } from "./scene.js";
+
 // create a cone
 const geometry = new THREE.ConeGeometry(4, 10, 16);
 const material = new THREE.MeshBasicMaterial({ color: 0xfeaa00 });
@@ -32,9 +33,10 @@ export function keyboardUpdate() {
   var moveDistance = speed * clock.getDelta();
 
   // Keyboard.pressed - execute while is pressed
-  if (keyboard.pressed("A")) cone.translateX(moveDistance);
-  if (keyboard.pressed("D")) cone.translateX(-moveDistance);
-  if (keyboard.pressed("W")) cone.translateY(moveDistance);
-  if (keyboard.pressed("S")) cone.translateY(-moveDistance);
+  if (keyboard.pressed("A") && cone.position.x <= 30 ) cone.translateX(moveDistance);
+  if (keyboard.pressed("D") && cone.position.x >= -30 ) cone.translateX(-moveDistance);
+  if (keyboard.pressed("W") && cone.position.z <= 20) cone.translateY(moveDistance);
+  if (keyboard.pressed("S") && cone.position.z >= -15) cone.translateY(-moveDistance);
   if (keyboard.pressed("space")) shoot();
 }
+
