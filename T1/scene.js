@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { PlaneGeometry } from "../build/three.module.js";
 import {
   initRenderer,
   initCamera,
@@ -54,7 +53,6 @@ function showInformation() {
   // Use this to show information onscreen
   var controls = new InfoBox();
   controls.add("Press WASD keys to move");
-  controls.add("Press F to put the cone in its original position");
   controls.show();
 }
 
@@ -88,7 +86,7 @@ function render() {
   spawnEnemy();
   keyboardUpdate();
   if (detectCollisionCubes(cone, enemy)) {
-    scene.remove(cone);
+    cone.position.set(0.0, 4.5, 0.0); // reseta pra posição original
   }
   if (detectCollisionCubes(projectile, enemy)) scene.remove(enemy);
 

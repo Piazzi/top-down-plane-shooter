@@ -9,7 +9,7 @@ export const cone = new THREE.Mesh(geometry, material);
 cone.rotation.set(0, 0, 0);
 
 // position the cone
-cone.position.set(0.0, 4.0, 0.0);
+cone.position.set(0.0, 4.5, 0.0);
 cone.rotateX(degreesToRadians(90));
 // add the cube to the scene
 
@@ -36,6 +36,5 @@ export function keyboardUpdate() {
   if (keyboard.pressed("D")) cone.translateX(-moveDistance);
   if (keyboard.pressed("W")) cone.translateY(moveDistance);
   if (keyboard.pressed("S")) cone.translateY(-moveDistance);
-  if (keyboard.pressed("F")) cone.position.set(0.0, 2.0, 0.0);
   if (keyboard.pressed("space")) shoot();
 }
