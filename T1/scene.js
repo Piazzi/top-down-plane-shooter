@@ -6,6 +6,7 @@ import {
   InfoBox,
   createGroundPlaneWired,
   onWindowResize,
+  degreesToRadians,
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone } from "./player.js";
 import projectile from "./projectile.js";
@@ -26,6 +27,8 @@ let plane2 = createGroundPlaneWired(125, 90, 10, 10);
 scene.add(plane);
 
 scene.add(cone);
+
+
 
 // Listen window size changes
 window.addEventListener(
@@ -55,18 +58,24 @@ function showInformation() {
   controls.add("Press WASD keys to move");
   controls.show();
 }
-
 export function shoot() {
   projectile.position.set(
     cone.position.x,
     cone.position.y,
     cone.position.z + 6
   );
-  scene.add(projectile);
-
+  scene.add( projectile);
   // setTimeout(() => {
   //   scene.remove(projectile), 10000;
   // });
+}
+
+var statusEnemy = true
+function getStatusEnemy(){
+  return statusEnemy
+}
+function setStatusEnemy(status){
+  statusEnemy =  status
 }
 
 function spawnEnemy() {
@@ -84,12 +93,19 @@ function render() {
   requestAnimationFrame(render); // Show events
   movePlane();
   projectileMovement();
-  spawnEnemy();
+  if(getStatusEnemy() === true){
+    spawnEnemy();
+  } else{
+    scene.remove(enemy);
+  }
   keyboardUpdate();
   if (detectCollisionCubes(cone, enemy)) {
     cone.position.set(0.0, 4.5, 0.0); // reseta pra posição original
   }
-  if (detectCollisionCubes(projectile, enemy)) scene.remove(enemy);
+  if (detectCollisionCubes(projectile, enemy)){
+    setStatusEnemy(false);
+  } 
+
 
   renderer.render(scene, camera); // Render scene
 }
