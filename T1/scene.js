@@ -6,6 +6,7 @@ import {
   InfoBox,
   createGroundPlaneWired,
   onWindowResize,
+  degreesToRadians,
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone } from "./player.js";
 // import projectile from "./projectile.js";
@@ -28,6 +29,8 @@ let plane2 = createGroundPlaneWired(125, 90, 10, 10);
 scene.add(plane);
 
 scene.add(cone);
+
+
 
 // Listen window size changes
 window.addEventListener(
@@ -54,7 +57,6 @@ function showInformation() {
   controls.add("Press WASD keys to move");
   controls.show();
 }
-
 export function shoot() {
   var sphereGeometry = new THREE.SphereGeometry(1.2, 32, 16);
   var sphereMaterial = new THREE.MeshLambertMaterial();
@@ -71,9 +73,18 @@ export function shoot() {
   }, 1000);
   scene.add(projectile);
 
+
   // setTimeout(() => {
   //   scene.remove(projectile), 10000;
   // });
+}
+
+var statusEnemy = true
+function getStatusEnemy(){
+  return statusEnemy
+}
+function setStatusEnemy(status){
+  statusEnemy =  status
 }
 
 function spawnEnemy() {
@@ -90,7 +101,10 @@ function render() {
   requestAnimationFrame(render); // Show events
   movePlane();
 
+
   spawnEnemy();
+
+ 
   keyboardUpdate();
   if (detectCollisionCubes(cone, enemy)) {
     cone.position.set(0.0, 4.5, 0.0); // reseta pra posição original
@@ -98,6 +112,7 @@ function render() {
   if (projectile) {
     if (detectCollisionCubes(projectile, enemy)) scene.remove(enemy);
   }
+
 
   renderer.render(scene, camera); // Render scene
 }
