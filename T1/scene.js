@@ -9,9 +9,11 @@ import {
   degreesToRadians,
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone } from "./player.js";
-import projectile from "./projectile.js";
+// import projectile from "./projectile.js";
 import { enemy } from "./enemies.js";
 import detectCollisionCubes from "./collision.js";
+import projectile from "./projectile.js";
+import { Vector3 } from "../build/three.module.js";
 var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
 var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
@@ -48,9 +50,6 @@ function movePlane() {
     plane.position.set(0, 0, 40);
   }
 }
-function projectileMovement() {
-  projectile.translateZ(4);
-}
 
 function showInformation() {
   // Use this to show information onscreen
@@ -59,12 +58,22 @@ function showInformation() {
   controls.show();
 }
 export function shoot() {
+  var sphereGeometry = new THREE.SphereGeometry(1.2, 32, 16);
+  var sphereMaterial = new THREE.MeshLambertMaterial();
+  var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
   projectile.position.set(
     cone.position.x,
     cone.position.y,
     cone.position.z + 6
   );
-  scene.add( projectile);
+  projectile.alive = true;
+  setTimeout(() => {
+    projectile.alive = false;
+    scene.remove(projectile);
+  }, 1000);
+  scene.add(projectile);
+
+
   // setTimeout(() => {
   //   scene.remove(projectile), 10000;
   // });
@@ -81,7 +90,7 @@ function setStatusEnemy(status){
 function spawnEnemy() {
   setTimeout(() => {
     scene.add(enemy);
-  }, 1000);
+  }, 100);
   enemy.translateZ(-0.3);
   if (enemy.position.z === -45) {
     scene.remove(enemy);
@@ -89,22 +98,20 @@ function spawnEnemy() {
 }
 
 function render() {
-
   requestAnimationFrame(render); // Show events
   movePlane();
-  projectileMovement();
-  if(getStatusEnemy() === true){
-    spawnEnemy();
-  } else{
-    scene.remove(enemy);
-  }
+
+
+  spawnEnemy();
+
+ 
   keyboardUpdate();
   if (detectCollisionCubes(cone, enemy)) {
     cone.position.set(0.0, 4.5, 0.0); // reseta pra posição original
   }
-  if (detectCollisionCubes(projectile, enemy)){
-    setStatusEnemy(false);
-  } 
+  if (projectile) {
+    if (detectCollisionCubes(projectile, enemy)) scene.remove(enemy);
+  }
 
 
   renderer.render(scene, camera); // Render scene
