@@ -8,10 +8,7 @@ import {
   onWindowResize,
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone } from "./player.js";
-// import projectile from "./projectile.js";
-import { enemy } from "./enemies.js";
 import detectCollisionCubes from "./collision.js";
-import projectile from "./projectile.js";
 
 var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
@@ -51,20 +48,19 @@ function showInformation() {
   // Use this to show information onscreen
   var controls = new InfoBox();
   controls.add("Press WASD keys to move");
+  controls.add("Press Spacebar to shoot");
   controls.show();
 }
 
 let projectileCooldown = 0;
 
 setInterval(() => {
-  if(projectileCooldown >= 0)
-  projectileCooldown--;
-}, "1000")
+  if (projectileCooldown >= 0) projectileCooldown--;
+}, "1000");
 
 export function shoot() {
 
-  if(!projectileCooldown)
-    return;
+  if (!projectileCooldown) return;
   projectileCooldown++;
 
   var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
@@ -75,48 +71,59 @@ export function shoot() {
     cone.position.y,
     cone.position.z + 3
   );
-  
+
   setInterval(() => {
     projectile.translateZ(0.9);
     if (projectile.position.z === 30) {
       scene.remove(projectile);
     }
-  }, "10")
+  }, "10");
 
   scene.add(projectile);
 }
 
-var statusEnemy = true
-function getStatusEnemy() {
-  return statusEnemy
-}
-function setStatusEnemy(status) {
-  statusEnemy = status
+let enemies = [];
+let projectiles = [];
+
+function resetGame() {
+  enemies = [];
+  projectiles = [];
+  cone.position.set(0.0, 4.5, 0.0);
 }
 
-let enemyArray = [];
+function removeEnemy(enemy) {
+  scene.remove(enemy);
+  enemies = enemies.filter(e => {
+   console.log( e.id != enemy.id);
+  })
+
+}
 
 function spawnEnemy() {
-
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
   const cubeMaterial = new THREE.MeshNormalMaterial();
   const enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  const randomPosition = Math.random() * (30 - (-30)) + -30;
+  const randomPosition = Math.random() * (30 - -30) + -30;
   scene.add(enemy);
-  enemyArray.push(enemy);
+  enemies.push(enemy);
+  console.log(enemies);
+
   setInterval(() => {
+    
     enemy.translateZ(-0.1);
-    if (enemy.position.z === -45) {
-      scene.remove(enemy);
-    }
-    if (detectCollisionCubes(cone, enemy)) {
-      enemyArray.forEach((e) => {
-        scene.remove(e);
-      })
-      cone.position.set(0.0, 4.5, 0.0); // reseta pra posição original
+    if (enemy.position.z <= -45) {
+       removeEnemy(enemy);
     }
 
-  }, "10")
+    if (detectCollisionCubes(cone, enemy)) {
+      enemies.forEach((e) => {
+        scene.remove(e);
+      });
+      removeEnemy(enemy);
+      resetGame(); // reseta pra posição original
+      return;
+    }
+  }, "10");
 
   enemy.position.set(randomPosition, 4.5, 30.0);
 }
@@ -125,17 +132,8 @@ function spawnEnemy() {
 setInterval(spawnEnemy, "2000");
 
 function render() {
-
   requestAnimationFrame(render); // Show events
   movePlane();
-
-  if (!getStatusEnemy())
-    scene.remove(enemy);
-
   keyboardUpdate();
-
-
   renderer.render(scene, camera); // Render scene
-
-
 }
