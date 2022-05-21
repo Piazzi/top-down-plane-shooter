@@ -91,8 +91,8 @@ export function shoot() {
     // and the projectile if did hit
     enemies.forEach((enemy) => {
       if (detectCollision(projectile, enemy)) {
-        scene.remove(enemy);
         scene.remove(projectile);
+        scene.remove(enemy);
         return;
       }
     });
