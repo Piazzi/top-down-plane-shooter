@@ -10,6 +10,9 @@ import {
 import { keyboardUpdate, cone } from "./player.js";
 import detectCollision from "./collision.js";
 
+const SCREEN_TOP = 30;
+const SCREEN_BOTTONM = -45;
+
 var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
 var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
@@ -74,7 +77,7 @@ export function shoot() {
   scene.add(projectile);
   setInterval(() => {
     projectile.translateZ(0.9);
-    if (projectile.position.z >= 30) {
+    if (projectile.position.z >= SCREEN_TOP) {
       scene.remove(projectile);
       return;
     }
@@ -105,18 +108,21 @@ function resetGame() {
 }
 
 function spawnEnemy() {
+  console.log(enemies);
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
   const cubeMaterial = new THREE.MeshNormalMaterial();
   const enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
   const randomPosition = Math.random() * (30 - -30) + -30;
   scene.add(enemy);
   enemies.push(enemy);
-  enemy.position.set(randomPosition, 4.5, 30.0);
+  enemy.position.set(randomPosition, 4.5, SCREEN_TOP);
 
   setInterval(() => {
     enemy.translateZ(-0.1);
-    if (enemy.position.z <= -45) {
+    if (enemy.position.z <= SCREEN_BOTTONM) {
       scene.remove(enemy);
+      enemies = enemies.filter(e => e.id !== enemy.id);
+      return;
     }
 
     if (detectCollision(cone, enemy)) {
@@ -131,6 +137,7 @@ function spawnEnemy() {
   }, "10");
   return;
 }
+
 
 // spawna inimigos a cada 2 segundos
 setInterval(spawnEnemy, "2000");
