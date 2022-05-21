@@ -1,18 +1,28 @@
 import KeyboardState from "../libs/util/KeyboardState.js";
 import * as THREE from "three";
 import { degreesToRadians } from "../libs/util/util.js";
-import { shoot } from "./scene.js";
+import { scene } from "./scene.js";
+import { OFF_SCREEN_TOP } from "./scene.js";
+import { enemies } from "./enemy.js";
+import detectCollision from "./collision.js";
 
 // create a cone
 const geometry = new THREE.ConeGeometry(2, 5, 8);
 const material = new THREE.MeshBasicMaterial({ color: 0xfeaa00 });
 export const cone = new THREE.Mesh(geometry, material);
-cone.rotation.set(0, 0, 0);
+const SCREEN_LEFT_EDGE = -30;
+const SCREEN_RIGHT_EDGE = 30;
+const SCREEN_TOP_EDGE = 20;
+const SCREEN_BOTTOM_EDGE = -15;
+
+export var projectileCooldown = 0;
+// active projectiles array on the scene
+export var projectiles = [];
 
 // position the cone
+cone.rotation.set(0, 0, 0);
 cone.position.set(0.0, 4.5, 0.0);
 cone.rotateX(degreesToRadians(90));
-// add the cube to the scene
 
 // Use TextureLoader to load texture files
 var textureLoader = new THREE.TextureLoader();
@@ -26,6 +36,7 @@ var keyboard = new KeyboardState();
 
 var clock = new THREE.Clock();
 
+// detect the player controls
 export function keyboardUpdate() {
   keyboard.update();
 
@@ -33,10 +44,64 @@ export function keyboardUpdate() {
   var moveDistance = speed * clock.getDelta();
 
   // Keyboard.pressed - execute while is pressed
-  if (keyboard.pressed("A") && cone.position.x <= 30 ) cone.translateX(moveDistance);
-  if (keyboard.pressed("D") && cone.position.x >= -30 ) cone.translateX(-moveDistance);
-  if (keyboard.pressed("W") && cone.position.z <= 20) cone.translateY(moveDistance);
-  if (keyboard.pressed("S") && cone.position.z >= -15) cone.translateY(-moveDistance);
+  // checks if the player is on the playable zone (in screen)
+  if (keyboard.pressed("A") && cone.position.x <= SCREEN_RIGHT_EDGE)
+    cone.translateX(moveDistance);
+  if (keyboard.pressed("D") && cone.position.x >= SCREEN_LEFT_EDGE)
+    cone.translateX(-moveDistance);
+  if (keyboard.pressed("W") && cone.position.z <= SCREEN_TOP_EDGE)
+    cone.translateY(moveDistance);
+  if (keyboard.pressed("S") && cone.position.z >= SCREEN_BOTTOM_EDGE)
+    cone.translateY(-moveDistance);
   if (keyboard.pressed("space")) shoot();
 }
 
+// shoot function for the player
+export function shoot() {
+  // if is on cooldown, the plane cannot shoot
+  if (!projectileCooldown) return;
+
+  projectileCooldown++;
+
+  // creates the projectile
+  var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
+  var sphereMaterial = new THREE.MeshLambertMaterial();
+  var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  projectiles.push(projectile);
+  projectile.position.set(
+    cone.position.x,
+    cone.position.y,
+    cone.position.z + 3
+  );
+
+  scene.add(projectile);
+
+  // every 10 ms checks if the projectile hit any enemy or exit the screen
+  setInterval(() => {
+    projectile.translateZ(0.9);
+
+    // remove the projectile if exits the screen
+    if (projectile.position.z >= OFF_SCREEN_TOP) {
+      scene.remove(projectile);
+      projectiles = projectiles.filter((p) => p.id !== projectile.id);
+      return;
+    }
+
+    // check if the projectile hit any enemy, remove the enemy
+    // and the projectile if did hit
+    enemies.forEach((enemy) => {
+      if (detectCollision(projectile, enemy)) {
+        scene.remove(enemy);
+        scene.remove(projectile);
+        return;
+      }
+    });
+  }, "10");
+
+  return;
+}
+
+// reduce projectile cooldown
+setInterval(() => {
+  if (projectileCooldown >= 0) projectileCooldown--;
+}, "1000");
