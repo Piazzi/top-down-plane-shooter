@@ -71,6 +71,7 @@ export function shoot() {
     cone.position.z + 3
   );
 
+  scene.add(projectile);
   setInterval(() => {
     projectile.translateZ(0.9);
     if (projectile.position.z >= 30) {
@@ -79,54 +80,56 @@ export function shoot() {
     }
 
     enemies.forEach((enemy) => {
-      if(detectCollision(projectile, enemy)){
+      if (detectCollision(projectile, enemy)) {
         scene.remove(enemy);
         scene.remove(projectile);
+        return;
       }
-    })
-    
+    });
   }, "10");
   console.log(projectiles);
-  scene.add(projectile);
+  return;
 }
 
 let enemies = [];
 let projectiles = [];
 
 function resetGame() {
+  enemies.forEach((e) => {
+    scene.remove(e);
+  });
+
   enemies = [];
   projectiles = [];
   cone.position.set(0.0, 4.5, 0.0);
 }
 
 function spawnEnemy() {
-
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
   const cubeMaterial = new THREE.MeshNormalMaterial();
   const enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  const randomPosition = Math.random() * (30 - (-30)) + -30;
+  const randomPosition = Math.random() * (30 - -30) + -30;
   scene.add(enemy);
   enemies.push(enemy);
+  enemy.position.set(randomPosition, 4.5, 30.0);
 
   setInterval(() => {
-
     enemy.translateZ(-0.1);
     if (enemy.position.z <= -45) {
       scene.remove(enemy);
     }
 
     if (detectCollision(cone, enemy)) {
-      enemies.forEach((e) => {
-        scene.remove(e);
-      });
+      // enemies.forEach((e) => {
+      //   scene.remove(e);
+      // });
       scene.remove(enemy);
 
       resetGame(); // reseta pra posição original
       return;
     }
   }, "10");
-
-  enemy.position.set(randomPosition, 4.5, 30.0);
+  return;
 }
 
 // spawna inimigos a cada 2 segundos
