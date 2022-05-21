@@ -8,7 +8,7 @@ import {
   onWindowResize,
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone } from "./player.js";
-import detectCollisionCubes from "./collision.js";
+import detectCollision from "./collision.js";
 
 var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
@@ -59,13 +59,12 @@ setInterval(() => {
 }, "1000");
 
 export function shoot() {
-
   if (!projectileCooldown) return;
   projectileCooldown++;
-
   var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
   var sphereMaterial = new THREE.MeshLambertMaterial();
   var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  projectiles.push(projectile);
   projectile.position.set(
     cone.position.x,
     cone.position.y,
@@ -74,11 +73,20 @@ export function shoot() {
 
   setInterval(() => {
     projectile.translateZ(0.9);
-    if (projectile.position.z === 30) {
+    if (projectile.position.z >= 30) {
       scene.remove(projectile);
+      return;
     }
-  }, "10");
 
+    enemies.forEach((enemy) => {
+      if(detectCollision(projectile, enemy)){
+        scene.remove(enemy);
+        scene.remove(projectile);
+      }
+    })
+    
+  }, "10");
+  console.log(projectiles);
   scene.add(projectile);
 }
 
@@ -91,35 +99,28 @@ function resetGame() {
   cone.position.set(0.0, 4.5, 0.0);
 }
 
-function removeEnemy(enemy) {
-  scene.remove(enemy);
-  enemies = enemies.filter(e => {
-   console.log( e.id != enemy.id);
-  })
-
-}
-
 function spawnEnemy() {
+
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
   const cubeMaterial = new THREE.MeshNormalMaterial();
   const enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  const randomPosition = Math.random() * (30 - -30) + -30;
+  const randomPosition = Math.random() * (30 - (-30)) + -30;
   scene.add(enemy);
   enemies.push(enemy);
-  console.log(enemies);
 
   setInterval(() => {
-    
+
     enemy.translateZ(-0.1);
     if (enemy.position.z <= -45) {
-       removeEnemy(enemy);
+      scene.remove(enemy);
     }
 
-    if (detectCollisionCubes(cone, enemy)) {
+    if (detectCollision(cone, enemy)) {
       enemies.forEach((e) => {
         scene.remove(e);
       });
-      removeEnemy(enemy);
+      scene.remove(enemy);
+
       resetGame(); // reseta pra posição original
       return;
     }

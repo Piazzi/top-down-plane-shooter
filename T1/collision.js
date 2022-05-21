@@ -1,6 +1,4 @@
-import * as THREE from  'three';
-
-function detectCollisionCubes(object1, object2){
+function detectCollision(object1, object2){
     object1.geometry.computeBoundingBox(); //not needed if its already calculated
     object2.geometry.computeBoundingBox();
     object1.updateMatrixWorld();
@@ -15,4 +13,4 @@ function detectCollisionCubes(object1, object2){
     return box1.intersectsBox(box2);
   }
 
-  export default detectCollisionCubes;
+  export default detectCollision;
