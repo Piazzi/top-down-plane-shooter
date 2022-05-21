@@ -58,6 +58,8 @@ function showInformation() {
 let projectileCooldown = 0;
 
 setInterval(() => {
+  console.log(projectiles);
+
   if (projectileCooldown >= 0) projectileCooldown--;
 }, "1000");
 
@@ -79,6 +81,8 @@ export function shoot() {
     projectile.translateZ(0.9);
     if (projectile.position.z >= SCREEN_TOP) {
       scene.remove(projectile);
+      projectiles = projectiles.filter(p => p.id !== projectile.id);
+
       return;
     }
 
@@ -108,7 +112,6 @@ function resetGame() {
 }
 
 function spawnEnemy() {
-  console.log(enemies);
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
   const cubeMaterial = new THREE.MeshNormalMaterial();
   const enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
