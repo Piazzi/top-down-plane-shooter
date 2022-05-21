@@ -4,7 +4,7 @@ import { degreesToRadians } from "../libs/util/util.js";
 import { shoot } from "./scene.js";
 
 // create a cone
-const geometry = new THREE.ConeGeometry(4, 10, 16);
+const geometry = new THREE.ConeGeometry(2, 5, 8);
 const material = new THREE.MeshBasicMaterial({ color: 0xfeaa00 });
 export const cone = new THREE.Mesh(geometry, material);
 cone.rotation.set(0, 0, 0);
