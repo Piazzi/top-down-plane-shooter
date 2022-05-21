@@ -1,7 +1,7 @@
 import KeyboardState from "../libs/util/KeyboardState.js";
 import * as THREE from "three";
 import { degreesToRadians } from "../libs/util/util.js";
-import { scene } from "./scene.js";
+import { OFF_SCREEN_BOTTON, scene } from "./scene.js";
 import { OFF_SCREEN_TOP } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
@@ -92,6 +92,7 @@ export function shoot() {
     enemies.forEach((enemy) => {
       if (detectCollision(projectile, enemy)) {
         scene.remove(projectile);
+        enemy.position.set(0, 0, OFF_SCREEN_BOTTON);
         scene.remove(enemy);
         return;
       }
