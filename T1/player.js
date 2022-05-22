@@ -10,10 +10,10 @@ import detectCollision from "./collision.js";
 const geometry = new THREE.ConeGeometry(2, 5, 8);
 const material = new THREE.MeshLambertMaterial({ color: 0xfeaa00 });
 export const cone = new THREE.Mesh(geometry, material);
-const SCREEN_LEFT_EDGE = -30;
-const SCREEN_RIGHT_EDGE = 30;
-const SCREEN_TOP_EDGE = 20;
-const SCREEN_BOTTOM_EDGE = -15;
+export const SCREEN_LEFT_EDGE = -30;
+export const SCREEN_RIGHT_EDGE = 30;
+export const SCREEN_TOP_EDGE = 20;
+export const SCREEN_BOTTOM_EDGE = -15;
 
 export var projectileCooldown = 0;
 // active projectiles array on the scene

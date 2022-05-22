@@ -5,7 +5,7 @@ import {
   OFF_SCREEN_TOP,
   resetGame,
 } from "./scene.js";
-import { cone, grow, shrink } from "./player.js";
+import { cone, grow, shrink, SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE } from "./player.js";
 import detectCollision from "./collision.js";
 
 // generate a random color for the enemy
@@ -20,6 +20,13 @@ export function generateColor() {
   return color;
 }
 
+/**
+ * Returns a random number between min (inclusive) and max (exclusive)
+ */
+ function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 // active enemies array on the scene
 export var enemies = [];
 // create a enemy at a random X position in the scene
@@ -30,14 +37,15 @@ export function spawnEnemy() {
     color: generateColor(),
   });
   let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  let randomPosition = Math.random() * (30 - -30) + -30;
+  let randomPosition = getRandomArbitrary(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
+  let randomSpeed = getRandomArbitrary(-0.1, -0.4);
   scene.add(enemy);
   enemies.push(enemy);
   enemy.position.set(randomPosition, 4.5, OFF_SCREEN_TOP);
 
   // every 10 ms checks if the enemy hit the player or exit the screen
   setInterval(() => {
-    enemy.translateZ(-0.1);
+    enemy.translateZ(randomSpeed);
     // remove the enemy if exits the screen
     if (enemy.position.z <= OFF_SCREEN_BOTTOM) {
       scene.remove(enemy);
