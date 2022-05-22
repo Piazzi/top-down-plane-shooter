@@ -8,7 +8,7 @@ import detectCollision from "./collision.js";
 
 // create a cone
 const geometry = new THREE.ConeGeometry(2, 5, 8);
-const material = new THREE.MeshBasicMaterial({ color: 0xfeaa00 });
+const material = new THREE.MeshLambertMaterial({ color: 0xfeaa00 });
 export const cone = new THREE.Mesh(geometry, material);
 const SCREEN_LEFT_EDGE = -30;
 const SCREEN_RIGHT_EDGE = 30;
@@ -65,7 +65,7 @@ export function shoot() {
 
   // creates the projectile
   var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
-  var sphereMaterial = new THREE.MeshLambertMaterial();
+  var sphereMaterial = new THREE.MeshLambertMaterial({ color: '#FEFE00' });
   var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
   projectiles.push(projectile);
   projectile.position.set(

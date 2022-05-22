@@ -18,6 +18,8 @@ var renderer = initRenderer(); // View function in util/utils
 var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
 initDefaultBasicLight(scene);
 
+
+
 // Show text information onscreen
 showInformation();
 
@@ -39,6 +41,18 @@ window.addEventListener(
 );
 
 render();
+
+export function generateColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  
+  return color;
+  
+}
 
 // move the plane against the player to simulate movement
 function movePlane() {

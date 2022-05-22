@@ -7,6 +7,7 @@ import {
 } from "./scene.js";
 import { cone } from "./player.js";
 import detectCollision from "./collision.js";
+import { generateColor } from "./scene.js"
 
 // active enemies array on the scene
 export var enemies = [];
@@ -14,7 +15,7 @@ export var enemies = [];
 export function spawnEnemy() {
   // creates de cube
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
-  const cubeMaterial = new THREE.MeshNormalMaterial();
+  const cubeMaterial = new THREE.MeshLambertMaterial({ color: generateColor() });
   let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
   let randomPosition = Math.random() * (30 - -30) + -30;
   scene.add(enemy);
