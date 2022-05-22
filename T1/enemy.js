@@ -5,35 +5,30 @@ import {
   OFF_SCREEN_TOP,
   resetGame,
 } from "./scene.js";
-import { cone } from "./player.js";
+import { cone, grow, shrink } from "./player.js";
 import detectCollision from "./collision.js";
-function shrink() {
-  let scale = 1;
-  setInterval(() => {
-    if (scale < 0.1) {
-      return;
-    }
-    scale -= 0.1;
-    cone.scale.set(scale, scale, scale);
-  }, "10");
+
+// generate a random color for the enemy
+export function generateColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+
+  return color;
 }
-function grow() {
-  let scale = 0;
-  setInterval(() => {
-    if (scale > 0.9) {
-      return;
-    }
-    scale += 0.1;
-    cone.scale.set(scale, scale, scale);
-  }, "10");
-}
+
 // active enemies array on the scene
 export var enemies = [];
 // create a enemy at a random X position in the scene
 export function spawnEnemy() {
   // creates de cube
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
-  const cubeMaterial = new THREE.MeshNormalMaterial();
+  const cubeMaterial = new THREE.MeshLambertMaterial({
+    color: generateColor(),
+  });
   let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
   let randomPosition = Math.random() * (30 - -30) + -30;
   scene.add(enemy);

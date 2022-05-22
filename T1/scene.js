@@ -41,7 +41,6 @@ window.addEventListener(
 render();
 
 // move the plane against the player to simulate movement
-
 function movePlane() {
   scene.add(plane);
   scene.add(plane2);
@@ -66,12 +65,12 @@ function showInformation() {
 // resets the game removing all active
 // enemies, projectiles and setting the players position
 export function resetGame() {
+  cone.position.set(0, 4.5, 0);
   enemies.forEach((e) => {
     scene.remove(e);
   });
   enemies.length = 0;
   projectiles.length = 0;
-  cone.position.set(0, 4.5, 0);
 }
 
 // spawn a enemy every 2 seconds

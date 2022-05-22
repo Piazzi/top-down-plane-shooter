@@ -5,9 +5,10 @@ import { OFF_SCREEN_BOTTOM, scene } from "./scene.js";
 import { OFF_SCREEN_TOP } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
+
 // create a cone
 const geometry = new THREE.ConeGeometry(2, 5, 8);
-const material = new THREE.MeshBasicMaterial({ color: 0xfeaa00 });
+const material = new THREE.MeshLambertMaterial({ color: 0xfeaa00 });
 export const cone = new THREE.Mesh(geometry, material);
 const SCREEN_LEFT_EDGE = -30;
 const SCREEN_RIGHT_EDGE = 30;
@@ -26,6 +27,7 @@ cone.rotateX(degreesToRadians(90));
 // Use TextureLoader to load texture files
 var textureLoader = new THREE.TextureLoader();
 var stone = textureLoader.load("../assets/textures/floor-wood.jpg");
+var explosion = textureLoader.load("../assets/textures/11.png");
 
 // Add texture to the 'map' property of the object's material
 cone.material.map = stone;
@@ -62,7 +64,7 @@ export function shoot() {
 
   // creates the projectile
   var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
-  var sphereMaterial = new THREE.MeshLambertMaterial();
+  var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
   var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
   projectiles.push(projectile);
   projectile.position.set(
@@ -104,3 +106,28 @@ export function shoot() {
 setInterval(() => {
   if (projectileCooldown >= 0) projectileCooldown--;
 }, "1000");
+
+// shrinks the player when he gets hit by a enemy
+export function shrink() {
+  cone.material.map = explosion;
+  let scale = 1;
+  setInterval(() => {
+    if (scale < 0.1) {
+      return;
+    }
+    scale -= 0.1;
+    cone.scale.set(scale, scale, scale);
+    cone.material.map = stone;
+  }, "100");
+}
+
+export function grow() {
+  let scale = 0;
+  setInterval(() => {
+    if (scale > 0.9) {
+      return;
+    }
+    scale += 0.1;
+    cone.scale.set(scale, scale, scale);
+  }, "100");
+}
