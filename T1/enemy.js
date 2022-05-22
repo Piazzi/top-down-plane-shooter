@@ -4,8 +4,10 @@ import {
   OFF_SCREEN_BOTTOM,
   OFF_SCREEN_TOP,
   resetGame,
+  SCREEN_LEFT_EDGE,
+  SCREEN_RIGHT_EDGE,
 } from "./scene.js";
-import { cone, grow, shrink, SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE } from "./player.js";
+import { cone, grow, shrink } from "./player.js";
 import detectCollision from "./collision.js";
 
 // generate a random color for the enemy
@@ -20,10 +22,8 @@ export function generateColor() {
   return color;
 }
 
-/**
- * Returns a random number between min (inclusive) and max (exclusive)
- */
- function getRandomArbitrary(min, max) {
+//Returns a random number between min (inclusive) and max (exclusive)
+function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
@@ -37,8 +37,8 @@ export function spawnEnemy() {
     color: generateColor(),
   });
   let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  let randomPosition = getRandomArbitrary(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
-  let randomSpeed = getRandomArbitrary(-0.1, -0.4);
+  let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
+  let randomSpeed = getRandomNumber(-0.1, -0.3);
   scene.add(enemy);
   enemies.push(enemy);
   enemy.position.set(randomPosition, 4.5, OFF_SCREEN_TOP);
@@ -57,8 +57,8 @@ export function spawnEnemy() {
     if (detectCollision(cone, enemy)) {
       scene.remove(enemy);
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-      shrink();
-      grow();
+      shrink(cone);
+      grow(cone);
       resetGame(); // reset the game
 
       return;

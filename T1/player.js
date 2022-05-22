@@ -1,8 +1,15 @@
 import KeyboardState from "../libs/util/KeyboardState.js";
 import * as THREE from "three";
 import { degreesToRadians } from "../libs/util/util.js";
-import { OFF_SCREEN_BOTTOM, scene } from "./scene.js";
-import { OFF_SCREEN_TOP } from "./scene.js";
+import {
+  OFF_SCREEN_BOTTOM,
+  OFF_SCREEN_TOP,
+  SCREEN_BOTTOM_EDGE,
+  SCREEN_LEFT_EDGE,
+  SCREEN_RIGHT_EDGE,
+  SCREEN_TOP_EDGE,
+  scene,
+} from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 
@@ -10,11 +17,6 @@ import detectCollision from "./collision.js";
 const geometry = new THREE.ConeGeometry(2, 5, 8);
 const material = new THREE.MeshLambertMaterial({ color: 0xfeaa00 });
 export const cone = new THREE.Mesh(geometry, material);
-export const SCREEN_LEFT_EDGE = -30;
-export const SCREEN_RIGHT_EDGE = 30;
-export const SCREEN_TOP_EDGE = 20;
-export const SCREEN_BOTTOM_EDGE = -15;
-
 export var projectileCooldown = 0;
 // active projectiles array on the scene
 export var projectiles = [];
@@ -90,11 +92,15 @@ export function shoot() {
     // and the projectile if did hit
     enemies.forEach((enemy) => {
       if (detectCollision(projectile, enemy)) {
-        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
-        scene.remove(projectile);
-        enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-        scene.remove(enemy);
-        return;
+        shrink(enemy);
+        grow(enemy);
+        setTimeout(function () {
+          projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
+          scene.remove(projectile);
+          enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
+          scene.remove(enemy);
+          return;
+        }, 200);
       }
     });
   }, "10");
@@ -107,27 +113,28 @@ setInterval(() => {
   if (projectileCooldown >= 0) projectileCooldown--;
 }, "1000");
 
-// shrinks the player when he gets hit by a enemy
-export function shrink() {
-  cone.material.map = explosion;
+// makes the mesh shrinks in scale
+export function shrink(mesh) {
+  mesh.material.map = explosion;
   let scale = 1;
   setInterval(() => {
     if (scale < 0.1) {
       return;
     }
     scale -= 0.1;
-    cone.scale.set(scale, scale, scale);
-    cone.material.map = stone;
+    mesh.scale.set(scale, scale, scale);
+    mesh.material.map = stone;
   }, "100");
 }
 
-export function grow() {
+// makes the mesh grow in scale
+export function grow(mesh) {
   let scale = 0;
   setInterval(() => {
     if (scale > 0.9) {
       return;
     }
     scale += 0.1;
-    cone.scale.set(scale, scale, scale);
+    mesh.scale.set(scale, scale, scale);
   }, "100");
 }
