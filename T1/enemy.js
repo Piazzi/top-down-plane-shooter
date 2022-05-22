@@ -60,7 +60,6 @@ export function spawnEnemy() {
       shrink(cone);
       grow(cone);
       resetGame(); // reset the game
-
       return;
     }
   }, "10");

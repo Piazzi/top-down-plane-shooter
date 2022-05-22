@@ -94,9 +94,10 @@ export function shoot() {
       if (detectCollision(projectile, enemy)) {
         shrink(enemy);
         grow(enemy);
+        scene.remove(projectile);
+        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
+        // wait 200ms before removing the enemy so that the animation can play
         setTimeout(function () {
-          projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
-          scene.remove(projectile);
           enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
           scene.remove(enemy);
           return;
