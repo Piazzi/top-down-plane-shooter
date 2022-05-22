@@ -5,7 +5,6 @@ import { OFF_SCREEN_BOTTOM, scene } from "./scene.js";
 import { OFF_SCREEN_TOP } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
-
 // create a cone
 const geometry = new THREE.ConeGeometry(2, 5, 8);
 const material = new THREE.MeshBasicMaterial({ color: 0xfeaa00 });
@@ -30,7 +29,6 @@ var stone = textureLoader.load("../assets/textures/floor-wood.jpg");
 
 // Add texture to the 'map' property of the object's material
 cone.material.map = stone;
-
 // To use the keyboard
 var keyboard = new KeyboardState();
 
@@ -60,7 +58,6 @@ export function keyboardUpdate() {
 export function shoot() {
   // if is on cooldown, the plane cannot shoot
   if (!projectileCooldown) return;
-
   projectileCooldown++;
 
   // creates the projectile

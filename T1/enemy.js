@@ -7,7 +7,26 @@ import {
 } from "./scene.js";
 import { cone } from "./player.js";
 import detectCollision from "./collision.js";
-
+function shrink() {
+  let scale = 1;
+  setInterval(() => {
+    if (scale < 0.1) {
+      return;
+    }
+    scale -= 0.1;
+    cone.scale.set(scale, scale, scale);
+  }, "10");
+}
+function grow() {
+  let scale = 0;
+  setInterval(() => {
+    if (scale > 0.9) {
+      return;
+    }
+    scale += 0.1;
+    cone.scale.set(scale, scale, scale);
+  }, "10");
+}
 // active enemies array on the scene
 export var enemies = [];
 // create a enemy at a random X position in the scene
@@ -35,10 +54,13 @@ export function spawnEnemy() {
     if (detectCollision(cone, enemy)) {
       scene.remove(enemy);
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-
+      shrink();
+      grow();
       resetGame(); // reset the game
+
       return;
     }
   }, "10");
+
   return;
 }

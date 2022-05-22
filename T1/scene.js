@@ -9,7 +9,6 @@ import {
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
-
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
 
@@ -42,22 +41,16 @@ window.addEventListener(
 render();
 
 // move the plane against the player to simulate movement
-var planoAtual = 1;
-function movePlane() {
-  // console.log(planoAtual);
 
+function movePlane() {
   scene.add(plane);
   scene.add(plane2);
   plane.translateY(0.1);
   plane2.translateY(0.1);
 
   if (plane2.position.z < 0 && plane2.position.z > -0.1) {
-    console.log("Troca de planos");
-    planoAtual = 2;
     plane.position.z = 200;
   } else if (plane.position.z < 0 && plane.position.z > -0.1) {
-    console.log("Troca de planos");
-    planoAtual = 1;
     plane2.position.z = 200;
   }
 }
@@ -78,20 +71,8 @@ export function resetGame() {
   });
   enemies.length = 0;
   projectiles.length = 0;
-
-  cone.position.set(0.0, 4.5, 0.0);
+  cone.position.set(0, 4.5, 0);
 }
-/////////////////////// animação
-const times = [0, 1, 2, 3, 4];
-const values = [0, 1, 0, 1, 0];
-
-const opacityKF = new NumberKeyframeTrack(".material.opacity", times, values);
-const clip = new AnimationClip("blink", -1, [positionKF, opacityKF]);
-
-mixer = THREE.AnimationMixer(cone);
-
-const clipAction = mixer.clipAction(clip);
-clipAction.play();
 
 // spawn a enemy every 2 seconds
 setInterval(spawnEnemy, "2000");
@@ -100,5 +81,6 @@ function render() {
   requestAnimationFrame(render); // Show events
   movePlane();
   keyboardUpdate();
+
   renderer.render(scene, camera); // Render scene
 }
