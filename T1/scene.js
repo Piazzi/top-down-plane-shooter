@@ -1,5 +1,12 @@
 import * as THREE from "three";
-import { initRenderer, initCamera, initDefaultBasicLight, InfoBox, createGroundPlaneWired, onWindowResize} from "../libs/util/util.js";
+import {
+  initRenderer,
+  initCamera,
+  initDefaultBasicLight,
+  InfoBox,
+  createGroundPlaneWired,
+  onWindowResize,
+} from "../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 
