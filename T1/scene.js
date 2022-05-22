@@ -11,7 +11,7 @@ import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 
 export const OFF_SCREEN_TOP = 30;
-export const OFF_SCREEN_BOTTON = -45;
+export const OFF_SCREEN_BOTTOM = -45;
 
 export var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
@@ -23,10 +23,11 @@ showInformation();
 
 // create the ground plane
 let plane = createGroundPlaneWired(140, 200, 20, 20);
-plane.position.set(0, 0, 40);
+plane.position.set(0, 0, 0);
+let plane2 = createGroundPlaneWired(140, 200, 10, 10);
+plane2.position.set(0, 0, 200);
 
-// adds the plane and the player to the scene
-scene.add(plane);
+// adds the player to the scene
 scene.add(cone);
 
 // Listen window size changes
@@ -41,11 +42,23 @@ window.addEventListener(
 render();
 
 // move the plane against the player to simulate movement
+var planoAtual = 1;
 function movePlane() {
+  // console.log(planoAtual);
+
   scene.add(plane);
+  scene.add(plane2);
   plane.translateY(0.1);
-  if (plane.position.z < OFF_SCREEN_BOTTON) {
-    plane.position.set(0, 0, 40);
+  plane2.translateY(0.1);
+
+  if (plane2.position.z < 0 && plane2.position.z > -0.1) {
+    console.log("Troca de planos");
+    planoAtual = 2;
+    plane.position.z = 200;
+  } else if (plane.position.z < 0 && plane.position.z > -0.1) {
+    console.log("Troca de planos");
+    planoAtual = 1;
+    plane2.position.z = 200;
   }
 }
 
@@ -65,8 +78,20 @@ export function resetGame() {
   });
   enemies.length = 0;
   projectiles.length = 0;
+
   cone.position.set(0.0, 4.5, 0.0);
 }
+/////////////////////// animação
+const times = [0, 1, 2, 3, 4];
+const values = [0, 1, 0, 1, 0];
+
+const opacityKF = new NumberKeyframeTrack(".material.opacity", times, values);
+const clip = new AnimationClip("blink", -1, [positionKF, opacityKF]);
+
+mixer = THREE.AnimationMixer(cone);
+
+const clipAction = mixer.clipAction(clip);
+clipAction.play();
 
 // spawn a enemy every 2 seconds
 setInterval(spawnEnemy, "2000");

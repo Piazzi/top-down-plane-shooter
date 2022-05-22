@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import {
   scene,
-  OFF_SCREEN_BOTTON,
+  OFF_SCREEN_BOTTOM,
   OFF_SCREEN_TOP,
   resetGame,
 } from "./scene.js";
@@ -25,7 +25,7 @@ export function spawnEnemy() {
   setInterval(() => {
     enemy.translateZ(-0.1);
     // remove the enemy if exits the screen
-    if (enemy.position.z <= OFF_SCREEN_BOTTON) {
+    if (enemy.position.z <= OFF_SCREEN_BOTTOM) {
       scene.remove(enemy);
       enemies = enemies.filter((e) => e.id !== enemy.id);
       return;
@@ -34,6 +34,8 @@ export function spawnEnemy() {
     // resets the game if the player hit any enemy
     if (detectCollision(cone, enemy)) {
       scene.remove(enemy);
+      enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
+
       resetGame(); // reset the game
       return;
     }
