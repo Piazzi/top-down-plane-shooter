@@ -1,5 +1,12 @@
 import * as THREE from "three";
-import { initRenderer, initCamera, initDefaultBasicLight, InfoBox, createGroundPlaneWired, onWindowResize} from "../libs/util/util.js";
+import {
+  initRenderer,
+  initCamera,
+  initDefaultBasicLight,
+  InfoBox,
+  createGroundPlaneWired,
+  onWindowResize,
+} from "../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 
@@ -19,9 +26,9 @@ initDefaultBasicLight(scene);
 showInformation();
 
 // create the ground plane
-let plane = createGroundPlaneWired(140, 200, 20, 20);
+let plane = createGroundPlaneWired(140, 200, 20, 20, "#546A76");
 plane.position.set(0, 0, 0);
-let plane2 = createGroundPlaneWired(140, 200, 20, 20);
+let plane2 = createGroundPlaneWired(140, 200, 20, 20, "#222b30");
 plane2.position.set(0, 0, 200);
 
 // adds the player to the scene
