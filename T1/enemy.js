@@ -7,7 +7,18 @@ import {
 } from "./scene.js";
 import { cone } from "./player.js";
 import detectCollision from "./collision.js";
-import { generateColor } from "./scene.js"
+
+export function generateColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  
+  return color;
+  
+}
 
 // active enemies array on the scene
 export var enemies = [];
