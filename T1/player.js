@@ -47,15 +47,15 @@ export function keyboardUpdate() {
 
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
-  if (keyboard.pressed("A") && cone.position.x <= SCREEN_RIGHT_EDGE)
+  if (keyboard.pressed("left") && cone.position.x <= SCREEN_RIGHT_EDGE)
     cone.translateX(moveDistance);
-  if (keyboard.pressed("D") && cone.position.x >= SCREEN_LEFT_EDGE)
+  if (keyboard.pressed("right") && cone.position.x >= SCREEN_LEFT_EDGE)
     cone.translateX(-moveDistance);
-  if (keyboard.pressed("W") && cone.position.z <= SCREEN_TOP_EDGE)
+  if (keyboard.pressed("up") && cone.position.z <= SCREEN_TOP_EDGE)
     cone.translateY(moveDistance);
-  if (keyboard.pressed("S") && cone.position.z >= SCREEN_BOTTOM_EDGE)
+  if (keyboard.pressed("down") && cone.position.z >= SCREEN_BOTTOM_EDGE)
     cone.translateY(-moveDistance);
-  if (keyboard.pressed("space")) shoot();
+  if (keyboard.pressed("ctrl")) shoot();
 }
 
 // shoot function for the player
