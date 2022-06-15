@@ -16,6 +16,7 @@ export const SCREEN_LEFT_EDGE = -30;
 export const SCREEN_RIGHT_EDGE = 30;
 export const SCREEN_TOP_EDGE = 20;
 export const SCREEN_BOTTOM_EDGE = -15;
+export var HIGHWAY = 10;
 
 export var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
@@ -75,7 +76,7 @@ export function resetGame() {
   });
   projectiles.length = 0;
   enemies.length = 0;
-  cone.position.set(0, 4.5, 0);
+  cone.position.set(0, HIGHWAY, 0);
 }
 
 // spawn a enemy every 2 seconds
