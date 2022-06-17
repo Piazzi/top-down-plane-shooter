@@ -9,7 +9,7 @@ import {
   SCREEN_RIGHT_EDGE,
   SCREEN_TOP_EDGE,
   scene,
-  HIGHWAY,
+  HEIGHT,
 } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
@@ -24,7 +24,7 @@ export var projectiles = [];
 
 // position the cone
 cone.rotation.set(0, 0, 0);
-cone.position.set(0.0, HIGHWAY, 0.0);
+cone.position.set(0.0, HEIGHT, 0.0);
 cone.rotateX(degreesToRadians(90));
 
 // Use TextureLoader to load texture files
