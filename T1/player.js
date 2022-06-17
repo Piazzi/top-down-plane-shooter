@@ -9,6 +9,7 @@ import {
   SCREEN_RIGHT_EDGE,
   SCREEN_TOP_EDGE,
   scene,
+  HEIGHT,
 } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
@@ -23,7 +24,7 @@ export var projectiles = [];
 
 // position the cone
 cone.rotation.set(0, 0, 0);
-cone.position.set(0.0, 4.5, 0.0);
+cone.position.set(0.0, HEIGHT, 0.0);
 cone.rotateX(degreesToRadians(90));
 
 // Use TextureLoader to load texture files
@@ -47,15 +48,15 @@ export function keyboardUpdate() {
 
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
-  if (keyboard.pressed("A") && cone.position.x <= SCREEN_RIGHT_EDGE)
+  if (keyboard.pressed("left") && cone.position.x <= SCREEN_RIGHT_EDGE)
     cone.translateX(moveDistance);
-  if (keyboard.pressed("D") && cone.position.x >= SCREEN_LEFT_EDGE)
+  if (keyboard.pressed("right") && cone.position.x >= SCREEN_LEFT_EDGE)
     cone.translateX(-moveDistance);
-  if (keyboard.pressed("W") && cone.position.z <= SCREEN_TOP_EDGE)
+  if (keyboard.pressed("up") && cone.position.z <= SCREEN_TOP_EDGE)
     cone.translateY(moveDistance);
-  if (keyboard.pressed("S") && cone.position.z >= SCREEN_BOTTOM_EDGE)
+  if (keyboard.pressed("down") && cone.position.z >= SCREEN_BOTTOM_EDGE)
     cone.translateY(-moveDistance);
-  if (keyboard.pressed("space")) shoot();
+  if (keyboard.pressed("ctrl")) shoot();
 }
 
 // shoot function for the player
@@ -93,12 +94,13 @@ export function shoot() {
     enemies.forEach((enemy) => {
       if (detectCollision(projectile, enemy)) {
         shrink(enemy);
-        grow(enemy);
+        scene.remove(projectile);
+        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
+        // wait 200ms before removing the enemy so that the animation can play
         setTimeout(function () {
-          projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
-          scene.remove(projectile);
           enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
           scene.remove(enemy);
+
           return;
         }, 200);
       }

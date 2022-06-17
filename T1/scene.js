@@ -1,5 +1,12 @@
 import * as THREE from "three";
-import { initRenderer, initCamera, initDefaultBasicLight, InfoBox, createGroundPlaneWired, onWindowResize} from "../libs/util/util.js";
+import {
+  initRenderer,
+  initCamera,
+  initDefaultBasicLight,
+  InfoBox,
+  createGroundPlaneWired,
+  onWindowResize,
+} from "../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 
@@ -9,6 +16,7 @@ export const SCREEN_LEFT_EDGE = -30;
 export const SCREEN_RIGHT_EDGE = 30;
 export const SCREEN_TOP_EDGE = 20;
 export const SCREEN_BOTTOM_EDGE = -15;
+export var HEIGHT = 10;
 
 export var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
@@ -19,9 +27,9 @@ initDefaultBasicLight(scene);
 showInformation();
 
 // create the ground plane
-let plane = createGroundPlaneWired(140, 200, 20, 20);
+let plane = createGroundPlaneWired(140, 200, 20, 20, "#546A76");
 plane.position.set(0, 0, 0);
-let plane2 = createGroundPlaneWired(140, 200, 20, 20);
+let plane2 = createGroundPlaneWired(140, 200, 20, 20, "#222b30");
 plane2.position.set(0, 0, 200);
 
 // adds the player to the scene
@@ -66,9 +74,9 @@ export function resetGame() {
   enemies.forEach((e) => {
     scene.remove(e);
   });
-  cone.position.set(0, 4.5, 0);
-  enemies.length = 0;
   projectiles.length = 0;
+  enemies.length = 0;
+  cone.position.set(0, HEIGHT, 0);
 }
 
 // spawn a enemy every 2 seconds
