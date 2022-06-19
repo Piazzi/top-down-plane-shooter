@@ -1,0 +1,17 @@
+@font-face {
+    font-family: paper;
+    src: url(Newspaper.ttf);
+  }
+
+#info {
+	position: absolute;
+	top: 10px;
+	width: 100%;
+	text-align: left;
+	z-index: 100;
+	display:block;
+    font-family: paper;
+    font-size: 64px;
+    color: whitesmoke;
+    margin-left: 10px;
+}
