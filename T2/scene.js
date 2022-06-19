@@ -2,14 +2,14 @@ import * as THREE from "three";
 import {
   initRenderer,
   initCamera,
-  InfoBox,
   createGroundPlaneWired,
   onWindowResize,
+  createLightSphere
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 import { Clock } from "../build/three.module.js";
-import { dirLight, ambientLight } from "./lighting.js";
+import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import Stats from '../build/jsm/libs/stats.module.js';
 
 export const OFF_SCREEN_TOP = 30;
@@ -23,20 +23,29 @@ const stats = new Stats();
 
 export var clock = new Clock(true);
 export var scene = new THREE.Scene(); // Create main scene
-var renderer = initRenderer(); // View function in util/utils
-var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
 
+// Set all renderers
+var renderer = new THREE.WebGLRenderer();
+  document.getElementById("webgl-output").appendChild( renderer.domElement );  
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type  = THREE.VSMShadowMap; // default
+
+var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
+createLightSphere(scene, 0.5, 10, 10, lightPosition);
 // create the ground plane
 let plane = createGroundPlaneWired(140, 200, 20, 20, "#546A76");
 plane.position.set(0, 0, 0);
 let plane2 = createGroundPlaneWired(140, 200, 20, 20, "#222b30");
 plane2.position.set(0, 0, 200);
+plane.receiveShadow = true;
+plane2.receiveShadow = true;
 
 // adds the player to the scene
 scene.add(cone);
 scene.add(dirLight);
 scene.add(ambientLight);
-
+scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
 // Listen window size changes
 window.addEventListener(
   "resize",
