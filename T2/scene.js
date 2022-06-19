@@ -24,9 +24,6 @@ export var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
 var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
 
-// Show text information onscreen
-showInformation();
-
 // create the ground plane
 let plane = createGroundPlaneWired(140, 200, 20, 20, "#546A76");
 plane.position.set(0, 0, 0);
@@ -61,14 +58,6 @@ function movePlane() {
   } else if (plane.position.z < 0 && plane.position.z > -0.1) {
     plane2.position.z = 200;
   }
-}
-
-function showInformation() {
-  // Use this to show information onscreen
-  var controls = new InfoBox();
-  controls.add("Press Arrow keys to move");
-  controls.add("Press CTRL to shoot");
-  controls.show();
 }
 
 // resets the game removing all active
