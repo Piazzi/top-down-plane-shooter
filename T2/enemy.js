@@ -34,8 +34,10 @@ export var enemies = [];
 export function spawnEnemy() {
   // creates de cube
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
-  const cubeMaterial = new THREE.MeshLambertMaterial({
-    color: generateColor(),
+  const cubeMaterial = new THREE.MeshPhongMaterial({
+    color:generateColor(),     // Main color of the object
+    shininess:"200",            // Shininess of the object
+    specular:"rgb(255,255,255)" // Color of the specular component
   });
   let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
@@ -43,6 +45,8 @@ export function spawnEnemy() {
   scene.add(enemy);
   enemies.push(enemy);
   enemy.position.set(randomPosition, HEIGHT, OFF_SCREEN_TOP);
+  enemy.castShadow = true;
+  enemy.visible = true;
 
   // every 10 ms checks if the enemy hit the player or exit the screen
   setInterval(() => {
