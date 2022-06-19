@@ -16,7 +16,11 @@ import detectCollision from "./collision.js";
 
 // create a cone
 const geometry = new THREE.ConeGeometry(2, 5, 8);
-const material = new THREE.MeshLambertMaterial({ color: 0xfeaa00 });
+const material = new THREE.MeshPhongMaterial({
+	color:"0xfeAA00",     // Main color of the object
+	shininess:"150",            // Shininess of the object
+	specular:"rgb(255,255,255)" // Color of the specular component
+});
 export const cone = new THREE.Mesh(geometry, material);
 export var projectileCooldown = 0;
 // active projectiles array on the scene
@@ -26,6 +30,8 @@ export var projectiles = [];
 cone.rotation.set(0, 0, 0);
 cone.position.set(0.0, HEIGHT, 0.0);
 cone.rotateX(degreesToRadians(90));
+cone.castShadow = true;
+cone.visible = true;
 
 // Use TextureLoader to load texture files
 var textureLoader = new THREE.TextureLoader();

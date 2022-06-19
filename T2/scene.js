@@ -2,7 +2,6 @@ import * as THREE from "three";
 import {
   initRenderer,
   initCamera,
-  initDefaultBasicLight,
   InfoBox,
   createGroundPlaneWired,
   onWindowResize,
@@ -10,6 +9,7 @@ import {
 import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 import { Clock } from "../build/three.module.js";
+import { dirLight, ambientLight } from "./lighting.js";
 
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
@@ -23,7 +23,6 @@ export var clock = new Clock(true);
 export var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
 var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
-initDefaultBasicLight(scene);
 
 // Show text information onscreen
 showInformation();
@@ -36,6 +35,8 @@ plane2.position.set(0, 0, 200);
 
 // adds the player to the scene
 scene.add(cone);
+scene.add(dirLight);
+scene.add(ambientLight);
 
 // Listen window size changes
 window.addEventListener(
