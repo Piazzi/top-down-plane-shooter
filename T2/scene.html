@@ -4,10 +4,13 @@
     <title>Plane Shooter</title>
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../html/resources/default.css">
+    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">  
 </head>
 
 <body>
+  <div id="info">Clock: <span id="clock"></span> s</div>
+
   <div id="webgl-output">
     <script type="importmap">
       {"imports": {"three": "../build/three.module.js"}}
@@ -15,5 +18,4 @@
     <script type="module" src="scene.js"></script>
   </div>
 </body>
-
 </html>

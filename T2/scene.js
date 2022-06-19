@@ -9,6 +9,7 @@ import {
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
+import { Clock } from "../build/three.module.js";
 
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
@@ -18,6 +19,7 @@ export const SCREEN_TOP_EDGE = 20;
 export const SCREEN_BOTTOM_EDGE = -15;
 export var HEIGHT = 10;
 
+export var clock = new Clock(true);
 export var scene = new THREE.Scene(); // Create main scene
 var renderer = initRenderer(); // View function in util/utils
 var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
@@ -63,8 +65,8 @@ function movePlane() {
 function showInformation() {
   // Use this to show information onscreen
   var controls = new InfoBox();
-  controls.add("Press WASD keys to move");
-  controls.add("Press Spacebar to shoot");
+  controls.add("Press Arrow keys to move");
+  controls.add("Press CTRL to shoot");
   controls.show();
 }
 
@@ -77,10 +79,15 @@ export function resetGame() {
   projectiles.length = 0;
   enemies.length = 0;
   cone.position.set(0, HEIGHT, 0);
+  clock.start();
 }
+
+let clockText = document.getElementById('clock');
 
 // spawn a enemy every 2 seconds
 setInterval(spawnEnemy, "2000");
+// show clock time
+setInterval(() => {clockText.innerText = clock.getElapsedTime().toFixed()}, "1000")
 
 function render() {
   requestAnimationFrame(render); // Show events
