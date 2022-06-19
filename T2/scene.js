@@ -10,6 +10,7 @@ import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 import { Clock } from "../build/three.module.js";
 import { dirLight, ambientLight } from "./lighting.js";
+import Stats from '../build/jsm/libs/stats.module.js';
 
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
@@ -18,6 +19,7 @@ export const SCREEN_RIGHT_EDGE = 30;
 export const SCREEN_TOP_EDGE = 20;
 export const SCREEN_BOTTOM_EDGE = -15;
 export var HEIGHT = 10;
+const stats = new Stats();
 
 export var clock = new Clock(true);
 export var scene = new THREE.Scene(); // Create main scene
@@ -73,6 +75,11 @@ export function resetGame() {
 }
 
 let clockText = document.getElementById('clock');
+let statsText = document.getElementById('stats');
+stats.dom.style.top = '80px';
+stats.dom.style.marginLeft = '10px';
+
+statsText.appendChild(stats.dom);
 
 // spawn a enemy every 2 seconds
 setInterval(spawnEnemy, "2000");
@@ -84,4 +91,6 @@ function render() {
   movePlane();
   keyboardUpdate();
   renderer.render(scene, camera); // Render scene
+  stats.update();
+
 }

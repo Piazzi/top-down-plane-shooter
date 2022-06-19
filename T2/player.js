@@ -31,6 +31,7 @@ cone.rotation.set(0, 0, 0);
 cone.position.set(0.0, HEIGHT, 0.0);
 cone.rotateX(degreesToRadians(90));
 cone.castShadow = true;
+cone.receiveShadow = true;
 cone.visible = true;
 
 // Use TextureLoader to load texture files

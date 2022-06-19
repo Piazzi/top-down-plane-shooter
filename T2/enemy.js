@@ -46,6 +46,7 @@ export function spawnEnemy() {
   enemies.push(enemy);
   enemy.position.set(randomPosition, HEIGHT, OFF_SCREEN_TOP);
   enemy.castShadow = true;
+  enemy.receiveShadow = true;
   enemy.visible = true;
 
   // every 10 ms checks if the enemy hit the player or exit the screen
