@@ -10,6 +10,7 @@ import {
 } from "./scene.js";
 import { cone, grow, shrink } from "./player.js";
 import detectCollision from "./collision.js";
+import { removeHearts } from "./interface.js";
 
 export var playerLife = 5;
 
@@ -54,7 +55,7 @@ export function spawnEnemy() {
   // every 10 ms checks if the enemy hit the player or exit the screen
   setInterval(() => {
 
-    if(playerLife == 0){
+    if(playerLife <= 0) {
       resetGame();
       playerLife = 5;
       return;
@@ -71,7 +72,7 @@ export function spawnEnemy() {
     // resets the game if the player hit any enemy
     if (detectCollision(cone, enemy)) {
       playerLife--;     
-      console.log(playerLife);
+      removeHearts(1);
       scene.remove(enemy);
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
       shrink(cone);
