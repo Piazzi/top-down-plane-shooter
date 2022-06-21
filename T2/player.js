@@ -21,6 +21,7 @@ const material = new THREE.MeshPhongMaterial({
 	shininess:"150",            // Shininess of the object
 	specular:"rgb(255,255,255)" // Color of the specular component
 });
+
 export const cone = new THREE.Mesh(geometry, material);
 export var projectileCooldown = 0;
 // active projectiles array on the scene

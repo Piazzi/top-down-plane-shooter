@@ -11,6 +11,8 @@ import {
 import { cone, grow, shrink } from "./player.js";
 import detectCollision from "./collision.js";
 
+export var playerLife = 5;
+
 // generate a random color for the enemy
 export function generateColor() {
   const letters = "0123456789ABCDEF";
@@ -51,6 +53,13 @@ export function spawnEnemy() {
 
   // every 10 ms checks if the enemy hit the player or exit the screen
   setInterval(() => {
+
+    if(playerLife == 0){
+      resetGame();
+      playerLife = 5;
+      return;
+    }
+
     enemy.translateZ(randomSpeed);
     // remove the enemy if exits the screen
     if (enemy.position.z <= OFF_SCREEN_BOTTOM) {
@@ -61,13 +70,13 @@ export function spawnEnemy() {
 
     // resets the game if the player hit any enemy
     if (detectCollision(cone, enemy)) {
+      playerLife--;     
+      console.log(playerLife);
       scene.remove(enemy);
-
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
       shrink(cone);
       grow(cone);
-      resetGame(); // reset the game
-      return;
+    
     }
   }, "10");
 

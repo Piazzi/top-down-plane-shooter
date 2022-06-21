@@ -7,7 +7,7 @@ import {
   createLightSphere
 } from "../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
-import { spawnEnemy, enemies } from "./enemy.js";
+import { spawnEnemy, enemies, playerLife } from "./enemy.js";
 import { Clock } from "../build/three.module.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import Stats from '../build/jsm/libs/stats.module.js';
@@ -46,6 +46,8 @@ scene.add(cone);
 scene.add(dirLight);
 scene.add(ambientLight);
 scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
+cone.position.set(0, HEIGHT, 0);
+
 // Listen window size changes
 window.addEventListener(
   "resize",
