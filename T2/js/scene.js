@@ -82,6 +82,7 @@ export function resetGame() {
   projectiles.length = 0;
   enemies.length = 0;
   cone.position.set(0, HEIGHT, 0);
+  resertHeartsOnInterface();
   clock.start();
 }
 
@@ -104,4 +105,21 @@ function render() {
   renderer.render(scene, camera); // Render scene
   stats.update();
 
+}
+
+const lifeInterface = document.getElementById('life');
+
+export function removeHeartsFromInterface(num) {
+  for (let i = 0; num != 0; i++) {
+    if(lifeInterface.children[i].style.display != 'none') {
+      lifeInterface.children[i].style.display = 'none';
+      num--;
+    }
+  }
+}
+
+function resertHeartsOnInterface() {
+  for (let i = 0; i < lifeInterface.children.length; i++) {
+      lifeInterface.children[i].style.display = '';
+  }
 }

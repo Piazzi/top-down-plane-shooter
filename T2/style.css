@@ -3,10 +3,6 @@
 	src: url(./fonts/Newspaper.ttf);
 }
 
-svg {
-	font-family: paper;
-}
-
 #interface div {
 	position: absolute;
 	z-index: 100;
@@ -34,7 +30,8 @@ svg {
 
 #life svg {
 	display: inline-flex;
-	width: 3%;
+	width: 40px;
 	margin-left: 20px;
-	margin-top: 6%;
+	margin-top: 80px;
+	font-family: paper;
 }
