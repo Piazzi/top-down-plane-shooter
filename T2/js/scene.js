@@ -5,12 +5,12 @@ import {
   createGroundPlaneWired,
   onWindowResize,
   createLightSphere
-} from "../libs/util/util.js";
+} from "../../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
 import { spawnEnemy, enemies, playerLife } from "./enemy.js";
-import { Clock } from "../build/three.module.js";
+import { Clock } from "../../build/three.module.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
-import Stats from '../build/jsm/libs/stats.module.js';
+import Stats from '../../build/jsm/libs/stats.module.js';
 
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
@@ -88,7 +88,7 @@ export function resetGame() {
 let clockText = document.getElementById('clock');
 let statsText = document.getElementById('stats');
 stats.dom.style.top = '80px';
-stats.dom.style.marginLeft = '10px';
+stats.dom.style.marginLeft = '20px';
 
 statsText.appendChild(stats.dom);
 

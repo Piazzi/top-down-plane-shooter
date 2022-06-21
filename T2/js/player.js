@@ -1,6 +1,6 @@
-import KeyboardState from "../libs/util/KeyboardState.js";
+import KeyboardState from "../../libs/util/KeyboardState.js";
 import * as THREE from "three";
-import { degreesToRadians } from "../libs/util/util.js";
+import { degreesToRadians } from "../../libs/util/util.js";
 import {
   OFF_SCREEN_BOTTOM,
   OFF_SCREEN_TOP,
