@@ -87,7 +87,7 @@ export function resetGame() {
 
 let clockText = document.getElementById('clock');
 let statsText = document.getElementById('stats');
-stats.dom.style.top = '80px';
+stats.dom.style.top = '180px';
 stats.dom.style.marginLeft = '20px';
 
 statsText.appendChild(stats.dom);

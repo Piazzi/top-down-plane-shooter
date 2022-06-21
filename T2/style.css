@@ -1,31 +1,40 @@
 @font-face {
-    font-family: paper;
-    src: url(./fonts/Newspaper.ttf);
-  }
+	font-family: paper;
+	src: url(./fonts/Newspaper.ttf);
+}
+
+svg {
+	font-family: paper;
+}
+
+#interface div {
+	position: absolute;
+	z-index: 100;
+	display: block;
+	font-family: paper;
+}
 
 #info {
-	position: absolute;
 	top: 10px;
 	width: 100%;
 	text-align: left;
-	z-index: 100;
-	display:block;
-    font-family: paper;
-    font-size: 64px;
-    color: whitesmoke;
-    margin-left: 20px;
+	font-size: 64px;
+	color: whitesmoke;
+	margin-left: 20px;
 }
 
 #controls {
-	position: absolute;
 	bottom: 10px;
 	width: 100%;
 	text-align: left;
-	z-index: 100;
-	display:block;
-    font-family: paper;
-    font-size: 24px;
-    color: whitesmoke;
-    margin-left: 20px;
+	font-size: 24px;
+	color: whitesmoke;
+	margin-left: 20px;
 }
 
+#life svg {
+	display: inline-flex;
+	width: 3%;
+	margin-left: 20px;
+	margin-top: 6%;
+}
