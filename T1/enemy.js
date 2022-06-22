@@ -40,7 +40,7 @@ export function spawnEnemy() {
   let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
   let randomSpeed = getRandomNumber(-0.1, -0.3);
-  enemy.alive = true;
+
   scene.add(enemy);
   enemies.push(enemy);
   enemy.position.set(randomPosition, HEIGHT, OFF_SCREEN_TOP);
@@ -56,7 +56,7 @@ export function spawnEnemy() {
     }
 
     // resets the game if the player hit any enemy
-    if (detectCollision(cone, enemy) && enemy.alive) {
+    if (detectCollision(cone, enemy)) {
       scene.remove(enemy);
 
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);

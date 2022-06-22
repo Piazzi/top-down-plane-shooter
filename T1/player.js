@@ -93,7 +93,6 @@ export function shoot() {
     // and the projectile if did hit
     enemies.forEach((enemy) => {
       if (detectCollision(projectile, enemy)) {
-        enemy.alive = false;
         shrink(enemy);
         scene.remove(projectile);
         projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
