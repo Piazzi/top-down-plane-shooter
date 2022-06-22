@@ -13,13 +13,15 @@ import {
 } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
+import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
+import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
 
 // create a cone
 const geometry = new THREE.ConeGeometry(2, 5, 8);
 const material = new THREE.MeshPhongMaterial({
-	color:"0xfeAA00",     // Main color of the object
-	shininess:"150",            // Shininess of the object
-	specular:"rgb(255,255,255)" // Color of the specular component
+  color: "0xfeAA00", // Main color of the object
+  shininess: "150", // Shininess of the object
+  specular: "rgb(255,255,255)", // Color of the specular component
 });
 
 export const cone = new THREE.Mesh(geometry, material);
@@ -34,6 +36,23 @@ cone.rotateX(degreesToRadians(90));
 cone.castShadow = true;
 cone.receiveShadow = true;
 cone.visible = true;
+
+//importing 3D model airplane player
+export var paperPlane = undefined;
+const mtlLoader = new MTLLoader();
+mtlLoader.load("./materials/paper_plane.mtl", (materials) => {
+  materials.preload();
+  console.log(materials);
+  const objLoader = new OBJLoader();
+  objLoader.setMaterials(materials);
+  objLoader.load("./assets/paper_plane.obj", (object) => {
+    paperPlane = object;
+    paperPlane.scale.set(0.2, 0.2, 0.2);
+    paperPlane.rotateY(degreesToRadians(180));
+    paperPlane.position.set(0.0, HEIGHT, 0.0);
+    scene.add(paperPlane);
+  });
+});
 
 // Use TextureLoader to load texture files
 var textureLoader = new THREE.TextureLoader();
@@ -56,14 +75,14 @@ export function keyboardUpdate() {
 
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
-  if (keyboard.pressed("left") && cone.position.x <= SCREEN_RIGHT_EDGE)
-    cone.translateX(moveDistance);
-  if (keyboard.pressed("right") && cone.position.x >= SCREEN_LEFT_EDGE)
-    cone.translateX(-moveDistance);
-  if (keyboard.pressed("up") && cone.position.z <= SCREEN_TOP_EDGE)
-    cone.translateY(moveDistance);
-  if (keyboard.pressed("down") && cone.position.z >= SCREEN_BOTTOM_EDGE)
-    cone.translateY(-moveDistance);
+  if (keyboard.pressed("left") && paperPlane.position.x <= SCREEN_RIGHT_EDGE)
+    paperPlane.translateX(-moveDistance);
+  if (keyboard.pressed("right") && paperPlane.position.x >= SCREEN_LEFT_EDGE)
+    paperPlane.translateX(moveDistance);
+  if (keyboard.pressed("up") && paperPlane.position.z <= SCREEN_TOP_EDGE)
+    paperPlane.translateZ(-moveDistance);
+  if (keyboard.pressed("down") && paperPlane.position.z >= SCREEN_BOTTOM_EDGE)
+    paperPlane.translateZ(moveDistance);
   if (keyboard.pressed("ctrl")) shoot();
 }
 
@@ -79,9 +98,9 @@ export function shoot() {
   var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
   projectiles.push(projectile);
   projectile.position.set(
-    cone.position.x,
-    cone.position.y,
-    cone.position.z + 3
+    paperPlane.position.x,
+    paperPlane.position.y,
+    paperPlane.position.z + 3
   );
 
   scene.add(projectile);

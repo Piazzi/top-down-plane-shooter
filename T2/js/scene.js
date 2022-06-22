@@ -39,7 +39,7 @@ plane2.position.set(0, 0, 200);
 plane2.receiveShadow = true;
 
 // adds the player to the scene
-scene.add(cone);
+//scene.add(cone);
 scene.add(dirLight);
 scene.add(ambientLight);
 scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
