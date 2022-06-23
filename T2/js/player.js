@@ -39,21 +39,24 @@ cone.visible = true;
 
 //importing 3D model airplane player
 export var paperPlane = undefined;
+export var paperChildren = undefined;
 const mtlLoader = new MTLLoader();
 mtlLoader.load("./materials/paper_plane.mtl", (materials) => {
   materials.preload();
-  console.log(materials);
   const objLoader = new OBJLoader();
+  // console.log(objLoader);
   objLoader.setMaterials(materials);
   objLoader.load("./assets/paper_plane.obj", (object) => {
     paperPlane = object;
+
+    paperPlane.children[0].castShadow = true;
+    paperChildren = paperPlane.children[0];
     paperPlane.scale.set(0.2, 0.2, 0.2);
     paperPlane.rotateY(degreesToRadians(180));
     paperPlane.position.set(0.0, HEIGHT, 0.0);
     scene.add(paperPlane);
   });
 });
-
 // Use TextureLoader to load texture files
 var textureLoader = new THREE.TextureLoader();
 var stone = textureLoader.load("../assets/textures/floor-wood.jpg");
