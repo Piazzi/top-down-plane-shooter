@@ -17,9 +17,9 @@ import detectCollision from "./collision.js";
 // create a cone
 const geometry = new THREE.ConeGeometry(2, 5, 8);
 const material = new THREE.MeshPhongMaterial({
-	color:"0xfeAA00",     // Main color of the object
-	shininess:"150",            // Shininess of the object
-	specular:"rgb(255,255,255)" // Color of the specular component
+  color: "0xfeAA00", // Main color of the object
+  shininess: "150", // Shininess of the object
+  specular: "rgb(255,255,255)", // Color of the specular component
 });
 
 export const cone = new THREE.Mesh(geometry, material);
@@ -102,6 +102,7 @@ export function shoot() {
     enemies.forEach((enemy) => {
       if (detectCollision(projectile, enemy)) {
         shrink(enemy);
+        enemy.alive = false;
         scene.remove(projectile);
         projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
         // wait 200ms before removing the enemy so that the animation can play
