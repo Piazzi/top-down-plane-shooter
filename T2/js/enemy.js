@@ -8,7 +8,7 @@ import {
   SCREEN_RIGHT_EDGE,
   HEIGHT,
 } from "./scene.js";
-import { cone, grow, shrink } from "./player.js";
+import { cone, grow, paperChildren, paperPlane, shrink } from "./player.js";
 import detectCollision from "./collision.js";
 import { removeHearts } from "./interface.js";
 
@@ -70,7 +70,7 @@ export function spawnEnemy() {
     }
 
     // resets the game if the player hit any enemy
-    if (detectCollision(cone, enemy) && enemy.alive) {
+    if (detectCollision(paperChildren, enemy) && enemy.alive) {
       playerLife--;
       removeHearts(1);
       enemy.alive = false;
