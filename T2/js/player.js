@@ -121,6 +121,7 @@ export function shoot() {
     enemies.forEach((enemy) => {
       if (detectCollision(projectile, enemy)) {
         shrink(enemy);
+        enemy.alive = false;
         scene.remove(projectile);
         projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
         // wait 200ms before removing the enemy so that the animation can play
