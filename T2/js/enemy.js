@@ -38,13 +38,14 @@ export function spawnEnemy() {
   // creates de cube
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
   const cubeMaterial = new THREE.MeshPhongMaterial({
-    color:generateColor(),     // Main color of the object
-    shininess:"200",            // Shininess of the object
-    specular:"rgb(255,255,255)" // Color of the specular component
+    color: generateColor(), // Main color of the object
+    shininess: "200", // Shininess of the object
+    specular: "rgb(255,255,255)", // Color of the specular component
   });
   let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
   let randomSpeed = getRandomNumber(-0.1, -0.3);
+  enemy.alive = true;
   scene.add(enemy);
   enemies.push(enemy);
   enemy.position.set(randomPosition, HEIGHT, OFF_SCREEN_TOP);
@@ -54,8 +55,7 @@ export function spawnEnemy() {
 
   // every 10 ms checks if the enemy hit the player or exit the screen
   setInterval(() => {
-
-    if(playerLife <= 0) {
+    if (playerLife <= 0) {
       resetGame();
       playerLife = 5;
       return;
@@ -70,14 +70,14 @@ export function spawnEnemy() {
     }
 
     // resets the game if the player hit any enemy
-    if (detectCollision(cone, enemy)) {
-      playerLife--;     
+    if (detectCollision(cone, enemy) && enemy.alive) {
+      playerLife--;
       removeHearts(1);
+      enemy.alive = false;
       scene.remove(enemy);
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
       shrink(cone);
       grow(cone);
-    
     }
   }, "10");
 
