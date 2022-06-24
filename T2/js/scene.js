@@ -6,8 +6,9 @@ import {
   createLightSphere,
 } from "../../libs/util/util.js";
 
-import { keyboardUpdate, cone, projectiles, paperPlane } from "./player.js";
 import { spawnHealthpack } from "./healthpack.js";
+
+import { keyboardUpdate, player as player, projectiles } from "./player.js";
 import {
   spawnEnemy,
   spawnEnemy2,
@@ -18,10 +19,6 @@ import {
   enemies3,
   enemies4,
 } from "./enemy.js";
-import { dirLight, ambientLight, lightPosition } from "./lighting.js";
-import { stats, resetHearts, clock } from "./interface.js";
-import { keyboardUpdate, player as player, projectiles } from "./player.js";
-import { spawnEnemy, spawnEnemy2, spawnEnemy3,spawnEnemy4, enemies, enemies2, enemies3, enemies4 } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
 export const OFF_SCREEN_TOP = 30;
@@ -122,8 +119,10 @@ export function resetGame() {
 
   resetHearts();
   clock.start();
-  resetGameMessage.style.visibility = 'visible';
-  setTimeout(() => {resetGameMessage.style.visibility = 'hidden';}, 3000)
+  resetGameMessage.style.visibility = "visible";
+  setTimeout(() => {
+    resetGameMessage.style.visibility = "hidden";
+  }, 3000);
 }
 
 setInterval(spawnEnemy, "1500");

@@ -8,7 +8,7 @@ import {
   SCREEN_RIGHT_EDGE,
   HEIGHT,
 } from "./scene.js";
-import { cone, grow, paperChildren, paperPlane, shrink } from "./player.js";
+import { grow, paperChildren, paperPlane, shrink } from "./player.js";
 import detectCollision from "./collision.js";
 import { addHearts } from "./interface.js";
 import { getRandomNumber, generateColor } from "./enemy.js";
