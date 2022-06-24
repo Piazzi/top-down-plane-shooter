@@ -99,6 +99,7 @@ export function shoot() {
   var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
   var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
   var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  projectile.castShadow = true;
   projectiles.push(projectile);
   projectile.position.set(
     paperPlane.position.x,
@@ -144,7 +145,7 @@ export function shoot() {
 // reduce projectile cooldown
 setInterval(() => {
   if (projectileCooldown >= 0) projectileCooldown--;
-}, "1000");
+}, "500");
 
 // makes the mesh shrinks in scale
 export function shrink(mesh) {
