@@ -11,7 +11,7 @@ import {
   scene,
   HEIGHT,
 } from "./scene.js";
-import { enemies } from "./enemy.js";
+import { enemies, enemies2, enemies3, enemies4 } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
@@ -126,6 +126,51 @@ export function shoot() {
       if (detectCollision(projectile, enemy)) {
         shrink(enemy);
         enemy.alive = false;
+        scene.remove(projectile);
+        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
+        // wait 200ms before removing the enemy so that the animation can play
+        setTimeout(function () {
+          enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
+          scene.remove(enemy);
+
+          return;
+        }, 200);
+      }
+    });
+
+    enemies2.forEach((enemy) => {
+      if (detectCollision(projectile, enemy)) {
+        shrink(enemy);
+        scene.remove(projectile);
+        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
+        // wait 200ms before removing the enemy so that the animation can play
+        setTimeout(function () {
+          enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
+          scene.remove(enemy);
+
+          return;
+        }, 200);
+      }
+    });
+
+    enemies3.forEach((enemy) => {
+      if (detectCollision(projectile, enemy)) {
+        shrink(enemy);
+        scene.remove(projectile);
+        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
+        // wait 200ms before removing the enemy so that the animation can play
+        setTimeout(function () {
+          enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
+          scene.remove(enemy);
+
+          return;
+        }, 200);
+      }
+    });
+
+    enemies4.forEach((enemy) => {
+      if (detectCollision(projectile, enemy)) {
+        shrink(enemy);
         scene.remove(projectile);
         projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
         // wait 200ms before removing the enemy so that the animation can play
