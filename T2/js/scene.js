@@ -20,7 +20,9 @@ export var HEIGHT = 10;
 export var scene = new THREE.Scene(); // Create main scene
 
 // Set all renderers
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({ alpha: true } );
+renderer.setClearColor( 0xF2E394, 0.5 ); // second param is opacity, 0 => transparent
+
 document.getElementById("webgl-output").appendChild(renderer.domElement);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
@@ -30,19 +32,26 @@ var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this p
 createLightSphere(scene, 0.5, 10, 10, lightPosition);
 
 // create the ground plane
-let plane = createGroundPlaneWired(140, 200, 20, 20, "#546A76");
+let plane = createGroundPlaneWired(121, 200, 1, 1, "#F2E394");
 plane.position.set(0, 0, 0);
 plane.receiveShadow = true;
 
-let plane2 = createGroundPlaneWired(140, 200, 20, 20, "#222b30");
+let plane2 = createGroundPlaneWired(121, 200, 1, 1, "#F2E394");
 plane2.position.set(0, 0, 200);
 plane2.receiveShadow = true;
+
+var textureLoader = new THREE.TextureLoader();
+var paper = textureLoader.load('./images/paper.jpg');
+
+// Add texture to the 'map' property of the object's material
+plane.material.map = paper;
+plane2.material.map = paper;
 
 // adds the player to the scene
 //scene.add(cone);
 scene.add(dirLight);
 scene.add(ambientLight);
-scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
+//scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
 cone.position.set(0, HEIGHT, 0);
 
 // Listen window size changes
