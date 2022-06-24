@@ -35,3 +35,21 @@
 	margin-top: 80px;
 	font-family: paper;
 }
+
+#reset-game-message {
+	color: gray;
+	font-size: 64px;
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	visibility: hidden;
+}
+
+#god-mode {
+	width: 100%;
+	text-align: left;
+	font-size: 30px;
+	color: brown;
+	margin-left: 20px;
+	bottom: 150px;
+}

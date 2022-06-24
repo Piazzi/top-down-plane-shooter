@@ -5,10 +5,10 @@ import {
   onWindowResize,
   createLightSphere,
 } from "../../libs/util/util.js";
-import { keyboardUpdate, cone, projectiles } from "./player.js";
+import { keyboardUpdate, player as player, projectiles } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
-import { stats, resetHearts, clock } from "./interface.js";
+import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
 
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
@@ -52,7 +52,7 @@ plane2.material.map = paper;
 scene.add(dirLight);
 scene.add(ambientLight);
 //scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
-cone.position.set(0, HEIGHT, 0);
+player.position.set(0, HEIGHT, 0);
 
 // Listen window size changes
 window.addEventListener(
@@ -87,9 +87,12 @@ export function resetGame() {
   });
   projectiles.length = 0;
   enemies.length = 0;
-  cone.position.set(0, HEIGHT, 0);
+  player.rotation.set(0, 0, 0);
+  player.position.set(0.0, HEIGHT, 0.0);
   resetHearts();
   clock.start();
+  resetGameMessage.style.visibility = 'visible';
+  setTimeout(() => {resetGameMessage.style.visibility = 'hidden';}, 3000)
 }
 
 // spawn a enemy every 2 seconds
