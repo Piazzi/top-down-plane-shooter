@@ -7,13 +7,22 @@ export const resetGameMessage = document.getElementById('reset-game-message');
 
 /**
  * Remove the num (parameter) of hearts from the interface
- * @param {int} num 
+ * @param {int} num
  */
 export function removeHearts(num) {
   for (let i = 0; num != 0; i++) {
     if (lifeInterface.children[i].style.display != "none") {
       lifeInterface.children[i].style.display = "none";
       num--;
+    }
+  }
+}
+
+export function addHearts(num) {
+  for (let i = 0; num != 0; i++) {
+    if (lifeInterface.children[i].style.display != "none") {
+      lifeInterface.children[i].style.display = "none";
+      num++;
     }
   }
 }

@@ -5,11 +5,25 @@ import {
   onWindowResize,
   createLightSphere,
 } from "../../libs/util/util.js";
+
+import { keyboardUpdate, cone, projectiles, paperPlane } from "./player.js";
+import { spawnHealthpack } from "./healthpack.js";
+import {
+  spawnEnemy,
+  spawnEnemy2,
+  spawnEnemy3,
+  spawnEnemy4,
+  enemies,
+  enemies2,
+  enemies3,
+  enemies4,
+} from "./enemy.js";
+import { dirLight, ambientLight, lightPosition } from "./lighting.js";
+import { stats, resetHearts, clock } from "./interface.js";
 import { keyboardUpdate, player as player, projectiles } from "./player.js";
 import { spawnEnemy, spawnEnemy2, spawnEnemy3,spawnEnemy4, enemies, enemies2, enemies3, enemies4 } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
-
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
 export const OFF_SCREEN_LEFT = -45;
@@ -22,8 +36,8 @@ export var HEIGHT = 10;
 export var scene = new THREE.Scene(); // Create main scene
 
 // Set all renderers
-var renderer = new THREE.WebGLRenderer({ alpha: true } );
-renderer.setClearColor( 0xF2E394, 0.5 ); // second param is opacity, 0 => transparent
+var renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setClearColor(0xf2e394, 0.5); // second param is opacity, 0 => transparent
 
 document.getElementById("webgl-output").appendChild(renderer.domElement);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -43,7 +57,7 @@ plane2.position.set(0, 0, 200);
 plane2.receiveShadow = true;
 
 var textureLoader = new THREE.TextureLoader();
-var paper = textureLoader.load('./images/paper.jpg');
+var paper = textureLoader.load("./images/paper.jpg");
 
 // Add texture to the 'map' property of the object's material
 plane.material.map = paper;
@@ -104,6 +118,7 @@ export function resetGame() {
   enemies2.length = 0;
   enemies3.length = 0;
   enemies4.length = 0;
+  paperPlane.position.set(0, HEIGHT, 0);
 
   resetHearts();
   clock.start();
