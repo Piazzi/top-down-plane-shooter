@@ -93,7 +93,7 @@ export function resetGame() {
 }
 
 // spawn a enemy every 2 seconds
-setInterval(spawnEnemy, "2000");
+setInterval(spawnEnemy, "1500");
 
 function render() {
   requestAnimationFrame(render); // Show events
