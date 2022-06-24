@@ -6,12 +6,23 @@ import {
   createLightSphere,
 } from "../../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles, paperPlane } from "./player.js";
-import { spawnEnemy, enemies } from "./enemy.js";
 import { spawnHealthpack } from "./healthpack.js";
+import {
+  spawnEnemy,
+  spawnEnemy2,
+  spawnEnemy3,
+  spawnEnemy4,
+  enemies,
+  enemies2,
+  enemies3,
+  enemies4,
+} from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock } from "./interface.js";
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
+export const OFF_SCREEN_LEFT = -45;
+export const OFF_SCREEN_RIGHT = 45;
 export const SCREEN_LEFT_EDGE = -30;
 export const SCREEN_RIGHT_EDGE = 30;
 export const SCREEN_TOP_EDGE = 20;
@@ -20,7 +31,9 @@ export var HEIGHT = 10;
 export var scene = new THREE.Scene(); // Create main scene
 
 // Set all renderers
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setClearColor(0xf2e394, 0.5); // second param is opacity, 0 => transparent
+
 document.getElementById("webgl-output").appendChild(renderer.domElement);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
@@ -30,19 +43,26 @@ var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this p
 createLightSphere(scene, 0.5, 10, 10, lightPosition);
 
 // create the ground plane
-let plane = createGroundPlaneWired(140, 200, 20, 20, "#546A76");
+let plane = createGroundPlaneWired(121, 200, 1, 1, "#F2E394");
 plane.position.set(0, 0, 0);
 plane.receiveShadow = true;
 
-let plane2 = createGroundPlaneWired(140, 200, 20, 20, "#222b30");
+let plane2 = createGroundPlaneWired(121, 200, 1, 1, "#F2E394");
 plane2.position.set(0, 0, 200);
 plane2.receiveShadow = true;
+
+var textureLoader = new THREE.TextureLoader();
+var paper = textureLoader.load("./images/paper.jpg");
+
+// Add texture to the 'map' property of the object's material
+plane.material.map = paper;
+plane2.material.map = paper;
 
 // adds the player to the scene
 //scene.add(cone);
 scene.add(dirLight);
 scene.add(ambientLight);
-scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
+//scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
 cone.position.set(0, HEIGHT, 0);
 
 // Listen window size changes
@@ -72,20 +92,34 @@ function movePlane() {
 
 // resets the game removing all active
 // enemies, projectiles and setting the players position
+
 export function resetGame() {
   enemies.forEach((e) => {
     scene.remove(e);
   });
+  enemies2.forEach((e) => {
+    scene.remove(e);
+  });
+  enemies3.forEach((e) => {
+    scene.remove(e);
+  });
+  enemies4.forEach((e) => {
+    scene.remove(e);
+  });
   projectiles.length = 0;
   enemies.length = 0;
+  enemies2.length = 0;
+  enemies3.length = 0;
+  enemies4.length = 0;
   paperPlane.position.set(0, HEIGHT, 0);
   resetHearts();
   clock.start();
 }
 
-// spawn a enemy every 2 seconds
-setInterval(spawnEnemy, "2000");
-setInterval(spawnHealthpack, "2000");
+setInterval(spawnEnemy, "1500");
+setInterval(spawnEnemy2, "4000");
+setInterval(spawnEnemy3, "6000");
+setInterval(spawnEnemy4, "8000");
 
 function render() {
   requestAnimationFrame(render); // Show events
