@@ -6,12 +6,14 @@ import {
   createLightSphere,
 } from "../../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles } from "./player.js";
-import { spawnEnemy, enemies } from "./enemy.js";
+import { spawnEnemy, spawnEnemy2, spawnEnemy3,spawnEnemy4, enemies, enemies2, enemies3, enemies4 } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock } from "./interface.js";
 
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
+export const OFF_SCREEN_LEFT = -45;
+export const OFF_SCREEN_RIGHT = 45;
 export const SCREEN_LEFT_EDGE = -30;
 export const SCREEN_RIGHT_EDGE = 30;
 export const SCREEN_TOP_EDGE = 20;
@@ -81,19 +83,34 @@ function movePlane() {
 
 // resets the game removing all active
 // enemies, projectiles and setting the players position
+
 export function resetGame() {
   enemies.forEach((e) => {
     scene.remove(e);
   });
+  enemies2.forEach((e) => {
+    scene.remove(e);
+  });
+  enemies3.forEach((e) => {
+    scene.remove(e);
+  });
+  enemies4.forEach((e) => {
+    scene.remove(e);
+  });
   projectiles.length = 0;
   enemies.length = 0;
+  enemies2.length = 0;
+  enemies3.length = 0;
+  enemies4.length = 0;
   cone.position.set(0, HEIGHT, 0);
   resetHearts();
   clock.start();
 }
 
-// spawn a enemy every 2 seconds
 setInterval(spawnEnemy, "1500");
+setInterval(spawnEnemy2, "4000");
+setInterval(spawnEnemy3, "6000");
+setInterval(spawnEnemy4, "8000");
 
 function render() {
   requestAnimationFrame(render); // Show events
