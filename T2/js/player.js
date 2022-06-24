@@ -121,16 +121,16 @@ export function shoot() {
 
     // check if the projectile hit any enemy, remove the enemy
     // and the projectile if did hit
-    enemies.forEach((clip) => {
-      if (detectCollision(projectile, clip)) {
-        shrink(clip);
-        clip.alive = false;
+    enemies.forEach((enemy) => {
+      if (detectCollision(projectile, enemy)) {
+        shrink(enemy);
+        enemy.alive = false;
         scene.remove(projectile);
         projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
-        // wait 200ms before removing the clip so that the animation can play
+        // wait 200ms before removing the enemy so that the animation can play
         setTimeout(function () {
-          clip.position.set(0, 0, OFF_SCREEN_BOTTOM);
-          scene.remove(clip);
+          enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
+          scene.remove(enemy);
 
           return;
         }, 200);

@@ -7,9 +7,9 @@ import {
 } from "../../libs/util/util.js";
 import { keyboardUpdate, cone, projectiles, paperPlane } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
+import { spawnHealthpack } from "./healthpack.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock } from "./interface.js";
-
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
 export const SCREEN_LEFT_EDGE = -30;
@@ -85,6 +85,7 @@ export function resetGame() {
 
 // spawn a enemy every 2 seconds
 setInterval(spawnEnemy, "2000");
+setInterval(spawnHealthpack, "2000");
 
 function render() {
   requestAnimationFrame(render); // Show events
