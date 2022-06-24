@@ -107,8 +107,7 @@ export function resetGame() {
   clock.start();
 }
 
-// spawn a enemy every 2 seconds
-setInterval(spawnEnemy, "2000");
+setInterval(spawnEnemy, "1500");
 setInterval(spawnEnemy2, "4000");
 setInterval(spawnEnemy3, "6000");
 setInterval(spawnEnemy4, "8000");
