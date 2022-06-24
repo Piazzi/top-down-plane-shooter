@@ -115,7 +115,7 @@ export function resetGame() {
   enemies2.length = 0;
   enemies3.length = 0;
   enemies4.length = 0;
-  paperPlane.position.set(0, HEIGHT, 0);
+  player.position.set(0, HEIGHT, 0);
 
   resetHearts();
   clock.start();

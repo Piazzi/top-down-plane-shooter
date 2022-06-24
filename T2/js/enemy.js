@@ -137,13 +137,13 @@ export function spawnEnemy2() {
     }
 
     // resets the game if the player hit any enemy
-    if (detectCollision(cone, enemy)) {
+    if (detectCollision(player, enemy)) {
       playerLife--;     
       removeHearts(1);
       scene.remove(enemy);
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-      shrink(cone);
-      grow(cone);
+      shrink(player);
+      grow(player);
     
     }
   }, "10");
@@ -190,13 +190,13 @@ export function spawnEnemy3() {
     }
 
     // resets the game if the player hit any enemy
-    if (detectCollision(cone, enemy)) {
+    if (detectCollision(player, enemy)) {
       playerLife--;     
       removeHearts(1);
       scene.remove(enemy);
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-      shrink(cone);
-      grow(cone);
+      shrink(player);
+      grow(player);
     
     }
   }, "10");
@@ -242,13 +242,13 @@ export function spawnEnemy4() {
     }
 
     // resets the game if the player hit any enemy
-    if (detectCollision(cone, enemy)) {
+    if (detectCollision(player, enemy)) {
       playerLife--;     
       removeHearts(1);
       scene.remove(enemy);
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-      shrink(cone);
-      grow(cone);
+      shrink(player);
+      grow(player);
     
     }
   }, "10");
