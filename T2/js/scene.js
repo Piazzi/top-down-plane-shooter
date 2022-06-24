@@ -5,7 +5,7 @@ import {
   onWindowResize,
   createLightSphere,
 } from "../../libs/util/util.js";
-import { keyboardUpdate, cone, projectiles } from "./player.js";
+import { keyboardUpdate, cone, projectiles, paperPlane } from "./player.js";
 import { spawnEnemy, enemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock } from "./interface.js";
@@ -78,7 +78,7 @@ export function resetGame() {
   });
   projectiles.length = 0;
   enemies.length = 0;
-  cone.position.set(0, HEIGHT, 0);
+  paperPlane.position.set(0, HEIGHT, 0);
   resetHearts();
   clock.start();
 }
