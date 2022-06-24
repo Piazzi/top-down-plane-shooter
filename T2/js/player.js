@@ -10,12 +10,13 @@ import {
   SCREEN_TOP_EDGE,
   scene,
   HEIGHT,
+  resetGame,
 } from "./scene.js";
 import { enemies, enemies2, enemies3, enemies4 } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
-
+import { godMode } from "./interface.js";
 // create a cone
 const geometry = new THREE.ConeGeometry(2, 5, 8);
 const material = new THREE.MeshPhongMaterial({
@@ -24,18 +25,19 @@ const material = new THREE.MeshPhongMaterial({
   specular: "rgb(255,255,255)", // Color of the specular component
 });
 
-export const cone = new THREE.Mesh(geometry, material);
+export let GOD_MODE = false;
+export const player = new THREE.Mesh(geometry, material);
 export var projectileCooldown = 0;
 // active projectiles array on the scene
 export var projectiles = [];
 
 // position the cone
-cone.rotation.set(0, 0, 0);
-cone.position.set(0.0, HEIGHT, 0.0);
-cone.rotateX(degreesToRadians(90));
-cone.castShadow = true;
-cone.receiveShadow = true;
-cone.visible = true;
+player.rotation.set(0, 0, 0);
+player.position.set(0.0, HEIGHT, 0.0);
+player.rotateX(degreesToRadians(90));
+player.castShadow = true;
+player.receiveShadow = true;
+player.visible = true;
 
 //importing 3D model airplane player
 export var paperPlane = undefined;
@@ -63,7 +65,7 @@ var stone = textureLoader.load("../assets/textures/floor-wood.jpg");
 var explosion = textureLoader.load("../assets/textures/11.png");
 
 // Add texture to the 'map' property of the object's material
-cone.material.map = stone;
+player.material.map = stone;
 // To use the keyboard
 var keyboard = new KeyboardState();
 
@@ -86,8 +88,20 @@ export function keyboardUpdate() {
     paperPlane.translateZ(-moveDistance);
   if (keyboard.pressed("down") && paperPlane.position.z >= SCREEN_BOTTOM_EDGE)
     paperPlane.translateZ(moveDistance);
-  if (keyboard.pressed("ctrl")) shoot();
+  if (keyboard.pressed("ctrl")) 
+    shoot();
+  if (keyboard.pressed("enter"))
+    resetGame();
+  if (keyboard.pressed("G")) {
+    if( godMode.style.visibility == 'visible')
+      godMode.style.visibility = 'hidden';
+    else
+      godMode.style.visibility = 'visible';
+
+    GOD_MODE = !GOD_MODE;
+  }
 }
+
 
 // shoot function for the player
 export function shoot() {

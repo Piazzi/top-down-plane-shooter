@@ -12,7 +12,8 @@ import {
   SCREEN_BOTTOM_EDGE,
   HEIGHT,
 } from "./scene.js";
-import { cone, grow, shrink } from "./player.js";
+
+import { player, grow, paperChildren, paperPlane, shrink, GOD_MODE } from "./player.js";
 import detectCollision from "./collision.js";
 import { removeHearts } from "./interface.js";
 import { degreesToRadians } from "../../libs/util/util.js";
@@ -78,13 +79,18 @@ export function spawnEnemy() {
     }
 
     // resets the game if the player hit any enemy
-    if (detectCollision(cone, enemy)) {
-      playerLife--;     
-      removeHearts(1);
+    if (detectCollision(paperChildren, enemy) && enemy.alive) {
+      
+      if(!GOD_MODE) {
+        playerLife--;
+        removeHearts(1);
+      }
+      enemy.alive = false;
       scene.remove(enemy);
       enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-      shrink(cone);
-      grow(cone);
+      shrink(player);
+      grow(player);
+
     
     }
   }, "10");
