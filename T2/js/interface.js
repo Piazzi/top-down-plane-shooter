@@ -1,5 +1,6 @@
 import { Clock } from "../../build/three.module.js";
 import Stats from "../../build/jsm/libs/stats.module.js";
+import { playerLife } from "./player.js";
 
 const lifeInterface = document.getElementById("life");
 export const godMode = document.getElementById('god-mode');
@@ -19,10 +20,11 @@ export function removeHearts(num) {
 }
 
 export function addHearts(num) {
+
   for (let i = 0; num != 0; i++) {
-    if (lifeInterface.children[i].style.display != "none") {
-      lifeInterface.children[i].style.display = "none";
+    if (lifeInterface.children[i].style.display == "none") {
       num++;
+      return lifeInterface.children[i].style.display = "";
     }
   }
 }

@@ -7,20 +7,12 @@ import {
 } from "../../libs/util/util.js";
 
 import { spawnHealthpack } from "./healthpack.js";
-
-import { keyboardUpdate, player as player, projectiles } from "./player.js";
-import {
-  spawnEnemy,
-  spawnEnemy2,
-  spawnEnemy3,
-  spawnEnemy4,
-  enemies,
-  enemies2,
-  enemies3,
-  enemies4,
-} from "./enemy.js";
+import { keyboardUpdate, player, projectiles } from "./player.js";
+import { spawnEnemy, enemies, } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
+import { degreesToRadians } from "../../libs/util/util.js";
+
 export const OFF_SCREEN_TOP = 30;
 export const OFF_SCREEN_BOTTOM = -45;
 export const OFF_SCREEN_LEFT = -45;
@@ -65,7 +57,6 @@ plane2.material.map = paper;
 scene.add(dirLight);
 scene.add(ambientLight);
 //scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
-player.position.set(0, HEIGHT, 0);
 
 // Listen window size changes
 window.addEventListener(
@@ -99,36 +90,19 @@ export function resetGame() {
   enemies.forEach((e) => {
     scene.remove(e);
   });
-  enemies2.forEach((e) => {
-    scene.remove(e);
-  });
-  enemies3.forEach((e) => {
-    scene.remove(e);
-  });
-  enemies4.forEach((e) => {
-    scene.remove(e);
-  });
+ 
   projectiles.length = 0;
   enemies.length = 0;
-  player.rotation.set(0, 0, 0);
   player.position.set(0.0, HEIGHT, 0.0);
-  enemies2.length = 0;
-  enemies3.length = 0;
-  enemies4.length = 0;
-  player.position.set(0, HEIGHT, 0);
 
   resetHearts();
   clock.start();
-  resetGameMessage.style.visibility = "visible";
-  setTimeout(() => {
-    resetGameMessage.style.visibility = "hidden";
-  }, 3000);
+  resetGameMessage.style.visibility = 'visible';
+  setTimeout(() => {resetGameMessage.style.visibility = 'hidden';}, 3000)
 }
 
 setInterval(spawnEnemy, "1500");
-setInterval(spawnEnemy2, "4000");
-setInterval(spawnEnemy3, "6000");
-setInterval(spawnEnemy4, "8000");
+setInterval(spawnHealthpack, "1500");
 
 function render() {
   requestAnimationFrame(render); // Show events

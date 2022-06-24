@@ -12,36 +12,30 @@ import {
   HEIGHT,
   resetGame,
 } from "./scene.js";
-import { enemies, enemies2, enemies3, enemies4 } from "./enemy.js";
+import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
 import { godMode } from "./interface.js";
-// create a cone
-const geometry = new THREE.ConeGeometry(2, 5, 8);
-const material = new THREE.MeshPhongMaterial({
-  color: "0xfeAA00", // Main color of the object
-  shininess: "150", // Shininess of the object
-  specular: "rgb(255,255,255)", // Color of the specular component
-});
+
+export var playerLife = 5;
+
+export function increasePlayerLife(num) {
+  playerLife+=num;
+}
 
 export let GOD_MODE = false;
-export const player = new THREE.Mesh(geometry, material);
+// export const player = new THREE.Mesh(geometry, material);
 export var projectileCooldown = 0;
 // active projectiles array on the scene
 export var projectiles = [];
 
-// position the cone
-player.rotation.set(0, 0, 0);
-player.position.set(0.0, HEIGHT, 0.0);
-player.rotateX(degreesToRadians(90));
-player.castShadow = true;
-player.receiveShadow = true;
-player.visible = true;
+// Use TextureLoader to load texture files
+var textureLoader = new THREE.TextureLoader();
 
 //importing 3D model airplane player
-export var paperPlane = undefined;
-export var paperChildren = undefined;
+export var player = undefined;
+export var playerGeometry = undefined;
 const mtlLoader = new MTLLoader();
 mtlLoader.load("./materials/paper_plane.mtl", (materials) => {
   materials.preload();
@@ -49,23 +43,21 @@ mtlLoader.load("./materials/paper_plane.mtl", (materials) => {
   // console.log(objLoader);
   objLoader.setMaterials(materials);
   objLoader.load("./assets/paper_plane.obj", (object) => {
-    paperPlane = object;
+    player = object;
+    player.children[0].castShadow = true;
+    playerGeometry = player.children[0];
+    player.scale.set(0.2, 0.2, 0.2);
+    player.rotateY(degreesToRadians(180));
+    player.position.set(0.0, HEIGHT, 0.0);
+    playerGeometry.material[0].shininess = 200;
+    playerGeometry.material[0].specular.r = "255";
+    playerGeometry.material[0].specular.g = "255";
+    playerGeometry.material[0].specular.b = "255";
 
-    paperPlane.children[0].castShadow = true;
-    paperChildren = paperPlane.children[0];
-    paperPlane.scale.set(0.2, 0.2, 0.2);
-    paperPlane.rotateY(degreesToRadians(180));
-    paperPlane.position.set(0.0, HEIGHT, 0.0);
-    scene.add(paperPlane);
+    scene.add(player);
+    console.log(playerGeometry.material);
   });
 });
-// Use TextureLoader to load texture files
-var textureLoader = new THREE.TextureLoader();
-var stone = textureLoader.load("../assets/textures/floor-wood.jpg");
-var explosion = textureLoader.load("../assets/textures/11.png");
-
-// Add texture to the 'map' property of the object's material
-player.material.map = stone;
 // To use the keyboard
 var keyboard = new KeyboardState();
 
@@ -80,14 +72,14 @@ export function keyboardUpdate() {
 
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
-  if (keyboard.pressed("left") && paperPlane.position.x <= SCREEN_RIGHT_EDGE)
-    paperPlane.translateX(-moveDistance);
-  if (keyboard.pressed("right") && paperPlane.position.x >= SCREEN_LEFT_EDGE)
-    paperPlane.translateX(moveDistance);
-  if (keyboard.pressed("up") && paperPlane.position.z <= SCREEN_TOP_EDGE)
-    paperPlane.translateZ(-moveDistance);
-  if (keyboard.pressed("down") && paperPlane.position.z >= SCREEN_BOTTOM_EDGE)
-    paperPlane.translateZ(moveDistance);
+  if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE)
+    player.translateX(-moveDistance);
+  if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE)
+    player.translateX(moveDistance);
+  if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
+    player.translateZ(-moveDistance);
+  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
+    player.translateZ(moveDistance);
   if (keyboard.pressed("ctrl")) 
     shoot();
   if (keyboard.pressed("enter"))
@@ -116,9 +108,9 @@ export function shoot() {
   projectile.castShadow = true;
   projectiles.push(projectile);
   projectile.position.set(
-    paperPlane.position.x,
-    paperPlane.position.y,
-    paperPlane.position.z + 3
+    player.position.x,
+    player.position.y,
+    player.position.z + 3
   );
 
   scene.add(projectile);
@@ -151,51 +143,6 @@ export function shoot() {
         }, 200);
       }
     });
-
-    enemies2.forEach((enemy) => {
-      if (detectCollision(projectile, enemy)) {
-        shrink(enemy);
-        scene.remove(projectile);
-        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
-        // wait 200ms before removing the enemy so that the animation can play
-        setTimeout(function () {
-          enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-          scene.remove(enemy);
-
-          return;
-        }, 200);
-      }
-    });
-
-    enemies3.forEach((enemy) => {
-      if (detectCollision(projectile, enemy)) {
-        shrink(enemy);
-        scene.remove(projectile);
-        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
-        // wait 200ms before removing the enemy so that the animation can play
-        setTimeout(function () {
-          enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-          scene.remove(enemy);
-
-          return;
-        }, 200);
-      }
-    });
-
-    enemies4.forEach((enemy) => {
-      if (detectCollision(projectile, enemy)) {
-        shrink(enemy);
-        scene.remove(projectile);
-        projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
-        // wait 200ms before removing the enemy so that the animation can play
-        setTimeout(function () {
-          enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-          scene.remove(enemy);
-
-          return;
-        }, 200);
-      }
-    });
   }, "10");
 
   return;
@@ -208,7 +155,6 @@ setInterval(() => {
 
 // makes the mesh shrinks in scale
 export function shrink(mesh) {
-  mesh.material.map = explosion;
   let scale = 1;
   setInterval(() => {
     if (scale < 0.1) {
@@ -216,7 +162,6 @@ export function shrink(mesh) {
     }
     scale -= 0.1;
     mesh.scale.set(scale, scale, scale);
-    mesh.material.map = stone;
   }, "100");
 }
 

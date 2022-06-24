@@ -7,8 +7,8 @@ export const ambientLight = new THREE.AmbientLight(ambientColor);
 export const dirLight = new THREE.DirectionalLight(lightColor);
 
 dirLight.position.copy(lightPosition);
-dirLight.shadow.mapSize.width = 512;
-dirLight.shadow.mapSize.height = 512;
+dirLight.shadow.mapSize.width = 1024;
+dirLight.shadow.mapSize.height = 1024;
 dirLight.castShadow = true;
 dirLight.shadow.camera.near = 5;
 dirLight.shadow.camera.far = 100;

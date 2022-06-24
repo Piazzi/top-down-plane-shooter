@@ -3,17 +3,16 @@ import {
   scene,
   OFF_SCREEN_BOTTOM,
   OFF_SCREEN_TOP,
-  resetGame,
   SCREEN_LEFT_EDGE,
   SCREEN_RIGHT_EDGE,
   HEIGHT,
 } from "./scene.js";
-import { grow, paperChildren, paperPlane, shrink } from "./player.js";
+import { playerGeometry,increasePlayerLife } from "./player.js";
 import detectCollision from "./collision.js";
 import { addHearts } from "./interface.js";
-import { getRandomNumber, generateColor } from "./enemy.js";
+import { getRandomNumber } from "./enemy.js";
 import { degreesToRadians } from "../../libs/util/util.js";
-import { playerLife } from "./enemy.js";
+
 // active enemies array on the scene
 export var healthpacks = [];
 // create a healthpack at a random X position in the scene
@@ -39,11 +38,11 @@ export function spawnHealthpack() {
   healthpack.visible = true;
   // every 10 ms checks if the healthpack hit the player or exit the screen
   setInterval(() => {
-    healthpack.translateZ(randomSpeed);
-    if (detectCollision(paperChildren, healthpack) && healthpack.usable) {
-      playerLife = playerLife + 1;
-      addHearts(1);
+    healthpack.translateZ(-0.1);
+    if (detectCollision(playerGeometry, healthpack) && healthpack.usable) {
       healthpack.usable = false;
+      increasePlayerLife(1);
+      addHearts(1);
       scene.remove(healthpack);
       healthpack.position.set(0, 0, OFF_SCREEN_BOTTOM);
     }
