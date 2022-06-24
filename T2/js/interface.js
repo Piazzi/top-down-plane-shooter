@@ -2,6 +2,8 @@ import { Clock } from "../../build/three.module.js";
 import Stats from "../../build/jsm/libs/stats.module.js";
 
 const lifeInterface = document.getElementById("life");
+export const godMode = document.getElementById('god-mode');
+export const resetGameMessage = document.getElementById('reset-game-message');
 
 /**
  * Remove the num (parameter) of hearts from the interface
@@ -38,3 +40,4 @@ let statsText = document.getElementById("stats");
 stats.dom.style.top = "180px";
 stats.dom.style.marginLeft = "20px";
 statsText.appendChild(stats.dom);
+
