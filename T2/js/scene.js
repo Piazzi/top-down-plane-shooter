@@ -6,7 +6,7 @@ import {
   createLightSphere,
 } from "../../libs/util/util.js";
 
-import { spawnHealthpack } from "./healthpack.js";
+import { healthpacks, spawnHealthpack } from "./healthpack.js";
 import { keyboardUpdate, player, projectiles } from "./player.js";
 import { spawnEnemy, enemies, } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
@@ -88,6 +88,10 @@ function movePlane() {
 
 export function resetGame() {
   enemies.forEach((e) => {
+    scene.remove(e);
+  });
+
+  healthpacks.forEach((e) => {
     scene.remove(e);
   });
  
