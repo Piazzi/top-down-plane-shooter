@@ -16,12 +16,15 @@ import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
-import { godMode } from "./interface.js";
 
 export var playerLife = 5;
 
 export function increasePlayerLife(num) {
   playerLife+=num;
+}
+
+export function toggleGodMode() {
+  GOD_MODE = !GOD_MODE;
 }
 
 export let GOD_MODE = false;
@@ -82,16 +85,7 @@ export function keyboardUpdate() {
     player.translateZ(moveDistance);
   if (keyboard.pressed("ctrl")) 
     shoot();
-  if (keyboard.pressed("enter"))
-    resetGame();
-  if (keyboard.pressed("G")) {
-    if( godMode.style.visibility == 'visible')
-      godMode.style.visibility = 'hidden';
-    else
-      godMode.style.visibility = 'visible';
 
-    GOD_MODE = !GOD_MODE;
-  }
 }
 
 

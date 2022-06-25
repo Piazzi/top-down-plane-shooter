@@ -1,6 +1,7 @@
 import { Clock } from "../../build/three.module.js";
 import Stats from "../../build/jsm/libs/stats.module.js";
-import { playerLife } from "./player.js";
+import { resetGame } from "./scene.js";
+import { toggleGodMode } from "./player.js";
 
 const lifeInterface = document.getElementById("life");
 export const godMode = document.getElementById('god-mode');
@@ -19,6 +20,10 @@ export function removeHearts(num) {
   }
 }
 
+/**
+ * add the num (parameter) of hearts to the interface
+ * @param {int} num
+ */
 export function addHearts(num) {
 
   for (let i = 0; num != 0; i++) {
@@ -52,3 +57,19 @@ stats.dom.style.top = "180px";
 stats.dom.style.marginLeft = "20px";
 statsText.appendChild(stats.dom);
 
+document.addEventListener("keypress", (event) => {
+  const keyName = event.key;
+  console.log(keyName);
+
+  if (keyName == "g") {
+    if (godMode.style.visibility == "visible")
+      godMode.style.visibility = "hidden";
+    else godMode.style.visibility = "visible";
+
+    toggleGodMode();
+  }
+
+  if (keyName == "Enter") {
+    resetGame();
+  }
+});
