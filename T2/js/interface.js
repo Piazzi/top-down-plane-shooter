@@ -4,8 +4,8 @@ import { resetGame } from "./scene.js";
 import { toggleGodMode } from "./player.js";
 
 const lifeInterface = document.getElementById("life");
-export const godMode = document.getElementById('god-mode');
-export const resetGameMessage = document.getElementById('reset-game-message');
+export const godMode = document.getElementById("god-mode");
+export const resetGameMessage = document.getElementById("reset-game-message");
 
 /**
  * Remove the num (parameter) of hearts from the interface
@@ -25,11 +25,10 @@ export function removeHearts(num) {
  * @param {int} num
  */
 export function addHearts(num) {
-
   for (let i = 0; num != 0; i++) {
     if (lifeInterface.children[i].style.display == "none") {
       num++;
-      return lifeInterface.children[i].style.display = "";
+      return (lifeInterface.children[i].style.display = "");
     }
   }
 }
@@ -61,10 +60,11 @@ document.addEventListener("keypress", (event) => {
   const keyName = event.key;
   console.log(keyName);
 
-  if (keyName == "g") {
+  if (keyName == "g" || keyName == "G") {
     if (godMode.style.visibility == "visible")
       godMode.style.visibility = "hidden";
-    else godMode.style.visibility = "visible";
+    else 
+      godMode.style.visibility = "visible";
 
     toggleGodMode();
   }

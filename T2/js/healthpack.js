@@ -1,17 +1,18 @@
 import * as THREE from "three";
-import {
-  scene,
-  OFF_SCREEN_BOTTOM,
-  OFF_SCREEN_TOP,
-  SCREEN_LEFT_EDGE,
-  SCREEN_RIGHT_EDGE,
-  HEIGHT,
-} from "./scene.js";
-import { playerGeometry,increasePlayerLife } from "./player.js";
+import { scene } from "./scene.js";
+import { playerGeometry, increasePlayerLife } from "./player.js";
 import detectCollision from "./collision.js";
 import { addHearts } from "./interface.js";
 import { getRandomNumber } from "./enemy.js";
 import { degreesToRadians } from "../../libs/util/util.js";
+import {
+  HEIGHT,
+  OFF_SCREEN_BOTTOM,
+  OFF_SCREEN_TOP,
+  SCREEN_LEFT_EDGE,
+  SCREEN_RIGHT_EDGE,
+  PLANE_SPEED
+} from "./config.js";
 
 // active enemies array on the scene
 export var healthpacks = [];
@@ -27,7 +28,6 @@ export function spawnHealthpack() {
   });
   let healthpack = new THREE.Mesh(geometry, healthMaterial);
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
-  let randomSpeed = getRandomNumber(-0.1, -0.3);
   healthpack.usable = true;
   scene.add(healthpack);
   healthpacks.push(healthpack);
@@ -38,7 +38,7 @@ export function spawnHealthpack() {
   healthpack.visible = true;
   // every 10 ms checks if the healthpack hit the player or exit the screen
   setInterval(() => {
-    healthpack.translateZ(-0.1);
+    healthpack.translateZ(-PLANE_SPEED);
     if (detectCollision(playerGeometry, healthpack) && healthpack.usable) {
       healthpack.usable = false;
       increasePlayerLife(1);

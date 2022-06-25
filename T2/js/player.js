@@ -1,26 +1,28 @@
 import KeyboardState from "../../libs/util/KeyboardState.js";
 import * as THREE from "three";
 import { degreesToRadians } from "../../libs/util/util.js";
-import {
-  OFF_SCREEN_BOTTOM,
-  OFF_SCREEN_TOP,
-  SCREEN_BOTTOM_EDGE,
-  SCREEN_LEFT_EDGE,
-  SCREEN_RIGHT_EDGE,
-  SCREEN_TOP_EDGE,
-  scene,
-  HEIGHT,
-  resetGame,
-} from "./scene.js";
+import { scene } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
+import {
+  HEIGHT,
+  OFF_SCREEN_BOTTOM,
+  OFF_SCREEN_TOP,
+  PLAYER_SPEED,
+  PROJECTILE_SPEED,
+  SCREEN_BOTTOM_EDGE,
+  SCREEN_LEFT_EDGE,
+  SCREEN_RIGHT_EDGE,
+  SCREEN_TOP_EDGE,
+  SHOOT_COOLDOWN
+} from "./config.js";
 
 export var playerLife = 5;
 
 export function increasePlayerLife(num) {
-  playerLife+=num;
+  playerLife += num;
 }
 
 export function toggleGodMode() {
@@ -68,10 +70,9 @@ var clock = new THREE.Clock();
 
 // detect the player controls
 export function keyboardUpdate() {
-  keyboard.update();
 
-  var speed = 30;
-  var moveDistance = speed * clock.getDelta();
+  keyboard.update();
+  var moveDistance = PLAYER_SPEED * clock.getDelta();
 
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
@@ -83,11 +84,8 @@ export function keyboardUpdate() {
     player.translateZ(-moveDistance);
   if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
     player.translateZ(moveDistance);
-  if (keyboard.pressed("ctrl")) 
-    shoot();
-
+  if (keyboard.pressed("ctrl")) shoot();
 }
-
 
 // shoot function for the player
 export function shoot() {
@@ -111,7 +109,7 @@ export function shoot() {
 
   // every 10 ms checks if the projectile hit any enemy or exit the screen
   setInterval(() => {
-    projectile.translateZ(0.9);
+    projectile.translateZ(PROJECTILE_SPEED);
 
     // remove the projectile if exits the screen
     if (projectile.position.z >= OFF_SCREEN_TOP) {
@@ -145,7 +143,7 @@ export function shoot() {
 // reduce projectile cooldown
 setInterval(() => {
   if (projectileCooldown >= 0) projectileCooldown--;
-}, "500");
+}, SHOOT_COOLDOWN);
 
 // makes the mesh shrinks in scale
 export function shrink(mesh) {

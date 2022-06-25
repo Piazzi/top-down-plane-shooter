@@ -1,22 +1,24 @@
 import * as THREE from "three";
+import { scene, resetGame } from "./scene.js";
 import {
-  scene,
-  OFF_SCREEN_BOTTOM,
-  OFF_SCREEN_TOP,
-  OFF_SCREEN_RIGHT,
-  OFF_SCREEN_LEFT,
-  resetGame,
-  SCREEN_LEFT_EDGE,
-  SCREEN_RIGHT_EDGE,
-  SCREEN_TOP_EDGE,
-  SCREEN_BOTTOM_EDGE,
-  HEIGHT,
-} from "./scene.js";
-
-import { grow, playerGeometry, shrink, GOD_MODE, increasePlayerLife, playerLife } from "./player.js";
+  grow,
+  playerGeometry,
+  shrink,
+  GOD_MODE,
+  increasePlayerLife,
+  playerLife,
+} from "./player.js";
 import detectCollision from "./collision.js";
 import { removeHearts } from "./interface.js";
-
+import {
+  HEIGHT,
+  MAX_ENEMY_SPEED,
+  MIN_ENEMY_SPEED,
+  OFF_SCREEN_BOTTOM,
+  OFF_SCREEN_TOP,
+  SCREEN_LEFT_EDGE,
+  SCREEN_RIGHT_EDGE,
+} from "./config.js";
 
 // generate a random color for the enemy
 export function generateColor() {
@@ -43,13 +45,13 @@ export function spawnEnemy() {
   // creates de cube
   const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
   const cubeMaterial = new THREE.MeshPhongMaterial({
-    color:generateColor(),     // Main color of the object
-    shininess:"200",            // Shininess of the object
-    specular:"rgb(255,255,255)" // Color of the specular component
+    color: generateColor(), // Main color of the object
+    shininess: "200", // Shininess of the object
+    specular: "rgb(255,255,255)", // Color of the specular component
   });
   let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
-  let randomSpeed = getRandomNumber(-0.1, -0.3);
+  let randomSpeed = getRandomNumber(MIN_ENEMY_SPEED, MAX_ENEMY_SPEED);
   enemy.alive = true;
   scene.add(enemy);
   enemies.push(enemy);
@@ -60,8 +62,7 @@ export function spawnEnemy() {
 
   // every 10 ms checks if the enemy hit the player or exit the screen
   setInterval(() => {
-
-    if(playerLife <= 0) {
+    if (playerLife <= 0) {
       resetGame();
       increasePlayerLife(5);
       return;
@@ -77,8 +78,7 @@ export function spawnEnemy() {
 
     // resets the game if the player hit any enemy
     if (detectCollision(playerGeometry, enemy) && enemy.alive) {
-      
-      if(!GOD_MODE) {
+      if (!GOD_MODE) {
         increasePlayerLife(-1);
         removeHearts(1);
       }
@@ -92,4 +92,3 @@ export function spawnEnemy() {
 
   return;
 }
-

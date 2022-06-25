@@ -8,20 +8,11 @@ import {
 
 import { healthpacks, spawnHealthpack } from "./healthpack.js";
 import { keyboardUpdate, player, projectiles } from "./player.js";
-import { spawnEnemy, enemies, } from "./enemy.js";
+import { spawnEnemy, enemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
-import { degreesToRadians } from "../../libs/util/util.js";
+import { HEIGHT, SPAWN_HEALTHPACK_INTERVAL, SPAWN_ENEMY_INTERVAL, PLANE_SPEED } from "./config.js";
 
-export const OFF_SCREEN_TOP = 30;
-export const OFF_SCREEN_BOTTOM = -45;
-export const OFF_SCREEN_LEFT = -45;
-export const OFF_SCREEN_RIGHT = 45;
-export const SCREEN_LEFT_EDGE = -30;
-export const SCREEN_RIGHT_EDGE = 30;
-export const SCREEN_TOP_EDGE = 20;
-export const SCREEN_BOTTOM_EDGE = -15;
-export var HEIGHT = 10;
 export var scene = new THREE.Scene(); // Create main scene
 
 // Set all renderers
@@ -53,7 +44,6 @@ plane.material.map = paper;
 plane2.material.map = paper;
 
 // adds the player to the scene
-//scene.add(cone);
 scene.add(dirLight);
 scene.add(ambientLight);
 //scene.add(new THREE.CameraHelper(dirLight.shadow.camera));
@@ -73,8 +63,8 @@ render();
 function movePlane() {
   scene.add(plane);
   scene.add(plane2);
-  plane.translateY(0.1);
-  plane2.translateY(0.1);
+  plane.translateY(PLANE_SPEED);
+  plane2.translateY(PLANE_SPEED);
 
   if (plane2.position.z < 0 && plane2.position.z > -0.1) {
     plane.position.z = 200;
@@ -94,19 +84,21 @@ export function resetGame() {
   healthpacks.forEach((e) => {
     scene.remove(e);
   });
- 
+
   projectiles.length = 0;
   enemies.length = 0;
   player.position.set(0.0, HEIGHT, 0.0);
 
   resetHearts();
   clock.start();
-  resetGameMessage.style.visibility = 'visible';
-  setTimeout(() => {resetGameMessage.style.visibility = 'hidden';}, 3000)
+  resetGameMessage.style.visibility = "visible";
+  setTimeout(() => {
+    resetGameMessage.style.visibility = "hidden";
+  }, 3000);
 }
 
-setInterval(spawnEnemy, "1500");
-setInterval(spawnHealthpack, "1500");
+setInterval(spawnEnemy, SPAWN_ENEMY_INTERVAL);
+setInterval(spawnHealthpack, SPAWN_HEALTHPACK_INTERVAL);
 
 function render() {
   requestAnimationFrame(render); // Show events
