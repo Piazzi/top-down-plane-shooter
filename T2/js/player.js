@@ -84,11 +84,14 @@ export function keyboardUpdate() {
     player.translateZ(-moveDistance);
   if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
     player.translateZ(moveDistance);
-  if (keyboard.pressed("ctrl")) shoot();
+  if (keyboard.pressed("ctrl")) 
+    shoot('air');
+    if (keyboard.pressed("space")) 
+    shoot('land');
 }
 
 // shoot function for the player
-export function shoot() {
+export function shoot(typeOfMissile) {
   // if is on cooldown, the plane cannot shoot
   if (!projectileCooldown) return;
   projectileCooldown++;
@@ -104,6 +107,10 @@ export function shoot() {
     player.position.y,
     player.position.z + 3
   );
+
+  if(typeOfMissile == 'land') {
+    projectile.rotateX(45);
+  }
 
   scene.add(projectile);
 

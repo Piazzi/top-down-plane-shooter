@@ -28,11 +28,11 @@ var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this p
 createLightSphere(scene, 0.5, 10, 10, lightPosition);
 
 // create the ground plane
-let plane = createGroundPlaneWired(121, 200, 1, 1, "#F2E394");
+let plane = createGroundPlaneWired(125, 200, 1, 1, "#F2E394");
 plane.position.set(0, 0, 0);
 plane.receiveShadow = true;
 
-let plane2 = createGroundPlaneWired(121, 200, 1, 1, "#F2E394");
+let plane2 = createGroundPlaneWired(125, 200, 1, 1, "#F2E394");
 plane2.position.set(0, 0, 200);
 plane2.receiveShadow = true;
 
