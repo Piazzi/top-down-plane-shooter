@@ -6,12 +6,12 @@ import {
   createLightSphere,
 } from "../../libs/util/util.js";
 
-import { healthpacks, spawnHealthpack } from "./healthpack.js";
+import { healthpacks} from "./healthpack.js";
 import { keyboardUpdate, player, projectiles } from "./player.js";
-import { spawnEnemy, enemies, projectileEnemies  } from "./enemy.js";
+import { enemies, projectileEnemies  } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
-import { HEIGHT, SPAWN_HEALTHPACK_INTERVAL, SPAWN_TYPE_1_ENEMY_INTERVAL, SPAWN_TYPE_2_ENEMY_INTERVAL, SPAWN_TYPE_3_ENEMY_INTERVAL, SPAWN_TYPE_4_ENEMY_INTERVAL, PLANE_SPEED } from "./config.js";
+import { ENEMY_1_INTERVAL_HANDLER, ENEMY_1_TIMEOUT_HANDLER, ENEMY_2_INTERVAL_HANDLER, ENEMY_2_TIMEOUT_HANDLER, ENEMY_3_INTERVAL_HANDLER, ENEMY_3_TIMEOUT_HANDLER, ENEMY_4_INTERVAL_HANDLER, ENEMY_4_TIMEOUT_HANDLER, HEIGHT, PLANE_SPEED, setEnemiesTimeouts } from "./config.js";
 
 export var scene = new THREE.Scene(); // Create main scene
 
@@ -99,23 +99,18 @@ export function resetGame() {
   setTimeout(() => {
     resetGameMessage.style.visibility = "hidden";
   }, 3000);
-}
 
-//setInterval(spawnEnemy, SPAWN_ENEMY_INTERVAL);
-//setInterval(spawnHealthpack, SPAWN_HEALTHPACK_INTERVAL);
-setInterval(()=>{
-  spawnEnemy(1)
-}, SPAWN_TYPE_1_ENEMY_INTERVAL);
-setInterval(()=>{
-  spawnEnemy(2)
-}, SPAWN_TYPE_2_ENEMY_INTERVAL);
-setInterval(()=>{
-  spawnEnemy(3)
-},SPAWN_TYPE_3_ENEMY_INTERVAL);
-setInterval(()=>{
-  spawnEnemy(4)
-}, SPAWN_TYPE_4_ENEMY_INTERVAL);
-setInterval(spawnHealthpack, SPAWN_HEALTHPACK_INTERVAL);
+  clearTimeout(ENEMY_1_TIMEOUT_HANDLER);
+  clearTimeout(ENEMY_2_TIMEOUT_HANDLER);
+  clearTimeout(ENEMY_3_TIMEOUT_HANDLER);
+  clearTimeout(ENEMY_4_TIMEOUT_HANDLER);
+  clearInterval(ENEMY_1_INTERVAL_HANDLER);
+  clearInterval(ENEMY_2_INTERVAL_HANDLER);
+  clearInterval(ENEMY_3_INTERVAL_HANDLER);
+  clearInterval(ENEMY_4_INTERVAL_HANDLER);
+  setEnemiesTimeouts();
+
+}
 
 function render() {
   requestAnimationFrame(render); // Show events
