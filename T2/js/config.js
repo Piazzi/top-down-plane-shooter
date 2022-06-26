@@ -27,55 +27,44 @@ export let ENEMY_1_INTERVAL_HANDLER;
 export let ENEMY_2_INTERVAL_HANDLER;
 export let ENEMY_3_INTERVAL_HANDLER;
 export let ENEMY_4_INTERVAL_HANDLER;
+export let HEALTHPACK_INTERVAL_HANDLER;
+export let HEALTHPACK_TIMEOUT_HANDLER;
+export let ENEMY_1_TIMEOUT_HANDLER;
+export let ENEMY_2_TIMEOUT_HANDLER;
+export let ENEMY_3_TIMEOUT_HANDLER;
+export let ENEMY_4_TIMEOUT_HANDLER;
 
-setInterval(spawnHealthpack, SPAWN_HEALTHPACK_INTERVAL);
+export function resetTimeouts() {
+  HEALTHPACK_TIMEOUT_HANDLER = setTimeout(() => {
+    HEALTHPACK_INTERVAL_HANDLER = setInterval(
+      spawnHealthpack,
+      SPAWN_HEALTHPACK_INTERVAL
+    );
+  }, 15000);
 
-export let ENEMY_1_TIMEOUT_HANDLER = setTimeout(() => {
+  ENEMY_1_TIMEOUT_HANDLER = setTimeout(() => {
     ENEMY_1_INTERVAL_HANDLER = setInterval(() => {
-    spawnEnemy(1);
-  }, SPAWN_TYPE_1_ENEMY_INTERVAL);
-}, 1000);
+      spawnEnemy(1);
+    }, SPAWN_TYPE_1_ENEMY_INTERVAL);
+  }, 1000);
 
-export let ENEMY_2_TIMEOUT_HANDLER = setTimeout(() => {
+  ENEMY_2_TIMEOUT_HANDLER = setTimeout(() => {
     ENEMY_2_INTERVAL_HANDLER = setInterval(() => {
-    spawnEnemy(2);
-  }, SPAWN_TYPE_2_ENEMY_INTERVAL);
-}, 10000);
+      spawnEnemy(2);
+    }, SPAWN_TYPE_2_ENEMY_INTERVAL);
+  }, 10000);
 
-export let ENEMY_3_TIMEOUT_HANDLER = setTimeout(() => {
+  ENEMY_3_TIMEOUT_HANDLER = setTimeout(() => {
     ENEMY_3_INTERVAL_HANDLER = setInterval(() => {
-    spawnEnemy(3);
-  }, SPAWN_TYPE_3_ENEMY_INTERVAL);
-}, 30000);
+      spawnEnemy(3);
+    }, SPAWN_TYPE_3_ENEMY_INTERVAL);
+  }, 30000);
 
-export let ENEMY_4_TIMEOUT_HANDLER = setTimeout(() => {
+  ENEMY_4_TIMEOUT_HANDLER = setTimeout(() => {
     ENEMY_4_INTERVAL_HANDLER = setInterval(() => {
-    spawnEnemy(4);
-  }, SPAWN_TYPE_4_ENEMY_INTERVAL);
-}, 60000);
-
-export function setEnemiesTimeouts() {
-    ENEMY_1_TIMEOUT_HANDLER = setTimeout(() => {
-        ENEMY_1_INTERVAL_HANDLER = setInterval(() => {
-          spawnEnemy(1);
-        }, SPAWN_TYPE_1_ENEMY_INTERVAL);
-      }, 1000);
-      
-    ENEMY_2_TIMEOUT_HANDLER = setTimeout(() => {
-        ENEMY_2_INTERVAL_HANDLER = setInterval(() => {
-          spawnEnemy(2);
-        }, SPAWN_TYPE_2_ENEMY_INTERVAL);
-      }, 10000);
-      
-     ENEMY_3_TIMEOUT_HANDLER = setTimeout(() => {
-        ENEMY_3_INTERVAL_HANDLER = setInterval(() => {
-          spawnEnemy(3);
-        }, SPAWN_TYPE_3_ENEMY_INTERVAL);
-      }, 30000);
-      
-    ENEMY_4_TIMEOUT_HANDLER = setTimeout(() => {
-        ENEMY_4_INTERVAL_HANDLER = setInterval(() => {
-          spawnEnemy(4);
-        }, SPAWN_TYPE_4_ENEMY_INTERVAL);
-      }, 60000);
+      spawnEnemy(4);
+    }, SPAWN_TYPE_4_ENEMY_INTERVAL);
+  }, 60000);
 }
+
+resetTimeouts();
