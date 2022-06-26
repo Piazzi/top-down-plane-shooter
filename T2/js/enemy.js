@@ -183,8 +183,10 @@ export function shootEnemy(object) {
       detectCollision(playerGeometry, projectileEnemy) &&
       projectileEnemy.alive
     ) {
+      if (!GOD_MODE) {
       increasePlayerLife(-1);
       removeHearts(1);
+      }
       shrink(object);
       projectileEnemy.alive = false;
       scene.remove(projectileEnemy);
