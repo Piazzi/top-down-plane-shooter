@@ -20,6 +20,7 @@ import {
   OFF_SCREEN_RIGHT,
   SCREEN_LEFT_EDGE,
   SCREEN_RIGHT_EDGE,
+  ENEMY_PROJECTILE_SPEED,
 } from "./config.js";
 import { degreesToRadians } from "../../libs/util/util.js";
 
@@ -147,11 +148,11 @@ export function shootEnemy(object) {
   // creates the projectile
   var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
   var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
-  var projectileEnemy = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  projectileEnemy.alive = true;
-  projectileEnemy.castShadow = true;
-  projectileEnemies.push(projectileEnemy);
-  projectileEnemy.position.set(
+  var enemyProjectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  enemyProjectile.alive = true;
+  enemyProjectile.castShadow = true;
+  projectileEnemies.push(enemyProjectile);
+  enemyProjectile.position.set(
     object.position.x,
     object.position.y,
     object.position.z + 3
@@ -159,20 +160,22 @@ export function shootEnemy(object) {
   let projectileDestination = new THREE.Vector3(
     player.position.x,
     player.position.y,
-    player.position.z
+    player.position.z 
   );
-  scene.add(projectileEnemy);
+  scene.add(enemyProjectile);
   // every 10 ms checks if the projectileEnemy hit any object or exit the screen
   setInterval(() => {
-    projectileEnemy.position.lerp(projectileDestination, 0.015);
+    enemyProjectile.position.lerp(projectileDestination, ENEMY_PROJECTILE_SPEED);
     // remove the projectile if exits the screen
     if (
-      Math.trunc(projectileEnemy.position.z) ===
-      Math.trunc(projectileDestination.z)
+      Math.trunc(enemyProjectile.position.z) >
+      Math.trunc(projectileDestination.z - 2) &&
+      Math.trunc(enemyProjectile.position.z) <
+      Math.trunc(projectileDestination.z + 2) 
     ) {
-      scene.remove(projectileEnemy);
+      scene.remove(enemyProjectile);
       projectileEnemies = projectileEnemies.filter(
-        (p) => p.id !== projectileEnemy.id
+        (p) => p.id !== enemyProjectile.id
       );
       return;
     }
@@ -180,17 +183,17 @@ export function shootEnemy(object) {
     // check if the projectile hit any object, remove the object
     // and the projectile if did hit
     if (
-      detectCollision(playerGeometry, projectileEnemy) &&
-      projectileEnemy.alive
+      detectCollision(playerGeometry, enemyProjectile) &&
+      enemyProjectile.alive
     ) {
       if (!GOD_MODE) {
       increasePlayerLife(-1);
       removeHearts(1);
       }
       shrink(object);
-      projectileEnemy.alive = false;
-      scene.remove(projectileEnemy);
-      projectileEnemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
+      enemyProjectile.alive = false;
+      scene.remove(enemyProjectile);
+      enemyProjectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
       shrink(playerGeometry);
       grow(playerGeometry);
       // wait 200ms before removing the object so that the animation can play

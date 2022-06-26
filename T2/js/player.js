@@ -11,7 +11,7 @@ import {
   OFF_SCREEN_BOTTOM,
   OFF_SCREEN_TOP,
   PLAYER_SPEED,
-  PROJECTILE_SPEED,
+  PLAYER_PROJECTILE_SPEED,
   SCREEN_BOTTOM_EDGE,
   SCREEN_LEFT_EDGE,
   SCREEN_RIGHT_EDGE,
@@ -116,7 +116,7 @@ export function shoot(typeOfMissile) {
 
   // every 10 ms checks if the projectile hit any enemy or exit the screen
   setInterval(() => {
-    projectile.translateZ(PROJECTILE_SPEED);
+    projectile.translateZ(PLAYER_PROJECTILE_SPEED);
 
     // remove the projectile if exits the screen
     if (projectile.position.z >= OFF_SCREEN_TOP) {
