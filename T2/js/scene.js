@@ -8,11 +8,15 @@ import {
 
 import { healthpacks, spawnHealthpack } from "./healthpack.js";
 import { keyboardUpdate, player, projectiles } from "./player.js";
-import { spawnEnemy, enemies, projectileEnemies  } from "./enemy.js";
+import { spawnEnemy, enemies, projectileEnemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
-import { HEIGHT, SPAWN_HEALTHPACK_INTERVAL, SPAWN_ENEMY_INTERVAL, PLANE_SPEED } from "./config.js";
-
+import {
+  HEIGHT,
+  SPAWN_HEALTHPACK_INTERVAL,
+  SPAWN_ENEMY_INTERVAL,
+  PLANE_SPEED,
+} from "./config.js";
 export var scene = new THREE.Scene(); // Create main scene
 
 // Set all renderers
@@ -104,17 +108,17 @@ export function resetGame() {
 
 //setInterval(spawnEnemy, SPAWN_ENEMY_INTERVAL);
 //setInterval(spawnHealthpack, SPAWN_HEALTHPACK_INTERVAL);
-setInterval(()=>{
-  spawnEnemy(1)
+setInterval(() => {
+  spawnEnemy(1);
 }, "2000");
-setInterval(()=>{
-  spawnEnemy(2)
+setInterval(() => {
+  spawnEnemy(2);
 }, "5000");
-setInterval(()=>{
-  spawnEnemy(3)
+setInterval(() => {
+  spawnEnemy(3);
 }, "7000");
-setInterval(()=>{
-  spawnEnemy(4)
+setInterval(() => {
+  spawnEnemy(4);
 }, "110000");
 setInterval(spawnHealthpack, "15000");
 
