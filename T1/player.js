@@ -9,6 +9,7 @@ import {
   SCREEN_RIGHT_EDGE,
   SCREEN_TOP_EDGE,
   scene,
+  HEIGHT,
 } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
@@ -23,7 +24,7 @@ export var projectiles = [];
 
 // position the cone
 cone.rotation.set(0, 0, 0);
-cone.position.set(0.0, 4.5, 0.0);
+cone.position.set(0.0, HEIGHT, 0.0);
 cone.rotateX(degreesToRadians(90));
 
 // Use TextureLoader to load texture files
@@ -92,14 +93,15 @@ export function shoot() {
     // and the projectile if did hit
     enemies.forEach((enemy) => {
       if (detectCollision(projectile, enemy)) {
+        enemy.alive = false;
         shrink(enemy);
-        grow(enemy);
         scene.remove(projectile);
         projectile.position.set(0, 0, OFF_SCREEN_BOTTOM);
         // wait 200ms before removing the enemy so that the animation can play
         setTimeout(function () {
           enemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
           scene.remove(enemy);
+
           return;
         }, 200);
       }
