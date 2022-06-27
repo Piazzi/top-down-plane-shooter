@@ -1,0 +1,15 @@
+# Blender MTL File: 'Avion De Papel.blend'
+# Material Count: 1
+
+newmtl Material.001
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Alka\Desktop\Papel_Texture.jpg
+map_Bump -bm 2.621622 E:\\Proyecto\\3D Weapons Pets S4 L\\Avion De Papel Pet\\Papel_Texure_Normal_Map.png
+map_Ks E:\\Proyecto\\3D Weapons Pets S4 L\\Avion De Papel Pet\\Papel_Texture_Specular.jpg

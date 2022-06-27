@@ -18,7 +18,7 @@ import {
   SCREEN_TOP_EDGE,
   SHOOT_COOLDOWN,
 } from "./config.js";
-
+import { pencil } from "./models.js";
 export var playerLife = 5;
 
 export function increasePlayerLife(num) {
@@ -94,10 +94,10 @@ export function shoot(typeOfMissile) {
   projectileCooldown++;
 
   // creates the projectile
-  var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
-  var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
-  var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  projectile.castShadow = true;
+  // var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
+  // var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
+  // var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  var projectile = pencil.clone();
   projectiles.push(projectile);
   projectile.position.set(
     player.position.x,
@@ -125,7 +125,7 @@ export function shoot(typeOfMissile) {
     // check if the projectile hit any enemy, remove the enemy
     // and the projectile if did hit
     enemies.forEach((enemy) => {
-      if (detectCollision(projectile, enemy.children[0])) {
+      if (detectCollision(projectile.children[0], enemy.children[0])) {
         shrink(enemy);
         enemy.alive = false;
         scene.remove(projectile);

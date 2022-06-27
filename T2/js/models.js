@@ -74,7 +74,7 @@ mtlLoader.load("./materials/eraser.mtl", (materials) => {
 
 export let plane2 = undefined;
 export let plane2Geometry = undefined;
-mtlLoader.load("./materials/14bis.mtl", (materials) => {
+mtlLoader.load("./materials/paper_plane.mtl", (materials) => {
   materials.preload();
 
   objLoader.setMaterials(materials);
@@ -98,17 +98,38 @@ mtlLoader.load("./materials/paper_plane.mtl", (materials) => {
   materials.preload();
 
   objLoader.setMaterials(materials);
-  objLoader.load("./assets/albatros.obj", (object) => {
+  objLoader.load("./assets/avion.obj", (object) => {
     plane3 = object;
-    plane3.children[0].castShadow = true;
-    plane3.children[0].receiveShadow = true;
+    // plane3.children[0].castShadow = true;
+    // plane3.children[0].receiveShadow = true;
     plane3.children[0].visible = true;
     plane3Geometry = plane3.children[0];
-    plane3Geometry.rotateY(degreesToRadians(-135));
-    plane3.scale.set(0.1, 0.1, 0.1);
+    // plane3.rotateY(degreesToRadians(-45));
+    plane3.scale.set(1, 1, 1);
     plane3.position.set(0.0, HEIGHT, 0.0);
     // scene.add(plane3);
     // console.log(tank.children[0]);
     plane3.alive = true;
+  });
+});
+
+export let pencil = undefined;
+export let pencilGeometry = undefined;
+mtlLoader.load("./materials/eraser.mtl", (materials) => {
+  materials.preload();
+
+  objLoader.setMaterials(materials);
+  objLoader.load("./assets/eraser.obj", (object) => {
+    pencil = object;
+    pencil.children[0].castShadow = true;
+    pencil.children[0].receiveShadow = true;
+    pencil.children[0].visible = true;
+    pencilGeometry = pencil.children[0];
+    // pencilGeometry.rotateX(degreesToRadians(-90));
+    pencil.scale.set(24, 24, 24);
+    pencil.position.set(0.0, HEIGHT, 0.0);
+    // scene.add(pencil);
+    // console.log(tank.children[0]);
+    pencil.alive = true;
   });
 });
