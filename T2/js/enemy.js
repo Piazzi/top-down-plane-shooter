@@ -117,7 +117,7 @@ export function spawnEnemy(type) {
   if (type === 5) {
     spawn(enemy5, randomPosition, GROUND_ENEMY_POSITION, OFF_SCREEN_TOP);
     setTimeout(() => {
-      shootEnemy(enemy, 2);
+      shootEnemy(enemy5, 2);
     }, "2000");
   }
   
