@@ -16,9 +16,9 @@ import {
   SCREEN_LEFT_EDGE,
   SCREEN_RIGHT_EDGE,
   SCREEN_TOP_EDGE,
-  SHOOT_COOLDOWN
+  SHOOT_COOLDOWN,
 } from "./config.js";
-
+import { pencil } from "./models.js";
 export var playerLife = 5;
 
 export function increasePlayerLife(num) {
@@ -70,7 +70,6 @@ var clock = new THREE.Clock();
 
 // detect the player controls
 export function keyboardUpdate() {
-
   keyboard.update();
   var moveDistance = PLAYER_SPEED * clock.getDelta();
 
@@ -84,10 +83,8 @@ export function keyboardUpdate() {
     player.translateZ(-moveDistance);
   if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
     player.translateZ(moveDistance);
-  if (keyboard.pressed("ctrl")) 
-    shoot('air');
-    if (keyboard.pressed("space")) 
-    shoot('land');
+  if (keyboard.pressed("ctrl")) shoot("air");
+  if (keyboard.pressed("space")) shoot("land");
 }
 
 // shoot function for the player
@@ -97,10 +94,10 @@ export function shoot(typeOfMissile) {
   projectileCooldown++;
 
   // creates the projectile
-  var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
-  var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
-  var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  projectile.castShadow = true;
+  // var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
+  // var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
+  // var projectile = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  var projectile = pencil.clone();
   projectiles.push(projectile);
   projectile.position.set(
     player.position.x,
@@ -108,7 +105,7 @@ export function shoot(typeOfMissile) {
     player.position.z + 3
   );
 
-  if(typeOfMissile == 'land') {
+  if (typeOfMissile == "land") {
     projectile.rotateX(45);
   }
 
@@ -128,7 +125,7 @@ export function shoot(typeOfMissile) {
     // check if the projectile hit any enemy, remove the enemy
     // and the projectile if did hit
     enemies.forEach((enemy) => {
-      if (detectCollision(projectile, enemy)) {
+      if (detectCollision(projectile.children[0], enemy.children[0])) {
         shrink(enemy);
         enemy.alive = false;
         scene.remove(projectile);

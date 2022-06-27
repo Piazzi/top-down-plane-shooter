@@ -11,7 +11,7 @@ import {
   OFF_SCREEN_TOP,
   SCREEN_LEFT_EDGE,
   SCREEN_RIGHT_EDGE,
-  PLANE_SPEED
+  PLANE_SPEED,
 } from "./config.js";
 
 // active enemies array on the scene
@@ -19,14 +19,15 @@ export var healthpacks = [];
 // create a healthpack at a random X position in the scene
 export function spawnHealthpack() {
   // creates de cube
-  var geometry = new THREE.SphereGeometry(1, 16, 16);
-  geometry.applyMatrix4(new THREE.Matrix4().makeScale(1.0, 1.8, 1.6));
+  var geometry = new THREE.CylinderGeometry(2, 2, 1, 32);
+
   const healthMaterial = new THREE.MeshPhongMaterial({
     color: "darkred", // Main color of the object
     shininess: "0", // Shininess of the object
     specular: "rgb(255,255,255)", // Color of the specular component
   });
   let healthpack = new THREE.Mesh(geometry, healthMaterial);
+  healthpack.rotateZ(degreesToRadians(90));
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
   healthpack.usable = true;
   scene.add(healthpack);
