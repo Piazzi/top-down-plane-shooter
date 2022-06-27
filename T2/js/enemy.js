@@ -218,8 +218,13 @@ export function shootEnemy(object, type) {
       enemyProjectile.alive
     ) {
       if (!GOD_MODE) {
+      if(type === 1){
       increasePlayerLife(-1);
       removeHearts(1);
+       }else{
+        increasePlayerLife(-2);
+        removeHearts(2);
+       }
       }
       enemyProjectile.alive = false;
       scene.remove(enemyProjectile);
