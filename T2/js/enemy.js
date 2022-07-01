@@ -17,12 +17,16 @@ import {
   MIN_ENEMY_SPEED,
   OFF_SCREEN_BOTTOM,
   OFF_SCREEN_TOP,
+  OFF_SCREEN_LEFT,
   OFF_SCREEN_RIGHT,
   SCREEN_LEFT_EDGE,
   SCREEN_RIGHT_EDGE,
+  ENEMY_PROJECTILE_SPEED,
+  GROUND_ENEMY_POSITION,
+  GROUND_ENEMY_SPEED,
 } from "./config.js";
 import { degreesToRadians } from "../../libs/util/util.js";
-
+import { tank, clip, plane, plane2, plane3 } from "./models.js";
 // generate a random color for the enemy
 export function generateColor() {
   const letters = "0123456789ABCDEF";
@@ -54,7 +58,7 @@ function spawn(object, x, y, z) {
   object.visible = true;
 
   setInterval(() => {
-    if (detectCollision(playerGeometry, object) && object.alive) {
+    if (detectCollision(playerGeometry, object.children[0]) && object.alive) {
       if (!GOD_MODE) {
         increasePlayerLife(-1);
         removeHearts(1);
@@ -70,54 +74,80 @@ function spawn(object, x, y, z) {
 
 // create a enemy at a random X position in the scene
 export function spawnEnemy(type) {
-  // creates de cube
-  const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
-  const cubeMaterial = new THREE.MeshPhongMaterial({
-    color: generateColor(), // Main color of the object
-    shininess: "200", // Shininess of the object
-    specular: "rgb(255,255,255)", // Color of the specular component
+  //create standard enemy
+  let enemy = plane.clone();
+  let i = 0;
+  plane.children.forEach((mesh) => {
+    plane.children[i] = mesh.clone();
+    i++;
   });
-  let enemy = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  let enemy2 = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  let enemy3 = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  let enemy4 = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  // console.log(plane);
+  let enemy2 = plane2.clone();
+  i = 0;
+  plane2.children.forEach((mesh) => {
+    plane2.children[i] = mesh.clone();
+    i++;
+  });
+  console.log(plane2);
+  let enemy3 = plane3.clone();
+  i = 0;
+  plane3.children.forEach((mesh) => {
+    plane3.children[i] = mesh.clone();
+    i++;
+  });
+  console.log(plane3);
+  let enemy5 = tank.clone();
+  i = 0;
+  tank.children.forEach((mesh) => {
+    tank.children[i] = mesh.clone();
+    i++;
+  });
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
   let randomSpeed = getRandomNumber(MIN_ENEMY_SPEED, MAX_ENEMY_SPEED);
+
   if (type === 1) {
     spawn(enemy, randomPosition, HEIGHT, OFF_SCREEN_TOP);
     setTimeout(() => {
-      shootEnemy(enemy);
+      shootEnemy(enemy, 1);
     }, "500");
   }
   if (type === 2) {
     spawn(enemy2, OFF_SCREEN_RIGHT, HEIGHT, randomPosition);
     setTimeout(() => {
-      shootEnemy(enemy2);
+      shootEnemy(enemy2, 1);
     }, "500");
   }
   if (type === 3) {
     spawn(enemy3, OFF_SCREEN_RIGHT, HEIGHT, OFF_SCREEN_TOP);
     setTimeout(() => {
-      shootEnemy(enemy3);
+      shootEnemy(enemy3, 1);
     }, "500");
   }
 
-  if (type === 4) {
-    spawn(enemy4, OFF_SCREEN_RIGHT, HEIGHT, 20);
+  // if (type === 4) {
+  //   spawn(enemy4, OFF_SCREEN_RIGHT, HEIGHT, 20);
+  //   setTimeout(() => {
+  //     shootEnemy(enemy4, 1);
+  //   }, "500");
+  // }
+
+  if (type === 5) {
+    spawn(enemy5, randomPosition, GROUND_ENEMY_POSITION, OFF_SCREEN_TOP);
     setTimeout(() => {
-      shootEnemy(enemy4);
-    }, "500");
+      shootEnemy(enemy5, 2);
+    }, "2000");
   }
+
   // every 10 ms checks if the enemy hit the player or exit the screen
 
   setInterval(() => {
     if (playerLife <= 0) {
       resetGame();
-      increasePlayerLife(5);
+      increasePlayerLife(5, 2);
       return;
     }
     if (type === 1) {
-      enemy.translateZ(randomSpeed);
+      enemy.translateZ(-randomSpeed);
     }
     if (type === 2) {
       enemy2.translateX(randomSpeed);
@@ -126,10 +156,13 @@ export function spawnEnemy(type) {
       enemy3.translateX(randomSpeed);
       enemy3.translateZ(randomSpeed);
     }
-    if (type === 4) {
-      enemy4.translateZ(randomSpeed);
-      enemy4.translateX(randomSpeed);
-      enemy4.rotateY(degreesToRadians(0.25));
+    // if (type === 4) {
+    //   enemy4.translateZ(randomSpeed);
+    //   enemy4.translateX(randomSpeed);
+    //   enemy4.rotateY(degreesToRadians(0.25));
+    // }
+    if (type === 5) {
+      enemy5.translateZ(-GROUND_ENEMY_SPEED);
     }
     // remove the enemy if exits the screen
     if (enemy.position.z <= OFF_SCREEN_BOTTOM) {
@@ -143,11 +176,13 @@ export function spawnEnemy(type) {
 
   return;
 }
-export function shootEnemy(object) {
+export function shootEnemy(object, type) {
   // creates the projectile
-  var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
-  var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
-  var projectileEnemy = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  // var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
+  // var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
+  // var projectileEnemy = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  var projectileEnemy = clip.clone();
+  console.log(projectileEnemy);
   projectileEnemy.alive = true;
   projectileEnemy.castShadow = true;
   projectileEnemies.push(projectileEnemy);
@@ -156,19 +191,34 @@ export function shootEnemy(object) {
     object.position.y,
     object.position.z + 3
   );
+
   let projectileDestination = new THREE.Vector3(
     player.position.x,
     player.position.y,
     player.position.z
   );
+  projectileEnemy.lookAt(projectileDestination);
   scene.add(projectileEnemy);
+  if (type === 2) {
+    projectileEnemy.rotateX(degreesToRadians(90));
+    setInterval(() => {
+      if (projectileEnemy.position.y <= HEIGHT) {
+        projectileEnemy.translateY(0.1);
+      }
+    }, "5");
+  }
   // every 10 ms checks if the projectileEnemy hit any object or exit the screen
   setInterval(() => {
-    projectileEnemy.position.lerp(projectileDestination, 0.015);
+    if (projectileEnemy.position.y >= HEIGHT) {
+      projectileEnemy.translateZ(ENEMY_PROJECTILE_SPEED);
+    }
+
     // remove the projectile if exits the screen
     if (
-      Math.trunc(projectileEnemy.position.z) ===
-      Math.trunc(projectileDestination.z)
+      projectileEnemy.position.z <= OFF_SCREEN_BOTTOM ||
+      projectileEnemy.position.z >= OFF_SCREEN_TOP ||
+      projectileEnemy.position.x <= OFF_SCREEN_LEFT ||
+      projectileEnemy.position.x >= OFF_SCREEN_RIGHT
     ) {
       scene.remove(projectileEnemy);
       projectileEnemies = projectileEnemies.filter(
@@ -180,26 +230,19 @@ export function shootEnemy(object) {
     // check if the projectile hit any object, remove the object
     // and the projectile if did hit
     if (
-      detectCollision(playerGeometry, projectileEnemy) &&
+      detectCollision(playerGeometry, projectileEnemy.children[0]) &&
       projectileEnemy.alive
     ) {
       if (!GOD_MODE) {
-      increasePlayerLife(-1);
-      removeHearts(1);
+        increasePlayerLife(-1);
+        removeHearts(1);
       }
-      shrink(object);
       projectileEnemy.alive = false;
       scene.remove(projectileEnemy);
       projectileEnemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
       shrink(playerGeometry);
       grow(playerGeometry);
       // wait 200ms before removing the object so that the animation can play
-      setTimeout(function () {
-        object.position.set(0, 0, OFF_SCREEN_BOTTOM);
-        scene.remove(object);
-
-        return;
-      }, 200);
     }
   }, "10");
   return;

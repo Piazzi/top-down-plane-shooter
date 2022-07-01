@@ -19,8 +19,7 @@ export var healthpacks = [];
 // create a healthpack at a random X position in the scene
 export function spawnHealthpack() {
   // creates de cube
-
-  // var geometry = new THREE.CylinderGeometry(2, 2, 1, 32);
+  var geometry = new THREE.CylinderGeometry(2, 2, 1, 32);
 
   const healthMaterial = new THREE.MeshPhongMaterial({
     color: "darkred", // Main color of the object

@@ -6,12 +6,27 @@ import {
   createLightSphere,
 } from "../../libs/util/util.js";
 
-import { healthpacks, spawnHealthpack } from "./healthpack.js";
+import { healthpacks } from "./healthpack.js";
 import { keyboardUpdate, player, projectiles } from "./player.js";
-import { spawnEnemy, enemies, projectileEnemies  } from "./enemy.js";
+import {
+  ENEMY_1_INTERVAL_HANDLER,
+  ENEMY_1_TIMEOUT_HANDLER,
+  ENEMY_2_INTERVAL_HANDLER,
+  ENEMY_2_TIMEOUT_HANDLER,
+  ENEMY_3_INTERVAL_HANDLER,
+  ENEMY_3_TIMEOUT_HANDLER,
+  ENEMY_4_INTERVAL_HANDLER,
+  ENEMY_4_TIMEOUT_HANDLER,
+  HEALTHPACK_INTERVAL_HANDLER,
+  HEALTHPACK_TIMEOUT_HANDLER,
+  HEIGHT,
+  PLANE_SPEED,
+  resetTimeouts,
+} from "./config.js";
+
+import { spawnEnemy, enemies, projectileEnemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
-import { HEIGHT, SPAWN_HEALTHPACK_INTERVAL, SPAWN_ENEMY_INTERVAL, PLANE_SPEED } from "./config.js";
 
 export var scene = new THREE.Scene(); // Create main scene
 
@@ -91,7 +106,6 @@ export function resetGame() {
 
   projectiles.length = 0;
   enemies.length = 0;
-  enemies.length = 0;
   player.position.set(0.0, HEIGHT, 0.0);
 
   resetHearts();
@@ -100,23 +114,19 @@ export function resetGame() {
   setTimeout(() => {
     resetGameMessage.style.visibility = "hidden";
   }, 3000);
-}
 
-//setInterval(spawnEnemy, SPAWN_ENEMY_INTERVAL);
-//setInterval(spawnHealthpack, SPAWN_HEALTHPACK_INTERVAL);
-setInterval(()=>{
-  spawnEnemy(1)
-}, "2000");
-setInterval(()=>{
-  spawnEnemy(2)
-}, "5000");
-setInterval(()=>{
-  spawnEnemy(3)
-}, "7000");
-setInterval(()=>{
-  spawnEnemy(4)
-}, "110000");
-setInterval(spawnHealthpack, "15000");
+  clearTimeout(ENEMY_1_TIMEOUT_HANDLER);
+  clearTimeout(ENEMY_2_TIMEOUT_HANDLER);
+  clearTimeout(ENEMY_3_TIMEOUT_HANDLER);
+  clearTimeout(ENEMY_4_TIMEOUT_HANDLER);
+  clearTimeout(HEALTHPACK_TIMEOUT_HANDLER);
+  clearInterval(HEALTHPACK_INTERVAL_HANDLER);
+  clearInterval(ENEMY_1_INTERVAL_HANDLER);
+  clearInterval(ENEMY_2_INTERVAL_HANDLER);
+  clearInterval(ENEMY_3_INTERVAL_HANDLER);
+  clearInterval(ENEMY_4_INTERVAL_HANDLER);
+  resetTimeouts();
+}
 
 function render() {
   requestAnimationFrame(render); // Show events
