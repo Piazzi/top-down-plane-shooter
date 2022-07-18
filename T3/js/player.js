@@ -48,15 +48,16 @@ mtlLoader.load("./materials/player_plane.mtl", (materials) => {
   objLoader.setMaterials(materials);
   objLoader.load("./assets/player_plane.obj", (object) => {
     player = object;
-    player.children[0].castShadow = true;
+    console.log(playerGeometry);
     playerGeometry = player.children[0];
-    player.scale.set(0.2, 0.2, 0.2);
-    player.rotateY(degreesToRadians(180));
+
+    player.scale.set(0.4, 0.4, 0.4);
+    player.rotateY(degreesToRadians(185));
     player.position.set(0.0, HEIGHT, 0.0);
-    playerGeometry.material[0].shininess = 200;
-    playerGeometry.material[0].specular.r = "255";
-    playerGeometry.material[0].specular.g = "255";
-    playerGeometry.material[0].specular.b = "255";
+    // playerGeometry.material[0].shininess = 200;
+    // playerGeometry.material[0].specular.r = "255";
+    // playerGeometry.material[0].specular.g = "255";
+    // playerGeometry.material[0].specular.b = "255";
 
     scene.add(player);
     console.log(playerGeometry.material);
