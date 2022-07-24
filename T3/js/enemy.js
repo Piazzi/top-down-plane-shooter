@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { scene, resetGame } from "./scene.js";
+import { scene, resetGame, enemyMissileSound, explosionSound } from "./scene.js";
 import {
   grow,
   playerGeometry,
@@ -62,6 +62,7 @@ function spawn(object, x, y, z) {
       if (!GOD_MODE) {
         increasePlayerLife(-1);
         removeHearts(1);
+        explosionSound.play();
       }
       object.alive = false;
       scene.remove(object);
@@ -176,6 +177,8 @@ export function shootEnemy(object, type) {
     player.position.y,
     player.position.z
   );
+  enemyMissileSound.play()
+
   projectileEnemy.lookAt(projectileDestination);
   scene.add(projectileEnemy);
   if (type === 2) {

@@ -42,6 +42,44 @@ renderer.shadowMap.type = THREE.VSMShadowMap; // default
 var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this position
 createLightSphere(scene, 0.5, 10, 10, lightPosition);
 
+const listener = new THREE.AudioListener();
+camera.add( listener );
+
+// create a global audio source
+const themeSound = new THREE.Audio( listener );
+export const explosionSound = new THREE.Audio( listener );
+export const playerMissileSound = new THREE.Audio( listener );
+export const enemyMissileSound = new THREE.Audio( listener );
+
+// load a sound and set it as the Audio object's buffer
+const themeAudioLoader = new THREE.AudioLoader();
+themeAudioLoader.load( 'sounds/theme.mp3', function( buffer ) {
+	themeSound.setBuffer( buffer );
+	themeSound.setLoop( true );
+	themeSound.setVolume( 0.2 );
+	themeSound.play();
+});
+
+ const explosionAudioLoader = new THREE.AudioLoader();
+explosionAudioLoader.load( 'sounds/explosion.wav', function( buffer ) {
+	explosionSound.setBuffer( buffer );
+	explosionSound.setVolume( 0.2 );
+});
+
+ const playerMissileAudioLoader = new THREE.AudioLoader();
+playerMissileAudioLoader.load( 'sounds/missile1.wav', function( buffer ) {
+	playerMissileSound.setBuffer( buffer );
+	playerMissileSound.setVolume( 0.2 );
+  playerMissileSound.duration(0.5);
+});
+
+ const enemyMissileAudioLoader = new THREE.AudioLoader();
+enemyMissileAudioLoader.load( 'sounds/missile2.wav', function( buffer ) {
+	enemyMissileSound.setBuffer( buffer );
+	enemyMissileSound.setVolume( 0.2 );
+});
+
+
 // create the ground plane
 let plane = createGroundPlaneWired(125, 200, 1, 1, "#F2E394");
 plane.position.set(0, 0, 0);

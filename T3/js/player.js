@@ -1,7 +1,6 @@
 import KeyboardState from "../../libs/util/KeyboardState.js";
 import * as THREE from "three";
-import { degreesToRadians } from "../../libs/util/util.js";
-import { scene } from "./scene.js";
+import { scene, playerMissileSound, explosionSound } from "./scene.js";
 import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
@@ -86,13 +85,19 @@ export function keyboardUpdate() {
   if (keyboard.pressed("ctrl")) shoot("air");
   if (keyboard.pressed("space")) shoot("land");
 }
-
+ 
 // shoot function for the player
 export function shoot(typeOfMissile) {
   // if is on cooldown, the plane cannot shoot
   if (!projectileCooldown) return;
   projectileCooldown++;
 
+  if(playerMissileSound.isPlaying) {
+    playerMissileSound.stop();
+  }
+  playerMissileSound.play( 0.2 );
+
+ 
   // creates the projectile
   // var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
   // var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
@@ -126,6 +131,7 @@ export function shoot(typeOfMissile) {
     // and the projectile if did hit
     enemies.forEach((enemy) => {
       if (detectCollision(projectile.children[0], enemy.children[0])) {
+        explosionSound.play();
         shrink(enemy);
         enemy.alive = false;
         scene.remove(projectile);
