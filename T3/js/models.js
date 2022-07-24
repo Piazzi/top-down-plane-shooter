@@ -2,6 +2,7 @@ import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
 import { HEIGHT } from "./config.js";
 import { degreesToRadians } from "../../libs/util/util.js";
+import { scene } from "./scene.js";
 //importing 3D model airplane player
 const mtlLoader = new MTLLoader();
 const objLoader = new OBJLoader();
@@ -29,24 +30,24 @@ mtlLoader.load("./materials/boat.mtl", (materials) => {
   });
 });
 
-export let projectile = undefined;
-export let projectileGeometry = undefined;
+export let missile = undefined;
+export let missileGeometry = undefined;
 mtlLoader.load("./materials/rocket.mtl", (materials) => {
   materials.preload();
 
   objLoader.setMaterials(materials);
   objLoader.load("./assets/rocket.obj", (object) => {
-    projectile = object;
-    projectile.children[0].castShadow = true;
-    projectile.children[0].receiveShadow = true;
-    projectile.children[0].visible = true;
-    projectileGeometry = projectile.children[0];
-    projectile.scale.set(2, 2, 2);
-    projectile.rotateY(degreesToRadians(180));
-    projectile.position.set(0.0, HEIGHT, 0.0);
-    // scene.add(clip);
+    missile = object;
+    missile.children[0].castShadow = true;
+    missile.children[0].receiveShadow = true;
+    missile.children[0].visible = true;
+    missileGeometry = missile.children[0];
+    missile.scale.set(1, 1, 1);
+    missileGeometry.rotateX(degreesToRadians(90));
+    missile.position.set(0.0, HEIGHT, 0.0);
+    // scene.add(missile);
     // console.log(tank.children[0]);
-    projectile.alive = true;
+    missile.alive = true;
   });
 });
 
@@ -62,7 +63,7 @@ mtlLoader.load("./materials/player_plane.mtl", (materials) => {
     plane.children[0].receiveShadow = true;
     plane.children[0].visible = true;
     planeGeometry = plane.children[0];
-    plane.rotateY(degreesToRadians(180));
+    // plane.rotateY(degreesToRadians(180));
     plane.scale.set(0.65, 0.65, 0.65);
     plane.position.set(0.0, HEIGHT, 0.0);
     // scene.add(plane);
@@ -83,8 +84,8 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
     playerProjectile.children[0].receiveShadow = true;
     playerProjectile.children[0].visible = true;
     playerProjectileGeometry = playerProjectile.children[0];
-    // pencilGeometry.rotateX(degreesToRadians(-90));
-    playerProjectile.scale.set(24, 24, 24);
+    playerProjectileGeometry.rotateX(degreesToRadians(90));
+    playerProjectile.scale.set(1, 1, 1);
     playerProjectile.position.set(0.0, HEIGHT, 0.0);
     // scene.add(pencil);
     // console.log(tank.children[0]);

@@ -26,7 +26,7 @@ import {
   GROUND_ENEMY_SPEED,
 } from "./config.js";
 import { degreesToRadians } from "../../libs/util/util.js";
-import { boat, projectile, plane} from "./models.js";
+import { boat, missile, plane } from "./models.js";
 // generate a random color for the enemy
 export function generateColor() {
   const letters = "0123456789ABCDEF";
@@ -81,7 +81,7 @@ export function spawnEnemy(type) {
     plane.children[i] = mesh.clone();
     i++;
   });
-  
+
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
   let randomSpeed = getRandomNumber(MIN_ENEMY_SPEED, MAX_ENEMY_SPEED);
 
@@ -127,7 +127,7 @@ export function spawnEnemy(type) {
       return;
     }
     if (type === 1) {
-      enemy.translateZ(-randomSpeed);
+      enemy.translateZ(randomSpeed);
     }
     if (type === 2) {
       enemy.translateX(randomSpeed);
@@ -161,7 +161,7 @@ export function shootEnemy(object, type) {
   // var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
   // var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
   // var projectileEnemy = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  var projectileEnemy = projectile.clone();
+  var projectileEnemy = missile.clone();
   projectileEnemy.alive = true;
   projectileEnemy.castShadow = true;
   projectileEnemies.push(projectileEnemy);
