@@ -1,0 +1,56 @@
+@font-face {
+	font-family: paper;
+	src: url(./fonts/Newspaper.ttf);
+}
+
+#interface div {
+	position: absolute;
+	z-index: 100;
+	display: block;
+	font-family: paper;
+}
+
+#info {
+	top: 10px;
+	width: 100%;
+	text-align: left;
+	font-size: 64px;
+	color: gray;
+	margin-left: 20px;
+}
+
+#controls {
+	bottom: 10px;
+	width: 100%;
+	text-align: left;
+	font-size: 30px;
+	color: gray;
+	margin-left: 20px;
+}
+
+#life svg {
+	display: inline-flex;
+	width: 40px;
+	margin-left: 20px;
+	margin-top: 80px;
+	font-family: paper;
+}
+
+#reset-game-message {
+	color: gray;
+	font-size: 64px;
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	visibility: hidden;
+}
+
+#god-mode {
+	width: 100%;
+	text-align: left;
+	font-size: 30px;
+	color: brown;
+	margin-left: 20px;
+	bottom: 150px;
+	visibility: hidden;
+}
