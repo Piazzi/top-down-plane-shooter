@@ -27,6 +27,7 @@ import {
 import { enemies, projectileEnemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
+import { Water } from '/build/jsm/objects/Water.js';  
 
 export var scene = new THREE.Scene(); // Create main scene
 
@@ -81,7 +82,59 @@ enemyMissileAudioLoader.load( 'sounds/missile2.wav', function( buffer ) {
 
 
 // create the ground plane
-let plane = createGroundPlaneWired(125, 200, 1, 1, "#F2E394");
+const environment = new THREE.TextureLoader();
+let textureEquirec = environment.load( '../assets/textures/panorama5.jpg' );
+	textureEquirec.mapping = THREE.EquirectangularReflectionMapping; 
+	textureEquirec.encoding = THREE.sRGBEncoding;
+scene.background = textureEquirec
+
+const waterGeometry = new THREE.PlaneGeometry( 50, 200 );
+// Water shader parameters
+let water = new Water(
+  waterGeometry,
+  {
+    textureWidth: 512,
+    textureHeight: 512,
+    waterNormals: new THREE.TextureLoader().load( '../assets/textures/waternormals.jpg', function ( texture ) {
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    } ),
+    sunDirection: new THREE.Vector3(),
+    sunColor: 0xffffff,
+    waterColor: 0x001e0f, 
+    distortionScale: 3.7,
+  }
+);
+water.rotation.x = - Math.PI / 2;
+
+let water2 = new Water(
+  waterGeometry,
+  {
+    textureWidth: 512,
+    textureHeight: 512,
+    waterNormals: new THREE.TextureLoader().load( '../assets/textures/waternormals.jpg', function ( texture ) {
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    } ),
+    sunDirection: new THREE.Vector3(),
+    sunColor: 0xffffff,
+    waterColor: 0x001e0f, 
+    distortionScale: 3.7,
+  }
+);
+water2.rotation.x = - Math.PI / 2;
+
+const waterUniforms = water.material.uniforms;
+waterUniforms.distortionScale, 'value', 0, 8, 0.1 ;
+waterUniforms.size, 'value', 0.1, 10, 0.1;
+
+water.position.set(0, 0, 0);
+water.receiveShadow = true;
+
+water2.position.set(0, 0, 200);
+water2.receiveShadow = true;
+
+var textureLoader = new THREE.TextureLoader();
+
+/*let plane = createGroundPlaneWired(125, 200, 1, 1, "#F2E394");
 plane.position.set(0, 0, 0);
 plane.receiveShadow = true;
 
@@ -94,7 +147,7 @@ var paper = textureLoader.load("./images/paper.jpg");
 
 // Add texture to the 'map' property of the object's material
 plane.material.map = paper;
-plane2.material.map = paper;
+plane2.material.map = paper;*/
 
 // adds the player to the scene
 scene.add(dirLight);
@@ -114,17 +167,17 @@ render();
 
 // move the plane against the player to simulate movement
 function movePlane() {
-  scene.add(plane);
-  scene.add(plane2);
-  plane.translateY(PLANE_SPEED);
-  plane2.translateY(PLANE_SPEED);
+  scene.add(water);
+  scene.add(water2);
+  water.translateY(PLANE_SPEED);
+  water2.translateY(PLANE_SPEED);
 
-  if (plane2.position.z < 0 && plane2.position.z > -0.1) {
-    plane.position.z = 200;
+  if (water2.position.z < 0 && water2.position.z > -0.1) {
+    water.position.z = 200;
   } 
   
-  if (plane.position.z < 0 && plane.position.z > -0.1) {
-    plane2.position.z = 200;
+  if (water.position.z < 0 && water.position.z > -0.1) {
+    water2.position.z = 200;
   }
 }
 
@@ -170,6 +223,7 @@ export function resetGame() {
 
 function render() {
   requestAnimationFrame(render); // Show events
+   water.material.uniforms[ 'time' ].value += 0.01;
   movePlane();
   keyboardUpdate();
   renderer.render(scene, camera); // Render scene
