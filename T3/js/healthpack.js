@@ -13,6 +13,7 @@ import {
   SCREEN_RIGHT_EDGE,
   PLANE_SPEED,
 } from "./config.js";
+import { CSG } from "../../libs/other/CSGMesh.js";
 
 // active enemies array on the scene
 export var healthpacks = [];
@@ -27,7 +28,6 @@ export function spawnHealthpack() {
   });
   let healthBlueprint = new THREE.Mesh(geometry, healthMaterial);
   healthBlueprint.usable = true;
-  healthBlueprint.position.set(0, 5, 0);
   healthBlueprint.castShadow = true;
   healthBlueprint.receiveShadow = true;
   healthBlueprint.visible = true;
@@ -45,8 +45,6 @@ export function spawnHealthpack() {
   hole2.castShadow = true;
   hole2.receiveShadow = true;
   hole2.visible = true;
-  hole1.position.set(0, 5, 0);
-  hole2.position.set(0, 5, 0);
   let healthpackCSG = CSG.fromMesh(healthBlueprint);
   let hole1CSG = CSG.fromMesh(hole1);
   let hole2CSG = CSG.fromMesh(hole2);
@@ -58,9 +56,17 @@ export function spawnHealthpack() {
     shininess: "0", // Shininess of the object
     specular: "rgb(255,255,255)", // Color of the specular component
   });
-  let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
-  healthpack.position.set(randomPosition, HEIGHT, OFF_SCREEN_TOP);
   scene.add(healthpack);
+
+  let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
+  healthpack.usable = true;
+  healthpacks.push(healthpack);
+  healthpack.rotateZ(degreesToRadians(90));
+  healthpack.rotateZ(degreesToRadians(90));
+  healthpack.position.set(randomPosition, HEIGHT, OFF_SCREEN_TOP);
+  healthpack.castShadow = true;
+  healthpack.receiveShadow = true;
+  healthpack.visible = true;
   // every 10 ms checks if the healthpack hit the player or exit the screen
   setInterval(() => {
     healthpack.translateZ(-PLANE_SPEED);
