@@ -17,6 +17,8 @@ import {
   SCREEN_TOP_EDGE,
   SHOOT_COOLDOWN,
 } from "./config.js";
+import { degreesToRadians } from "../../libs/util/util.js";
+import { GLTFLoader } from "/build/jsm/loaders/GLTFLoader.js";
 import { playerProjectile } from "./models.js";
 export var playerLife = 5;
 
@@ -62,6 +64,22 @@ mtlLoader.load("./materials/plane_low.mtl", (materials) => {
     console.log(playerGeometry.material);
   });
 });
+// const glbLoader = new GLTFLoader();
+
+// //// Load a glTF resource
+// glbLoader.load(
+//   // resource URL
+//   "./assets/jetplane.glb",
+//   // called when the resource is loaded
+//   function (object) {
+//     player = object.scene;
+//     console.log(player);
+//     playerGeometry = player.children[0];
+//     // console.log(playerGeometry);
+//     scene.add(player);
+//   }
+// );
+
 // To use the keyboard
 var keyboard = new KeyboardState();
 
@@ -85,19 +103,18 @@ export function keyboardUpdate() {
   if (keyboard.pressed("ctrl")) shoot("air");
   if (keyboard.pressed("space")) shoot("land");
 }
- 
+
 // shoot function for the player
 export function shoot(typeOfMissile) {
   // if is on cooldown, the plane cannot shoot
   if (!projectileCooldown) return;
   projectileCooldown++;
 
-  if(playerMissileSound.isPlaying) {
+  if (playerMissileSound.isPlaying) {
     playerMissileSound.stop();
   }
-  playerMissileSound.play( 0.2 );
+  playerMissileSound.play(0.2);
 
- 
   // creates the projectile
   // var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
   // var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });

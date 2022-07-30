@@ -26,6 +26,7 @@ mtlLoader.load("./materials/boat.mtl", (materials) => {
     // tankGeometry.material[0].specular.g = "255";
     // tankGeometry.material[0].specular.b = "255";
     // console.log(tank.children[0]);
+    scene.add(boat);
     boat.alive = true;
   });
 });
