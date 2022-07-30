@@ -27,7 +27,7 @@ import {
 import { enemies, projectileEnemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
-import { Water } from '/build/jsm/objects/Water.js';  
+import { Water } from "/build/jsm/objects/Water.js";
 
 export var scene = new THREE.Scene(); // Create main scene
 
@@ -44,87 +44,82 @@ var camera = initCamera(new THREE.Vector3(0, 45, -30)); // Init camera in this p
 createLightSphere(scene, 0.5, 10, 10, lightPosition);
 
 const listener = new THREE.AudioListener();
-camera.add( listener );
+camera.add(listener);
 
 // create a global audio source
-const themeSound = new THREE.Audio( listener );
-export const explosionSound = new THREE.Audio( listener );
-export const playerMissileSound = new THREE.Audio( listener );
-export const enemyMissileSound = new THREE.Audio( listener );
+const themeSound = new THREE.Audio(listener);
+export const explosionSound = new THREE.Audio(listener);
+export const playerMissileSound = new THREE.Audio(listener);
+export const enemyMissileSound = new THREE.Audio(listener);
 
 // load a sound and set it as the Audio object's buffer
 const themeAudioLoader = new THREE.AudioLoader();
-themeAudioLoader.load( 'sounds/theme.mp3', function( buffer ) {
-	themeSound.setBuffer( buffer );
-	themeSound.setLoop( true );
-	themeSound.setVolume( 0.2 );
-	themeSound.play();
+themeAudioLoader.load("sounds/theme.mp3", function (buffer) {
+  themeSound.setBuffer(buffer);
+  themeSound.setLoop(true);
+  themeSound.setVolume(0.2);
+  themeSound.play();
 });
 
- const explosionAudioLoader = new THREE.AudioLoader();
-explosionAudioLoader.load( 'sounds/explosion.wav', function( buffer ) {
-	explosionSound.setBuffer( buffer );
-	explosionSound.setVolume( 0.2 );
+const explosionAudioLoader = new THREE.AudioLoader();
+explosionAudioLoader.load("sounds/explosion.wav", function (buffer) {
+  explosionSound.setBuffer(buffer);
+  explosionSound.setVolume(0.2);
 });
 
- const playerMissileAudioLoader = new THREE.AudioLoader();
-playerMissileAudioLoader.load( 'sounds/missile1.wav', function( buffer ) {
-	playerMissileSound.setBuffer( buffer );
-	playerMissileSound.setVolume( 0.2 );
+const playerMissileAudioLoader = new THREE.AudioLoader();
+playerMissileAudioLoader.load("sounds/missile1.wav", function (buffer) {
+  playerMissileSound.setBuffer(buffer);
+  playerMissileSound.setVolume(0.2);
   playerMissileSound.duration(0.5);
 });
 
- const enemyMissileAudioLoader = new THREE.AudioLoader();
-enemyMissileAudioLoader.load( 'sounds/missile2.wav', function( buffer ) {
-	enemyMissileSound.setBuffer( buffer );
-	enemyMissileSound.setVolume( 0.2 );
+const enemyMissileAudioLoader = new THREE.AudioLoader();
+enemyMissileAudioLoader.load("sounds/missile2.wav", function (buffer) {
+  enemyMissileSound.setBuffer(buffer);
+  enemyMissileSound.setVolume(0.2);
 });
-
 
 // create the ground plane
 const environment = new THREE.TextureLoader();
-let textureEquirec = environment.load( '../assets/textures/panorama5.jpg' );
-	textureEquirec.mapping = THREE.EquirectangularReflectionMapping; 
-	textureEquirec.encoding = THREE.sRGBEncoding;
-scene.background = textureEquirec
+let textureEquirec = environment.load("../assets/textures/sky.jpg");
+textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
+textureEquirec.encoding = THREE.sRGBEncoding;
+scene.background = textureEquirec;
 
-const waterGeometry = new THREE.PlaneGeometry( 50, 200 );
+const waterGeometry = new THREE.PlaneGeometry(50, 200);
 // Water shader parameters
-let water = new Water(
-  waterGeometry,
-  {
-    textureWidth: 512,
-    textureHeight: 512,
-    waterNormals: new THREE.TextureLoader().load( '../assets/textures/waternormals.jpg', function ( texture ) {
+let water = new Water(waterGeometry, {
+  textureWidth: 512,
+  textureHeight: 512,
+  waterNormals: new THREE.TextureLoader().load(
+    "../assets/textures/waternormals.jpg",
+    function (texture) {
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    } ),
-    sunDirection: new THREE.Vector3(),
-    sunColor: 0xffffff,
-    waterColor: 0x001e0f, 
-    distortionScale: 3.7,
-  }
-);
-water.rotation.x = - Math.PI / 2;
+    }
+  ),
+  sunDirection: new THREE.Vector3(),
+  sunColor: 0xffffff,
+  waterColor: 0x001e0f,
+  distortionScale: 3.7,
+});
+water.rotation.x = -Math.PI / 2;
 
-let water2 = new Water(
-  waterGeometry,
-  {
-    textureWidth: 512,
-    textureHeight: 512,
-    waterNormals: new THREE.TextureLoader().load( '../assets/textures/waternormals.jpg', function ( texture ) {
+let water2 = new Water(waterGeometry, {
+  textureWidth: 512,
+  textureHeight: 512,
+  waterNormals: new THREE.TextureLoader().load(
+    "../assets/textures/waternormals.jpg",
+    function (texture) {
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    } ),
-    sunDirection: new THREE.Vector3(),
-    sunColor: 0xffffff,
-    waterColor: 0x001e0f, 
-    distortionScale: 3.7,
-  }
-);
-water2.rotation.x = - Math.PI / 2;
-
-const waterUniforms = water.material.uniforms;
-waterUniforms.distortionScale, 'value', 0, 8, 0.1 ;
-waterUniforms.size, 'value', 0.1, 10, 0.1;
+    }
+  ),
+  sunDirection: new THREE.Vector3(),
+  sunColor: 0xffffff,
+  waterColor: 0x001e0f,
+  distortionScale: 3.7,
+});
+water2.rotation.x = -Math.PI / 2;
 
 water.position.set(0, 0, 0);
 water.receiveShadow = true;
@@ -132,22 +127,33 @@ water.receiveShadow = true;
 water2.position.set(0, 0, 200);
 water2.receiveShadow = true;
 
-var textureLoader = new THREE.TextureLoader();
+let textureFile = "../assets/textures/ground4.jpg";
+let normalMapFile = "../assets/textures/ground_normal2.jpg";
 
-/*let plane = createGroundPlaneWired(125, 200, 1, 1, "#F2E394");
-plane.position.set(0, 0, 0);
-plane.receiveShadow = true;
-
-let plane2 = createGroundPlaneWired(125, 200, 1, 1, "#F2E394");
-plane2.position.set(0, 0, 200);
-plane2.receiveShadow = true;
-
-var textureLoader = new THREE.TextureLoader();
-var paper = textureLoader.load("./images/paper.jpg");
-
-// Add texture to the 'map' property of the object's material
-plane.material.map = paper;
-plane2.material.map = paper;*/
+var coast = createMesh(
+  new THREE.BoxGeometry(40, 40, 200),
+  textureFile,
+  normalMapFile
+);
+var coast2 = createMesh(
+  new THREE.BoxGeometry(40, 40, 200),
+  textureFile,
+  normalMapFile
+);
+var coast3 = createMesh(
+  new THREE.BoxGeometry(40, 40, 200),
+  textureFile,
+  normalMapFile
+);
+var coast4 = createMesh(
+  new THREE.BoxGeometry(40, 40, 200),
+  textureFile,
+  normalMapFile
+);
+createTexture(coast, 43, -15, 0);
+createTexture(coast2, -43, -15, 0);
+createTexture(coast3, 43, -15, 200);
+createTexture(coast4, -43, -15, 200);
 
 // adds the player to the scene
 scene.add(dirLight);
@@ -165,21 +171,60 @@ window.addEventListener(
 
 render();
 
-// move the plane against the player to simulate movement
+function createTexture(object, x, y, z) {
+  var wrapModeS = THREE.RepeatWrapping;
+  var wrapModeT = THREE.RepeatWrapping;
+  var minFilter = THREE.LinearFilter;
+  var magFilter = THREE.LinearFilter;
+  object.material.map.dispose();
+  object.material.map.wrapS = wrapModeS;
+  object.material.map.wrapT = wrapModeT;
+  object.material.map.minFilter = minFilter;
+  object.material.map.magFilter = magFilter;
+  object.material.map.repeat.set(1, 1);
+  object.material.normalScale.set(10, 10);
+  object.castShadow = true;
+  object.position.set(x, y, z);
+}
+
+function createMesh(geom, imageFile, normal) {
+  let nmap = normal ? new THREE.TextureLoader().load(normal) : null;
+  var tex = new THREE.TextureLoader().load(imageFile);
+  var mat = new THREE.MeshPhongMaterial({
+    map: tex,
+    normalMap: nmap,
+  });
+  var mesh = new THREE.Mesh(geom, mat);
+  return mesh;
+}
+
 function movePlane() {
   scene.add(water);
   scene.add(water2);
+  scene.add(coast);
+  scene.add(coast2);
+  scene.add(coast3);
+  scene.add(coast4);
+  coast.translateZ(-PLANE_SPEED);
+  coast2.translateZ(-PLANE_SPEED);
+  coast3.translateZ(-PLANE_SPEED);
+  coast4.translateZ(-PLANE_SPEED);
   water.translateY(PLANE_SPEED);
   water2.translateY(PLANE_SPEED);
 
   if (water2.position.z < 0 && water2.position.z > -0.1) {
     water.position.z = 200;
-  } 
-  
-  if (water.position.z < 0 && water.position.z > -0.1) {
+    coast.position.z = 200;
+    coast2.position.z = 200;
+  } else if (water.position.z < 0 && water.position.z > -0.1) {
     water2.position.z = 200;
+    coast3.position.z = 200;
+    coast4.position.z = 200;
   }
 }
+
+// move the plane against the player to simulate movement
+
 
 // resets the game removing all active
 // enemies, projectiles and setting the players position
@@ -223,7 +268,8 @@ export function resetGame() {
 
 function render() {
   requestAnimationFrame(render); // Show events
-   water.material.uniforms[ 'time' ].value += 0.01;
+  water.material.uniforms["time"].value += 0.01;
+  water2.material.uniforms["time"].value += 0.01;
   movePlane();
   keyboardUpdate();
   renderer.render(scene, camera); // Render scene
