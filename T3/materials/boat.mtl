@@ -1,0 +1,55 @@
+# Blender MTL File: 'USS PerchFIN.blend'
+# Material Count: 5
+
+newmtl Dark_Gray
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.041182 0.039195 0.046962
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+newmtl Daska
+Ns 650.249991
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /Volumes/Marvin/ Arhiva Posao/ Blender projekti/ Teksture/Wood/Cherry darker seamles diffuse.jpg
+
+newmtl Gold
+Ns 728.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.447979 0.275172 0.129155
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl Light_Gray
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.186890 0.192344 0.226584
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Sub_Body
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.186890 0.192344 0.226584
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /Users/Gjuroo/Posao/ Blender/ Modeli/USS Perch/Sub UV/SubUVcolor.png
+map_Ns /Users/Gjuroo/Posao/ Blender/ Modeli/USS Perch/Sub UV/SubUVroughness.png
