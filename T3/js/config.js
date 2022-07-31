@@ -71,17 +71,17 @@ export function resetTimeouts() {
     }, SPAWN_TYPE_3_ENEMY_INTERVAL);
   }, SPAWN_TYPE_3_ENEMY_AFTER);
 
-  ENEMY_4_TIMEOUT_HANDLER = setTimeout(() => {
+  /*ENEMY_4_TIMEOUT_HANDLER = setTimeout(() => {
     ENEMY_4_INTERVAL_HANDLER = setInterval(() => {
       spawnEnemy(4);
     }, SPAWN_TYPE_4_ENEMY_INTERVAL);
-  }, SPAWN_TYPE_4_ENEMY_AFTER);
+  }, SPAWN_TYPE_4_ENEMY_AFTER);*/
 
   ENEMY_5_TIMEOUT_HANDLER = setTimeout(() => {
     ENEMY_5_INTERVAL_HANDLER = setInterval(() => {
       spawnEnemy(5);
-    }, SPAWN_TYPE_5_ENEMY_INTERVAL);
-  }, SPAWN_TYPE_5_ENEMY_AFTER);
+    }, SPAWN_TYPE_1_ENEMY_INTERVAL);
+  }, SPAWN_TYPE_1_ENEMY_AFTER);
 }
 
 resetTimeouts();
