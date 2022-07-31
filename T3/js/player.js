@@ -37,7 +37,9 @@ export var projectileCooldown = 0;
 export var projectiles = [];
 
 // Use TextureLoader to load texture files
-var textureLoader = new THREE.TextureLoader();
+var textureLoader = new THREE.TextureLoader().load(
+  "./materials/plane-diffuse.png"
+);
 
 //importing 3D model airplane player
 export var player = undefined;
@@ -45,13 +47,13 @@ export var playerGeometry = undefined;
 const mtlLoader = new MTLLoader();
 mtlLoader.load("./materials/plane_low.mtl", (materials) => {
   materials.preload();
+  materials.map = textureLoader;
   const objLoader = new OBJLoader();
   objLoader.setMaterials(materials);
   objLoader.load("./assets/plane_low.obj", (object) => {
     player = object;
     console.log(playerGeometry);
     playerGeometry = player.children[0];
-
     player.scale.set(0.8, 0.8, 0.8);
     // player.rotateY(degreesToRadians(185));
     player.position.set(0.0, HEIGHT, 0.0);
@@ -92,14 +94,18 @@ export function keyboardUpdate() {
 
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
-  if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE)
-    player.translateX(-moveDistance);
-  if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE)
+  if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE) {
     player.translateX(moveDistance);
+    player.rotateZ(degreesToRadians(-0.3));
+  }
+  if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE) {
+    player.translateX(-moveDistance);
+    player.rotateZ(degreesToRadians(0.3));
+  }
   if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
-    player.translateZ(-moveDistance);
-  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
     player.translateZ(moveDistance);
+  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
+    player.translateZ(-moveDistance);
   if (keyboard.pressed("ctrl")) shoot("air");
   if (keyboard.pressed("space")) shoot("land");
 }
