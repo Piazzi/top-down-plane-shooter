@@ -13,7 +13,7 @@ import {
   SCREEN_RIGHT_EDGE,
   PLANE_SPEED,
 } from "./config.js";
-
+import { CSG } from "../../libs/other/CSGMesh.js";
 // active enemies array on the scene
 export var healthpacks = [];
 // create a healthpack at a random X position in the scene
@@ -23,11 +23,19 @@ export function spawnHealthpack() {
 
   const healthMaterial = new THREE.MeshPhongMaterial({
     color: "darkred", // Main color of the object
-    shininess: "0", // Shininess of the object
+    shininess: "0", // Shininess of the objectc
     specular: "rgb(255,255,255)", // Color of the specular component
   });
-  let healthpack = new THREE.Mesh(geometry, healthMaterial);
-  healthpack.rotateZ(degreesToRadians(90));
+  // let healthpack = new THREE.Mesh(geometry, healthMaterial);
+  // healthpack.rotateZ(degreesToRadians(90));
+  let cylinderMesh = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 1, 32));
+  let corte = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 0.4, 32));
+  corte.rotateZ(degreesToRadians(90));
+  corte.rotateX(degreesToRadians(90));
+  let cylinderCSG = CSG.fromMesh(cylinderMesh);
+  let corteCSG = CSG.fromMesh(corte);
+  let objeto = cylinderCSG.subtract(corteCSG);
+  let healthpack = CSG.toMesh(objeto, healthMaterial);
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
   healthpack.usable = true;
   scene.add(healthpack);

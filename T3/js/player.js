@@ -5,6 +5,7 @@ import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
+import { degreesToRadians } from "../../libs/util/util.js";
 import {
   HEIGHT,
   OFF_SCREEN_BOTTOM,
@@ -75,13 +76,13 @@ export function keyboardUpdate() {
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
   if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE)
-    player.translateX(-moveDistance);
-  if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE)
     player.translateX(moveDistance);
+  if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE)
+    player.translateX(-moveDistance);
   if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
-    player.translateZ(-moveDistance);
-  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
     player.translateZ(moveDistance);
+  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
+    player.translateZ(-moveDistance);
   if (keyboard.pressed("ctrl")) shoot("air");
   if (keyboard.pressed("space")) shoot("land");
 }
@@ -111,7 +112,11 @@ export function shoot(typeOfMissile) {
   );
 
   if (typeOfMissile == "land") {
-    projectile.rotateX(45);
+    setTimeout(() => {
+      setInterval(() => {
+        projectile.rotateX(degreesToRadians(1));
+      }, "5");
+    }, '100');
   }
 
   scene.add(projectile);
@@ -121,7 +126,7 @@ export function shoot(typeOfMissile) {
     projectile.translateZ(PLAYER_PROJECTILE_SPEED);
 
     // remove the projectile if exits the screen
-    if (projectile.position.z >= OFF_SCREEN_TOP) {
+    if (projectile.position.z >= OFF_SCREEN_TOP || projectile.position.y < 0) {
       scene.remove(projectile);
       projectiles = projectiles.filter((p) => p.id !== projectile.id);
       return;

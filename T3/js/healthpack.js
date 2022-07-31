@@ -13,12 +13,12 @@ import {
   SCREEN_RIGHT_EDGE,
   PLANE_SPEED,
 } from "./config.js";
+import { CSG } from "../../libs/other/CSGMesh.js";
 
 // active enemies array on the scene
 export var healthpacks = [];
 // create a healthpack at a random X position in the scene
 export function spawnHealthpack() {
-  // creates de cube
   var geometry = new THREE.CylinderGeometry(2, 2, 1, 32);
 
   const healthMaterial = new THREE.MeshPhongMaterial({
@@ -26,12 +26,42 @@ export function spawnHealthpack() {
     shininess: "0", // Shininess of the object
     specular: "rgb(255,255,255)", // Color of the specular component
   });
-  let healthpack = new THREE.Mesh(geometry, healthMaterial);
-  healthpack.rotateZ(degreesToRadians(90));
+  let healthBlueprint = new THREE.Mesh(geometry, healthMaterial);
+  healthBlueprint.usable = true;
+  healthBlueprint.castShadow = true;
+  healthBlueprint.receiveShadow = true;
+  healthBlueprint.visible = true;
+  // scene.add(healthBlueprint);
+  var h1Geometry = new THREE.BoxGeometry(2, 1.2, 0.7);
+  var h2Geometry = new THREE.BoxGeometry(0.7, 1.2, 2);
+  const hMaterial = new THREE.MeshBasicMaterial({
+    color: "white",
+  });
+  let hole1 = new THREE.Mesh(h1Geometry, hMaterial);
+  let hole2 = new THREE.Mesh(h2Geometry, hMaterial);
+  hole1.castShadow = true;
+  hole1.receiveShadow = true;
+  hole1.visible = true;
+  hole2.castShadow = true;
+  hole2.receiveShadow = true;
+  hole2.visible = true;
+  let healthpackCSG = CSG.fromMesh(healthBlueprint);
+  let hole1CSG = CSG.fromMesh(hole1);
+  let hole2CSG = CSG.fromMesh(hole2);
+  let passo1 = healthpackCSG.subtract(hole1CSG);
+  let passo2 = passo1.subtract(hole2CSG);
+  let healthpack = CSG.toMesh(passo2, new THREE.Matrix4());
+  healthpack.material = new THREE.MeshPhongMaterial({
+    color: "darkred", // Main color of the object
+    shininess: "0", // Shininess of the object
+    specular: "rgb(255,255,255)", // Color of the specular component
+  });
+  scene.add(healthpack);
+
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
   healthpack.usable = true;
-  scene.add(healthpack);
   healthpacks.push(healthpack);
+  healthpack.rotateZ(degreesToRadians(90));
   healthpack.rotateZ(degreesToRadians(90));
   healthpack.position.set(randomPosition, HEIGHT, OFF_SCREEN_TOP);
   healthpack.castShadow = true;
