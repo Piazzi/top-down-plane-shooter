@@ -1,5 +1,10 @@
 import * as THREE from "three";
-import { scene, resetGame, enemyMissileSound, explosionSound } from "./scene.js";
+import {
+  scene,
+  resetGame,
+  enemyMissileSound,
+  explosionSound,
+} from "./scene.js";
 import {
   grow,
   playerGeometry,
@@ -82,6 +87,12 @@ export function spawnEnemy(type) {
     plane.children[i] = mesh.clone();
     i++;
   });
+  let enemy2 = boat.clone();
+  i = 0;
+  boat.children.forEach((mesh) => {
+    boat.children[i] = mesh.clone();
+    i++;
+  });
 
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
   let randomSpeed = getRandomNumber(MIN_ENEMY_SPEED, MAX_ENEMY_SPEED);
@@ -113,7 +124,7 @@ export function spawnEnemy(type) {
   }
 
   if (type === 5) {
-    spawn(enemy, randomPosition, GROUND_ENEMY_POSITION, OFF_SCREEN_TOP);
+    spawn(enemy2, randomPosition, GROUND_ENEMY_POSITION, OFF_SCREEN_TOP);
     setTimeout(() => {
       shootEnemy(enemy, 2);
     }, "2000");
@@ -143,7 +154,7 @@ export function spawnEnemy(type) {
       enemy.rotateY(degreesToRadians(0.25));
     }
     if (type === 5) {
-      enemy.translateZ(-GROUND_ENEMY_SPEED);
+      enemy2.translateX(-GROUND_ENEMY_SPEED);
     }
     // remove the enemy if exits the screen
     if (enemy.position.z <= OFF_SCREEN_BOTTOM) {
@@ -177,7 +188,7 @@ export function shootEnemy(object, type) {
     player.position.y,
     player.position.z
   );
-  enemyMissileSound.play()
+  enemyMissileSound.play();
 
   projectileEnemy.lookAt(projectileDestination);
   scene.add(projectileEnemy);

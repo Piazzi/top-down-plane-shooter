@@ -51,5 +51,5 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd /Users/Gjuroo/Posao/ Blender/ Modeli/USS Perch/Sub UV/SubUVcolor.png
-map_Ns /Users/Gjuroo/Posao/ Blender/ Modeli/USS Perch/Sub UV/SubUVroughness.png
+map_Kd C:\\Users\\Gustavo\\Desktop\\Programação\\top-down-plane-shooter\\T3\\materials\\SubUVcolor.png
+map_Ns C:\\Users\\Gustavo\\Desktop\\Programação\\top-down-plane-shooter\\T3\\materials\\SubUVroughness.png
