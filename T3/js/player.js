@@ -5,6 +5,7 @@ import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
+import { degreesToRadians } from "../../libs/util/util.js";
 import {
   HEIGHT,
   OFF_SCREEN_BOTTOM,
@@ -134,7 +135,11 @@ export function shoot(typeOfMissile) {
   );
 
   if (typeOfMissile == "land") {
-    projectile.rotateX(45);
+    setTimeout(() => {
+      setInterval(() => {
+        projectile.rotateX(degreesToRadians(1));
+      }, "5");
+    }, "100");
   }
 
   scene.add(projectile);
@@ -144,7 +149,7 @@ export function shoot(typeOfMissile) {
     projectile.translateZ(PLAYER_PROJECTILE_SPEED);
 
     // remove the projectile if exits the screen
-    if (projectile.position.z >= OFF_SCREEN_TOP) {
+    if (projectile.position.z >= OFF_SCREEN_TOP || projectile.position.y < 0) {
       scene.remove(projectile);
       projectiles = projectiles.filter((p) => p.id !== projectile.id);
       return;
