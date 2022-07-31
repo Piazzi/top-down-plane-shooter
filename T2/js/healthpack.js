@@ -23,7 +23,7 @@ export function spawnHealthpack() {
 
   const healthMaterial = new THREE.MeshPhongMaterial({
     color: "darkred", // Main color of the object
-    shininess: "0", // Shininess of the object
+    shininess: "0", // Shininess of the objectc
     specular: "rgb(255,255,255)", // Color of the specular component
   });
   // let healthpack = new THREE.Mesh(geometry, healthMaterial);
