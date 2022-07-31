@@ -5,7 +5,7 @@ import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
-import { degreesToRadians } from "../../libs/util/util.js";
+
 import {
   HEIGHT,
   OFF_SCREEN_BOTTOM,
