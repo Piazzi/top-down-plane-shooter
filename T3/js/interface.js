@@ -72,4 +72,8 @@ document.addEventListener("keypress", (event) => {
   if (keyName == "Enter") {
     resetGame();
   }
+
+  if(keyName == "p" || keyName == "P" ) {
+    alert('The game is paused, press enter to resume');
+  }
 });
