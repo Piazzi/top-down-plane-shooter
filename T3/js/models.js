@@ -45,7 +45,7 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
     missileGeometry = missile.children[0];
     missile.scale.set(1, 1, 1);
     missileGeometry.rotateX(degreesToRadians(90));
-    missile.position.set(0.0, HEIGHT, 0.0);
+    missile.position.set(0.0, HEIGHT, 10.0);
     // scene.add(missile);
     // console.log(tank.children[0]);
     missile.alive = true;

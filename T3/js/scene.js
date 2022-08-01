@@ -225,7 +225,6 @@ function movePlane() {
 
 // move the plane against the player to simulate movement
 
-
 // resets the game removing all active
 // enemies, projectiles and setting the players position
 
@@ -244,7 +243,7 @@ export function resetGame() {
 
   projectiles.length = 0;
   enemies.length = 0;
-  player.position.set(0.0, HEIGHT, 0.0);
+  player.position.set(0.0, HEIGHT, -18.0);
 
   resetHearts();
   clock.start();

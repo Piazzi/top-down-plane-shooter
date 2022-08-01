@@ -57,7 +57,7 @@ mtlLoader.load("./materials/plane.mtl", (materials) => {
     playerGeometry = player.children[0];
     player.scale.set(0.1, 0.1, 0.1);
     player.rotateY(degreesToRadians(270));
-    player.position.set(0.0, HEIGHT, 0.0);
+    player.position.set(0.0, HEIGHT, -18.0);
     // playerGeometry.material[0].shininess = 200;
     // playerGeometry.material[0].specular.r = "255";
     // playerGeometry.material[0].specular.g = "255";
@@ -97,16 +97,11 @@ export function keyboardUpdate() {
   // checks if the player is on the playable zone (in screen)
   if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE) {
     player.translateZ(-moveDistance);
-    player.rotateZ(degreesToRadians(-0.3));
   }
   if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE) {
     player.translateZ(moveDistance);
-    player.rotateZ(degreesToRadians(0.3));
   }
-  if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
-    player.translateX(moveDistance);
-  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
-    player.translateX(-moveDistance);
+
   if (keyboard.pressed("ctrl")) shoot("air");
   if (keyboard.pressed("space")) shoot("land");
 }
