@@ -5,7 +5,7 @@ import { enemies } from "./enemy.js";
 import detectCollision from "./collision.js";
 import { OBJLoader } from "/build/jsm/loaders/OBJLoader.js";
 import { MTLLoader } from "/build/jsm/loaders/MTLLoader.js";
-import { degreesToRadians } from "../../libs/util/util.js";
+
 import {
   HEIGHT,
   OFF_SCREEN_BOTTOM,
@@ -18,6 +18,8 @@ import {
   SCREEN_TOP_EDGE,
   SHOOT_COOLDOWN,
 } from "./config.js";
+import { degreesToRadians } from "../../libs/util/util.js";
+import { GLTFLoader } from "/build/jsm/loaders/GLTFLoader.js";
 import { playerProjectile } from "./models.js";
 export var playerLife = 5;
 
@@ -36,23 +38,25 @@ export var projectileCooldown = 0;
 export var projectiles = [];
 
 // Use TextureLoader to load texture files
-var textureLoader = new THREE.TextureLoader();
+var textureLoader = new THREE.TextureLoader().load(
+  "./materials/plane-diffuse.png"
+);
 
 //importing 3D model airplane player
 export var player = undefined;
 export var playerGeometry = undefined;
 const mtlLoader = new MTLLoader();
-mtlLoader.load("./materials/plane_low.mtl", (materials) => {
+mtlLoader.load("./materials/plane.mtl", (materials) => {
   materials.preload();
+  materials.map = textureLoader;
   const objLoader = new OBJLoader();
   objLoader.setMaterials(materials);
-  objLoader.load("./assets/plane_low.obj", (object) => {
+  objLoader.load("./materials/plane.obj", (object) => {
     player = object;
     console.log(playerGeometry);
     playerGeometry = player.children[0];
-
-    player.scale.set(0.8, 0.8, 0.8);
-    // player.rotateY(degreesToRadians(185));
+    player.scale.set(0.1, 0.1, 0.1);
+    player.rotateY(degreesToRadians(270));
     player.position.set(0.0, HEIGHT, 0.0);
     // playerGeometry.material[0].shininess = 200;
     // playerGeometry.material[0].specular.r = "255";
@@ -63,6 +67,22 @@ mtlLoader.load("./materials/plane_low.mtl", (materials) => {
     console.log(playerGeometry.material);
   });
 });
+// const glbLoader = new GLTFLoader();
+
+// //// Load a glTF resource
+// glbLoader.load(
+//   // resource URL
+//   "./assets/jetplane.glb",
+//   // called when the resource is loaded
+//   function (object) {
+//     player = object.scene;
+//     console.log(player);
+//     playerGeometry = player.children[0];
+//     // console.log(playerGeometry);
+//     scene.add(player);
+//   }
+// );
+
 // To use the keyboard
 var keyboard = new KeyboardState();
 
@@ -75,30 +95,33 @@ export function keyboardUpdate() {
 
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
-  if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE)
-    player.translateX(moveDistance);
-  if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE)
-    player.translateX(-moveDistance);
-  if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
-    player.translateZ(moveDistance);
-  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
+  if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE) {
     player.translateZ(-moveDistance);
+    player.rotateZ(degreesToRadians(-0.3));
+  }
+  if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE) {
+    player.translateZ(moveDistance);
+    player.rotateZ(degreesToRadians(0.3));
+  }
+  if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
+    player.translateX(moveDistance);
+  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
+    player.translateX(-moveDistance);
   if (keyboard.pressed("ctrl")) shoot("air");
   if (keyboard.pressed("space")) shoot("land");
 }
- 
+
 // shoot function for the player
 export function shoot(typeOfMissile) {
   // if is on cooldown, the plane cannot shoot
   if (!projectileCooldown) return;
   projectileCooldown++;
 
-  if(playerMissileSound.isPlaying) {
+  if (playerMissileSound.isPlaying) {
     playerMissileSound.stop();
   }
-  playerMissileSound.play( 0.2 );
+  playerMissileSound.play(0.2);
 
- 
   // creates the projectile
   // var sphereGeometry = new THREE.SphereGeometry(0.6, 16, 8);
   // var sphereMaterial = new THREE.MeshLambertMaterial({ color: "#FEFE00" });
@@ -116,7 +139,7 @@ export function shoot(typeOfMissile) {
       setInterval(() => {
         projectile.rotateX(degreesToRadians(1));
       }, "5");
-    }, '100');
+    }, "100");
   }
 
   scene.add(projectile);

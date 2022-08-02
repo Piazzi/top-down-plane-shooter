@@ -18,14 +18,15 @@ mtlLoader.load("./materials/boat.mtl", (materials) => {
     boat.children[0].receiveShadow = true;
     boat.children[0].visible = true;
     boatGeometry = boat.children[0];
-    boat.scale.set(1, 1, 1);
-    boat.rotateY(degreesToRadians(180));
+    boat.scale.set(0.3, 0.3, 0.3);
+    boat.rotateY(degreesToRadians(90));
     boat.position.set(0.0, 0.0, 0.0);
     // tankGeometry.material[0].shininess = 200;
     // tankGeometry.material[0].specular.r = "255";
     // tankGeometry.material[0].specular.g = "255";
     // tankGeometry.material[0].specular.b = "255";
     // console.log(tank.children[0]);
+    // scene.add(boat);
     boat.alive = true;
   });
 });
