@@ -4,6 +4,7 @@ import {
   createGroundPlaneWired,
   onWindowResize,
   createLightSphere,
+  degreesToRadians,
 } from "../../libs/util/util.js";
 
 import { healthpacks } from "./healthpack.js";
@@ -28,6 +29,8 @@ import { enemies, projectileEnemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
 import { Water } from "/build/jsm/objects/Water.js";
+//import asset from "./texture/sky.jpg"
+
 
 export var scene = new THREE.Scene(); // Create main scene
 
@@ -127,33 +130,77 @@ water.receiveShadow = true;
 water2.position.set(0, 0, 200);
 water2.receiveShadow = true;
 
-let textureFile = "../assets/textures/ground4.jpg";
-let normalMapFile = "../assets/textures/ground_normal2.jpg";
+let textureFile = "texture/ground.jpg";
+let textureFile2 = "texture/grass.jpg";
+let normalMapFile = "texture/ground_normal.jpg";
+let normalMapFile2 = "texture/ground_normal2.jpg";
 
 var coast = createMesh(
   new THREE.BoxGeometry(40, 40, 200),
   textureFile,
   normalMapFile
 );
+
+
 var coast2 = createMesh(
   new THREE.BoxGeometry(40, 40, 200),
   textureFile,
   normalMapFile
 );
+
+
 var coast3 = createMesh(
   new THREE.BoxGeometry(40, 40, 200),
   textureFile,
   normalMapFile
 );
+
+
 var coast4 = createMesh(
   new THREE.BoxGeometry(40, 40, 200),
   textureFile,
   normalMapFile
 );
-createTexture(coast, 43, -15, 0);
-createTexture(coast2, -43, -15, 0);
-createTexture(coast3, 43, -15, 200);
-createTexture(coast4, -43, -15, 200);
+
+
+var coast5 = createMesh(
+  new THREE.BoxGeometry(40, 40, 200),
+  textureFile2,
+  normalMapFile2
+);
+
+
+var coast6 = createMesh(
+  new THREE.BoxGeometry(40, 40, 200),
+  textureFile2,
+  normalMapFile2
+);
+
+
+var coast7 = createMesh(
+  new THREE.BoxGeometry(40, 40,200),
+  textureFile2,
+  normalMapFile2
+);
+
+
+var coast8 = createMesh(
+  new THREE.BoxGeometry(40, 40, 200),
+  textureFile2,
+  normalMapFile2
+);
+
+
+
+
+createTexture(coast, 53, -13, 0);
+createTexture(coast2, -53, -13, 0);
+createTexture(coast3, 53, -13, 200);
+createTexture(coast4, -53, -13, 200);
+createTexture(coast5, 43, -18, 0);
+createTexture(coast6, -43, -18, 0);
+createTexture(coast7, 43, -18, 200);
+createTexture(coast8, -43, -18, 200);
 
 // adds the player to the scene
 scene.add(dirLight);
@@ -171,7 +218,7 @@ window.addEventListener(
 
 render();
 
-function createTexture(object, x, y, z) {
+function createTexture(object, x, y, z, r) {
   var wrapModeS = THREE.RepeatWrapping;
   var wrapModeT = THREE.RepeatWrapping;
   var minFilter = THREE.LinearFilter;
@@ -197,29 +244,40 @@ function createMesh(geom, imageFile, normal) {
   var mesh = new THREE.Mesh(geom, mat);
   return mesh;
 }
+function addPlaneScene(object, speed,direction){
+  scene.add(object);
+  if(direction == "y"){
+    
+  }else{
+    object.translateZ(speed);
+  }
+}
 
 function movePlane() {
-  scene.add(water);
-  scene.add(water2);
-  scene.add(coast);
-  scene.add(coast2);
-  scene.add(coast3);
-  scene.add(coast4);
-  coast.translateZ(-PLANE_SPEED);
-  coast2.translateZ(-PLANE_SPEED);
-  coast3.translateZ(-PLANE_SPEED);
-  coast4.translateZ(-PLANE_SPEED);
-  water.translateY(PLANE_SPEED);
-  water2.translateY(PLANE_SPEED);
+
+  addPlaneScene(water, PLANE_SPEED, "y")
+  addPlaneScene(water2, PLANE_SPEED, "y")
+  addPlaneScene(coast, -PLANE_SPEED, "z")
+  addPlaneScene(coast2, -PLANE_SPEED, "z")
+  addPlaneScene(coast3, -PLANE_SPEED, "z")
+  addPlaneScene(coast4, -PLANE_SPEED, "z")
+  addPlaneScene(coast5, -PLANE_SPEED, "z")
+  addPlaneScene(coast6, -PLANE_SPEED, "z")
+  addPlaneScene(coast7, -PLANE_SPEED, "z")
+  addPlaneScene(coast8, -PLANE_SPEED, "z")
 
   if (water2.position.z < 0 && water2.position.z > -0.1) {
     water.position.z = 200;
     coast.position.z = 200;
     coast2.position.z = 200;
+    coast5.position.z = 200;
+    coast6.position.z = 200;
   } else if (water.position.z < 0 && water.position.z > -0.1) {
     water2.position.z = 200;
     coast3.position.z = 200;
     coast4.position.z = 200;
+    coast7.position.z = 200;
+    coast8.position.z = 200;
   }
 }
 
