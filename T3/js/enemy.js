@@ -95,6 +95,7 @@ export function spawnEnemy(type) {
   });
 
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
+  let randomPositionLow = getRandomNumber(-20, 20);
   let randomSpeed = getRandomNumber(MIN_ENEMY_SPEED, MAX_ENEMY_SPEED);
 
   if (type === 1) {
@@ -124,7 +125,7 @@ export function spawnEnemy(type) {
   }
 
   if (type === 5) {
-    spawn(enemy2, randomPosition, GROUND_ENEMY_POSITION, OFF_SCREEN_TOP);
+    spawn(enemy2, randomPositionLow, GROUND_ENEMY_POSITION, OFF_SCREEN_TOP);
     setTimeout(() => {
       shootEnemy(enemy, 2);
     }, "2000");

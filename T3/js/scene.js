@@ -218,7 +218,7 @@ window.addEventListener(
 
 render();
 
-function createTexture(object, x, y, z, r) {
+function createTexture(object, x, y, z) {
   var wrapModeS = THREE.RepeatWrapping;
   var wrapModeT = THREE.RepeatWrapping;
   var minFilter = THREE.LinearFilter;
@@ -228,8 +228,8 @@ function createTexture(object, x, y, z, r) {
   object.material.map.wrapT = wrapModeT;
   object.material.map.minFilter = minFilter;
   object.material.map.magFilter = magFilter;
-  object.material.map.repeat.set(1, 1);
-  object.material.normalScale.set(10, 10);
+  object.material.map.repeat.set(5, 5);
+  //object.material.normalScale.set(10, 10);
   object.castShadow = true;
   object.position.set(x, y, z);
 }
@@ -239,7 +239,7 @@ function createMesh(geom, imageFile, normal) {
   var tex = new THREE.TextureLoader().load(imageFile);
   var mat = new THREE.MeshPhongMaterial({
     map: tex,
-    normalMap: nmap,
+    //normalMap: nmap,
   });
   var mesh = new THREE.Mesh(geom, mat);
   return mesh;
@@ -247,7 +247,7 @@ function createMesh(geom, imageFile, normal) {
 function addPlaneScene(object, speed,direction){
   scene.add(object);
   if(direction == "y"){
-    
+    object.translateY(speed);
   }else{
     object.translateZ(speed);
   }
