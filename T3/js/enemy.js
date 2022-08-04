@@ -29,6 +29,8 @@ import {
   ENEMY_PROJECTILE_SPEED,
   GROUND_ENEMY_POSITION,
   GROUND_ENEMY_SPEED,
+  LEFT_OF_THE_RIVER,
+  RIGHT_OF_THE_RIVER,
 } from "./config.js";
 import { degreesToRadians } from "../../libs/util/util.js";
 import { boat, missile, plane } from "./models.js";
@@ -95,7 +97,7 @@ export function spawnEnemy(type) {
   });
 
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
-  let randomPositionLow = getRandomNumber(-20, 20);
+  let randomPositionLow = getRandomNumber(LEFT_OF_THE_RIVER, RIGHT_OF_THE_RIVER);
   let randomSpeed = getRandomNumber(MIN_ENEMY_SPEED, MAX_ENEMY_SPEED);
 
   if (type === 1) {
