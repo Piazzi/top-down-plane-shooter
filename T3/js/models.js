@@ -43,9 +43,9 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
     missile.children[0].receiveShadow = true;
     missile.children[0].visible = true;
     missileGeometry = missile.children[0];
-    missile.scale.set(1, 1, 1);
-    missileGeometry.rotateX(degreesToRadians(90));
-    missile.position.set(0.0, HEIGHT, 10.0);
+    missile.scale.set(0.5, 0.5, 0.5);
+    missileGeometry.rotateY(degreesToRadians(90));
+    missile.position.set(0.0, HEIGHT, 0.0);
     // scene.add(missile);
     // console.log(tank.children[0]);
     missile.alive = true;
@@ -87,7 +87,7 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
     playerProjectile.children[0].visible = true;
     playerProjectileGeometry = playerProjectile.children[0];
     playerProjectileGeometry.rotateX(degreesToRadians(90));
-    playerProjectile.scale.set(1, 1, 1);
+    playerProjectile.scale.set(0.5, 0.5, 0.5);
     playerProjectile.position.set(0.0, HEIGHT, 0.0);
     // scene.add(pencil);
     // console.log(tank.children[0]);
