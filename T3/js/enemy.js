@@ -127,7 +127,7 @@ export function spawnEnemy(type) {
   if (type === 5) {
     spawn(enemy2, randomPosition, GROUND_ENEMY_POSITION, OFF_SCREEN_TOP);
     setTimeout(() => {
-      shootEnemy(enemy, 2);
+      shootEnemy(enemy2, 2);
     }, "2000");
   }
 
@@ -140,18 +140,18 @@ export function spawnEnemy(type) {
       return;
     }
     if (type === 1) {
-      enemy.translateZ(randomSpeed);
+      enemy.translateZ(-randomSpeed);
     }
     if (type === 2) {
       enemy.translateX(randomSpeed);
     }
     if (type === 3) {
-      enemy.translateX(randomSpeed);
-      enemy.translateZ(randomSpeed);
+      enemy.translateX(-randomSpeed);
+      enemy.translateZ(-randomSpeed);
     }
     if (type === 4) {
-      enemy.translateZ(randomSpeed);
-      enemy.translateX(randomSpeed);
+      enemy.translateZ(-randomSpeed);
+      enemy.translateX(-randomSpeed);
       enemy.rotateY(degreesToRadians(0.25));
     }
     if (type === 5) {

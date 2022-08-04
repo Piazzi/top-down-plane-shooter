@@ -8,28 +8,28 @@ const mtlLoader = new MTLLoader();
 const objLoader = new OBJLoader();
 export let boat = undefined;
 export let boatGeometry = undefined;
-// mtlLoader.load("./materials/boat.mtl", (materials) => {
-//   materials.preload();
+mtlLoader.load("./materials/uss.mtl", (materials) => {
+  materials.preload();
 
-// objLoader.setMaterials(materials);
-objLoader.load("./assets/boat.obj", (object) => {
-  boat = object;
-  boat.children[0].castShadow = true;
-  boat.children[0].receiveShadow = true;
-  boat.children[0].visible = true;
-  boatGeometry = boat.children[0];
-  boat.scale.set(0.3, 0.3, 0.3);
-  boat.rotateY(degreesToRadians(90));
-  boat.position.set(0.0, 0.0, 0.0);
-  // tankGeometry.material[0].shininess = 200;
-  // tankGeometry.material[0].specular.r = "255";
-  // tankGeometry.material[0].specular.g = "255";
-  // tankGeometry.material[0].specular.b = "255";
-  // console.log(tank.children[0]);
-  // scene.add(boat);
-  boat.alive = true;
+  // objLoader.setMaterials(materials);
+  objLoader.load("./assets/uss.obj", (object) => {
+    boat = object;
+    boat.children[0].castShadow = true;
+    boat.children[0].receiveShadow = true;
+    boat.children[0].visible = true;
+    boatGeometry = boat.children[0];
+    boat.scale.set(3, 3, 3);
+    boat.rotateY(degreesToRadians(90));
+    boat.position.set(0.0, 0.0, 0.0);
+    // tankGeometry.material[0].shininess = 200;
+    // tankGeometry.material[0].specular.r = "255";
+    // tankGeometry.material[0].specular.g = "255";
+    // tankGeometry.material[0].specular.b = "255";
+    // console.log(tank.children[0]);
+    // scene.add(boat);
+    boat.alive = true;
+  });
 });
-// });
 
 export let missile = undefined;
 export let missileGeometry = undefined;
@@ -54,25 +54,25 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
 
 export let plane = undefined;
 export let planeGeometry = undefined;
-// mtlLoader.load("./materials/player_plane.mtl", (materials) => {
-//   materials.preload();
+mtlLoader.load("./materials/CosmoDragon.mtl", (materials) => {
+  materials.preload();
 
-// objLoader.setMaterials(materials);
-objLoader.load("./assets/player_plane.obj", (object) => {
-  plane = object;
-  console.log(object);
-  plane.children[0].castShadow = true;
-  plane.children[0].receiveShadow = true;
-  plane.children[0].visible = true;
-  planeGeometry = plane.children[0];
-  // plane.rotateY(degreesToRadians(180));
-  plane.scale.set(0.35, 0.35, 0.35);
-  // plane.position.set(0.0, HEIGHT, 0.0);
-  // scene.add(plane);
-  // console.log(tank.children[0]);
-  plane.alive = true;
+  objLoader.setMaterials(materials);
+  objLoader.load("./assets/CosmoDragon.obj", (object) => {
+    plane = object;
+    console.log(object);
+    plane.children[0].castShadow = true;
+    plane.children[0].receiveShadow = true;
+    plane.children[0].visible = true;
+    planeGeometry = plane.children[0];
+    plane.rotateY(degreesToRadians(180));
+    plane.scale.set(0.013, 0.013, 0.013);
+    // plane.position.set(0.0, HEIGHT, 0.0);
+    // scene.add(plane);
+    // console.log(tank.children[0]);
+    plane.alive = true;
+  });
 });
-// });
 
 export let playerProjectile = undefined;
 export let playerProjectileGeometry = undefined;
