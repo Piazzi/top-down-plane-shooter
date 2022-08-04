@@ -18,7 +18,7 @@ mtlLoader.load("./materials/boat.mtl", (materials) => {
     boat.children[0].receiveShadow = true;
     boat.children[0].visible = true;
     boatGeometry = boat.children[0];
-    boat.scale.set(0.3, 0.3, 0.3);
+    boat.scale.set(0.1, 0.1, 0.1);
     boat.rotateY(degreesToRadians(90));
     boat.position.set(0.0, 0.0, 0.0);
     // tankGeometry.material[0].shininess = 200;
@@ -43,8 +43,8 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
     missile.children[0].receiveShadow = true;
     missile.children[0].visible = true;
     missileGeometry = missile.children[0];
-    missile.scale.set(1, 1, 1);
-    missileGeometry.rotateX(degreesToRadians(90));
+    missile.scale.set(0.5, 0.5, 0.5);
+    missileGeometry.rotateY(degreesToRadians(90));
     missile.position.set(0.0, HEIGHT, 0.0);
     // scene.add(missile);
     // console.log(tank.children[0]);
@@ -65,7 +65,7 @@ mtlLoader.load("./materials/player_plane.mtl", (materials) => {
     plane.children[0].visible = true;
     planeGeometry = plane.children[0];
     // plane.rotateY(degreesToRadians(180));
-    plane.scale.set(0.65, 0.65, 0.65);
+    plane.scale.set(0.15, 0.15, 0.15);
     plane.position.set(0.0, HEIGHT, 0.0);
     // scene.add(plane);
     // console.log(tank.children[0]);
@@ -86,7 +86,7 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
     playerProjectile.children[0].visible = true;
     playerProjectileGeometry = playerProjectile.children[0];
     playerProjectileGeometry.rotateX(degreesToRadians(90));
-    playerProjectile.scale.set(1, 1, 1);
+    playerProjectile.scale.set(0.5, 0.5, 0.5);
     playerProjectile.position.set(0.0, HEIGHT, 0.0);
     // scene.add(pencil);
     // console.log(tank.children[0]);
