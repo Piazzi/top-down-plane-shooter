@@ -97,11 +97,11 @@ export function keyboardUpdate() {
   // checks if the player is on the playable zone (in screen)
   if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE) {
     player.translateZ(-moveDistance);
-    player.rotateZ(degreesToRadians(-0.3));
+    //player.rotateZ(degreesToRadians(-0.3));
   }
   if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE) {
     player.translateZ(moveDistance);
-    player.rotateZ(degreesToRadians(0.3));
+    //player.rotateZ(degreesToRadians(0.3));
   }
   if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
     player.translateX(moveDistance);
