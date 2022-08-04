@@ -48,7 +48,7 @@ const SPAWN_TYPE_5_ENEMY_AFTER = 1000;
 const SPAWN_HEALTHPACK_AFTER = 15000;
 
 export function resetTimeouts() {
-  /*HEALTHPACK_TIMEOUT_HANDLER = setTimeout(() => {
+  HEALTHPACK_TIMEOUT_HANDLER = setTimeout(() => {
     HEALTHPACK_INTERVAL_HANDLER = setInterval(
       spawnHealthpack,
       SPAWN_HEALTHPACK_INTERVAL
@@ -77,7 +77,7 @@ export function resetTimeouts() {
     ENEMY_4_INTERVAL_HANDLER = setInterval(() => {
       spawnEnemy(4);
     }, SPAWN_TYPE_4_ENEMY_INTERVAL);
-  }, SPAWN_TYPE_4_ENEMY_AFTER);*/
+  }, SPAWN_TYPE_4_ENEMY_AFTER);
 
   ENEMY_5_TIMEOUT_HANDLER = setTimeout(() => {
     ENEMY_5_INTERVAL_HANDLER = setInterval(() => {

@@ -8,17 +8,17 @@ const mtlLoader = new MTLLoader();
 const objLoader = new OBJLoader();
 export let boat = undefined;
 export let boatGeometry = undefined;
-mtlLoader.load("./materials/boat.mtl", (materials) => {
+mtlLoader.load("./materials/uss.mtl", (materials) => {
   materials.preload();
 
-  objLoader.setMaterials(materials);
-  objLoader.load("./assets/boat.obj", (object) => {
+  // objLoader.setMaterials(materials);
+  objLoader.load("./assets/uss.obj", (object) => {
     boat = object;
     boat.children[0].castShadow = true;
     boat.children[0].receiveShadow = true;
     boat.children[0].visible = true;
     boatGeometry = boat.children[0];
-    boat.scale.set(0.1, 0.1, 0.1);
+    boat.scale.set(3, 3, 3);
     boat.rotateY(degreesToRadians(90));
     boat.position.set(0.0, 0.0, 0.0);
     // tankGeometry.material[0].shininess = 200;
@@ -54,19 +54,20 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
 
 export let plane = undefined;
 export let planeGeometry = undefined;
-mtlLoader.load("./materials/player_plane.mtl", (materials) => {
+mtlLoader.load("./materials/CosmoDragon.mtl", (materials) => {
   materials.preload();
 
   objLoader.setMaterials(materials);
-  objLoader.load("./assets/player_plane.obj", (object) => {
+  objLoader.load("./assets/CosmoDragon.obj", (object) => {
     plane = object;
+    console.log(object);
     plane.children[0].castShadow = true;
     plane.children[0].receiveShadow = true;
     plane.children[0].visible = true;
     planeGeometry = plane.children[0];
-    // plane.rotateY(degreesToRadians(180));
-    plane.scale.set(0.15, 0.15, 0.15);
-    plane.position.set(0.0, HEIGHT, 0.0);
+    plane.rotateY(degreesToRadians(180));
+    plane.scale.set(0.013, 0.013, 0.013);
+    // plane.position.set(0.0, HEIGHT, 0.0);
     // scene.add(plane);
     // console.log(tank.children[0]);
     plane.alive = true;
