@@ -63,10 +63,11 @@ export function spawnHealthpack() {
   healthpacks.push(healthpack);
   healthpack.rotateZ(degreesToRadians(90));
   healthpack.rotateZ(degreesToRadians(90));
-  healthpack.position.set(randomPosition, HEIGHT, OFF_SCREEN_TOP);
+  healthpack.position.set(randomPosition, HEIGHT + 3, OFF_SCREEN_TOP);
   healthpack.castShadow = true;
   healthpack.receiveShadow = true;
   healthpack.visible = true;
+  console.log(healthpack);
   // every 10 ms checks if the healthpack hit the player or exit the screen
   setInterval(() => {
     healthpack.translateZ(-PLANE_SPEED);
