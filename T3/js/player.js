@@ -19,7 +19,7 @@ import {
   SHOOT_COOLDOWN,
 } from "./config.js";
 import { degreesToRadians } from "../../libs/util/util.js";
-import { GLTFLoader } from "/build/jsm/loaders/GLTFLoader.js";
+//import { GLTFLoader } from "/build/jsm/loaders/GLTFLoader.js";
 import { playerProjectile } from "./models.js";
 export var playerLife = 5;
 

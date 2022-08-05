@@ -84,7 +84,6 @@ function spawn(object, x, y, z) {
 export function spawnEnemy(type) {
   //create standard enemy
   let enemy = plane.clone();
-  console.log(enemy);
   let i = 0;
   plane.children.forEach((mesh) => {
     plane.children[i] = mesh.clone();
