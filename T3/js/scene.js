@@ -130,7 +130,7 @@ water.receiveShadow = true;
 water2.position.set(0, 0, 200);
 water2.receiveShadow = true;
 
-let textureFile = "texture/ground.jpg";
+let textureFile = "texture/ground3.jpg";
 let textureFile2 = "texture/grass.jpg";
 let normalMapFile = "texture/ground_normal.jpg";
 let normalMapFile2 = "texture/ground_normal2.jpg";
@@ -153,6 +153,7 @@ const extrudeSettings = {
 	bevelOffset: 0,
 	bevelSegments: 5
 };
+
 
 var coast = createMesh(
   new THREE.ExtrudeGeometry(shape, extrudeSettings),
@@ -213,14 +214,14 @@ var coast8 = createMesh(
 coast8.rotateY(degreesToRadians(90))
 
 
-createTexture(coast, 38, -10, 100);
-createTexture(coast2, -78, -10, 100);
-createTexture(coast3, 38, -10, 300);
-createTexture(coast4, -78, -10, 300);
-createTexture(coast5, 28, -18, 100);
-createTexture(coast6, -68, -18, 100);
-createTexture(coast7, 28, -18, 300);
-createTexture(coast8, -68, -18, 300);
+createTexture(coast, 38, -10, 100, 1);
+createTexture(coast2, -78, -10, 100, 1);
+createTexture(coast3, 38, -10, 300, 1);
+createTexture(coast4, -78, -10, 300, 1);
+createTexture(coast5, 28, -18, 100, 1);
+createTexture(coast6, -68, -18, 100, 1);
+createTexture(coast7, 28, -18, 300, 1);
+createTexture(coast8, -68, -18, 300, 1);
 
 // adds the player to the scene
 scene.add(dirLight);
@@ -238,7 +239,7 @@ window.addEventListener(
 
 render();
 
-function createTexture(object, x, y, z) {
+function createTexture(object, x, y, z, repeat) {
   var wrapModeS = THREE.RepeatWrapping;
   var wrapModeT = THREE.RepeatWrapping;
   var minFilter = THREE.LinearFilter;
@@ -248,7 +249,7 @@ function createTexture(object, x, y, z) {
   object.material.map.wrapT = wrapModeT;
   object.material.map.minFilter = minFilter;
   object.material.map.magFilter = magFilter;
-  object.material.map.repeat.set(5, 5);
+  object.material.map.repeat.set(repeat, repeat);
   //object.material.normalScale.set(10, 10);
   object.castShadow = true;
   object.position.set(x, y, z);
