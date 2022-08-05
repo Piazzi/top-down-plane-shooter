@@ -37,17 +37,40 @@ var cube1 = new THREE.Mesh(cubeGeometry1, cubeMaterial);
 // position the cube
 cube1.position.set(0.0, 0.0, 2.0);
 // add the cube to the scene
-scene.add(cube1);
+//scene.add(cube1);
 
 var cubeGeometry2 = new THREE.BoxGeometry(6, 6, 6);
 var cube2 = new THREE.Mesh(cubeGeometry2, cubeMaterial);
 cube2.position.set(0.0, 6.0, 3.0);
-scene.add(cube2);
+//scene.add(cube2);
 
 var cubeGeometry3 = new THREE.BoxGeometry(2, 2, 2);
 var cube3 = new THREE.Mesh(cubeGeometry3, cubeMaterial);
 cube3.position.set(0.0, -4.0, 1.0);
-scene.add(cube3);
+//scene.add(cube3);
+
+const length = 200, width = 8;
+
+const shape = new THREE.Shape();
+shape.moveTo( 0,0 );
+shape.lineTo( 0, width );
+shape.lineTo( length, width );
+shape.lineTo( length, 0 );
+shape.lineTo( 0, 0 );
+
+const extrudeSettings = {
+	steps: 2,
+	depth: 16,
+	bevelEnabled: true,
+	bevelThickness: 1,
+	bevelSize: 1,
+	bevelOffset: 0,
+	bevelSegments: 1
+};
+var extrudeGeometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
+var extrudeMaterial = new THREE.MeshNormalMaterial();
+var extrude = new THREE.Mesh(extrudeGeometry, extrudeMaterial);
+scene.add(extrude);
 
 
 // Use this to show information onscreen

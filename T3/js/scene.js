@@ -135,72 +135,93 @@ let textureFile2 = "texture/grass.jpg";
 let normalMapFile = "texture/ground_normal.jpg";
 let normalMapFile2 = "texture/ground_normal2.jpg";
 
+const length = 200, width = 20;
+
+const shape = new THREE.Shape();
+shape.moveTo( 0,0 );
+shape.lineTo( 0, width );
+shape.lineTo( length, width );
+shape.lineTo( length, 0 );
+shape.lineTo( 0, 0 );
+
+const extrudeSettings = {
+	steps: 2,
+	depth: 40,
+	bevelEnabled: true,
+	bevelThickness: 5,
+	bevelSize: 5,
+	bevelOffset: 0,
+	bevelSegments: 5
+};
+
 var coast = createMesh(
-  new THREE.BoxGeometry(40, 40, 200),
+  new THREE.ExtrudeGeometry(shape, extrudeSettings),
   textureFile,
   normalMapFile
 );
-
+coast.rotateY(degreesToRadians(90))
 
 var coast2 = createMesh(
-  new THREE.BoxGeometry(40, 40, 200),
+  new THREE.ExtrudeGeometry(shape, extrudeSettings),
   textureFile,
   normalMapFile
 );
-
+coast2.rotateY(degreesToRadians(90))
 
 var coast3 = createMesh(
-  new THREE.BoxGeometry(40, 40, 200),
+  new THREE.ExtrudeGeometry(shape, extrudeSettings),
   textureFile,
   normalMapFile
 );
-
+coast3.rotateY(degreesToRadians(90))
 
 var coast4 = createMesh(
-  new THREE.BoxGeometry(40, 40, 200),
+  new THREE.ExtrudeGeometry(shape, extrudeSettings),
   textureFile,
   normalMapFile
 );
-
+coast4.rotateY(degreesToRadians(90))
 
 var coast5 = createMesh(
-  new THREE.BoxGeometry(40, 40, 200),
+  new THREE.ExtrudeGeometry(shape, extrudeSettings),
   textureFile2,
   normalMapFile2
 );
-
+coast5.rotateY(degreesToRadians(90))
 
 var coast6 = createMesh(
-  new THREE.BoxGeometry(40, 40, 200),
+  new THREE.ExtrudeGeometry(shape, extrudeSettings),
   textureFile2,
   normalMapFile2
 );
+coast6.rotateY(degreesToRadians(90))
 
 
 var coast7 = createMesh(
-  new THREE.BoxGeometry(40, 40,200),
+  new THREE.ExtrudeGeometry(shape, extrudeSettings),
   textureFile2,
   normalMapFile2
 );
+coast7.rotateY(degreesToRadians(90))
 
 
 var coast8 = createMesh(
-  new THREE.BoxGeometry(40, 40, 200),
+  new THREE.ExtrudeGeometry(shape, extrudeSettings),
   textureFile2,
   normalMapFile2
 );
+coast8.rotateY(degreesToRadians(90))
 
 
 
-
-createTexture(coast, 53, -13, 0);
-createTexture(coast2, -53, -13, 0);
-createTexture(coast3, 53, -13, 200);
-createTexture(coast4, -53, -13, 200);
-createTexture(coast5, 43, -18, 0);
-createTexture(coast6, -43, -18, 0);
-createTexture(coast7, 43, -18, 200);
-createTexture(coast8, -43, -18, 200);
+createTexture(coast, 38, -10, 100);
+createTexture(coast2, -78, -10, 100);
+createTexture(coast3, 38, -10, 300);
+createTexture(coast4, -78, -10, 300);
+createTexture(coast5, 28, -18, 0);
+createTexture(coast6, -68, -18, 0);
+createTexture(coast7, 28, -18, 200);
+createTexture(coast8, -68, -18, 200);
 
 // adds the player to the scene
 scene.add(dirLight);
@@ -247,9 +268,9 @@ function createMesh(geom, imageFile, normal) {
 function addPlaneScene(object, speed,direction){
   scene.add(object);
   if(direction == "y"){
-    object.translateY(speed);
+    //object.translateY(speed);
   }else{
-    object.translateZ(speed);
+    //object.translateX(speed);
   }
 }
 
