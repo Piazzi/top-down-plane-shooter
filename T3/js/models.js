@@ -87,7 +87,7 @@ mtlLoader.load("./materials/rocket.mtl", (materials) => {
     playerProjectile.children[0].visible = true;
     playerProjectileGeometry = playerProjectile.children[0];
     playerProjectileGeometry.rotateX(degreesToRadians(90));
-    playerProjectile.scale.set(0.5, 0.5, 0.5);
+    playerProjectile.scale.set(0.8, 0.8, 0.8);
     playerProjectile.position.set(0.0, HEIGHT, 0.0);
     // scene.add(pencil);
     // console.log(tank.children[0]);
