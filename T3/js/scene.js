@@ -130,7 +130,7 @@ water.receiveShadow = true;
 water2.position.set(0, 0, 200);
 water2.receiveShadow = true;
 
-let textureFile = "texture/ground3.jpg";
+let textureFile = "texture/ground.jpg";
 let textureFile2 = "texture/grass.jpg";
 let normalMapFile = "texture/ground_normal.jpg";
 let normalMapFile2 = "texture/ground_normal2.jpg";
@@ -214,7 +214,7 @@ var coast8 = createMesh(
 coast8.rotateY(degreesToRadians(90))
 
 
-createTexture(coast, 38, -10, 100, 1);
+createTexture(coast, 38, -10, 100,1);
 createTexture(coast2, -78, -10, 100, 1);
 createTexture(coast3, 38, -10, 300, 1);
 createTexture(coast4, -78, -10, 300, 1);
@@ -250,7 +250,7 @@ function createTexture(object, x, y, z, repeat) {
   object.material.map.minFilter = minFilter;
   object.material.map.magFilter = magFilter;
   object.material.map.repeat.set(repeat, repeat);
-  //object.material.normalScale.set(10, 10);
+  object.material.normalScale.set(10, 10);
   object.castShadow = true;
   object.position.set(x, y, z);
 }
