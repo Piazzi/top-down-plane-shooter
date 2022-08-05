@@ -101,6 +101,10 @@ export function keyboardUpdate() {
   if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE) {
     player.translateZ(moveDistance);
   }
+  if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
+    player.translateX(moveDistance);
+  if (keyboard.pressed("down") && player.position.z >= SCREEN_BOTTOM_EDGE)
+    player.translateX(-moveDistance);
 
   if (keyboard.pressed("ctrl")) shoot("air");
   if (keyboard.pressed("space")) shoot("land");
@@ -132,7 +136,7 @@ export function shoot(typeOfMissile) {
   if (typeOfMissile == "land") {
     setTimeout(() => {
       setInterval(() => {
-        projectile.rotateX(degreesToRadians(3));
+        projectile.rotateX(degreesToRadians(1));
       }, "5");
     }, "100");
   }
