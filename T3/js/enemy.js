@@ -185,14 +185,13 @@ export function shootEnemy(object, type) {
     object.position.y,
     object.position.z + 3
   );
-
+  
   let projectileDestination = new THREE.Vector3(
     player.position.x,
     player.position.y,
     player.position.z
   );
   enemyMissileSound.play();
-
   projectileEnemy.lookAt(projectileDestination);
   scene.add(projectileEnemy);
   if (type === 2) {

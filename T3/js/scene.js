@@ -84,7 +84,7 @@ enemyMissileAudioLoader.load("sounds/missile2.wav", function (buffer) {
 
 // create the ground plane
 const environment = new THREE.TextureLoader();
-let textureEquirec = environment.load("../assets/textures/sky.jpg");
+let textureEquirec = environment.load("texture/sky.jpg");
 textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
 textureEquirec.encoding = THREE.sRGBEncoding;
 scene.background = textureEquirec;
