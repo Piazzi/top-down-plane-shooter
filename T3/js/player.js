@@ -132,7 +132,7 @@ export function shoot(typeOfMissile) {
   if (typeOfMissile == "land") {
     setTimeout(() => {
       setInterval(() => {
-        projectile.rotateX(degreesToRadians(1));
+        projectile.rotateX(degreesToRadians(3));
       }, "5");
     }, "100");
   }
