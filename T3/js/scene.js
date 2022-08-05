@@ -28,7 +28,7 @@ import {
 import { enemies, projectileEnemies } from "./enemy.js";
 import { dirLight, ambientLight, lightPosition } from "./lighting.js";
 import { stats, resetHearts, clock, resetGameMessage } from "./interface.js";
-import { Water } from "/build/jsm/objects/Water.js";
+import { Water } from "../build/jsm/objects/Water.js";
 //import asset from "./texture/sky.jpg"
 
 
