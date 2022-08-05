@@ -95,7 +95,7 @@ let water = new Water(waterGeometry, {
   textureWidth: 512,
   textureHeight: 512,
   waterNormals: new THREE.TextureLoader().load(
-    "../assets/textures/waternormals.jpg",
+    "texture/waternormals.jpg",
     function (texture) {
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     }
@@ -111,7 +111,7 @@ let water2 = new Water(waterGeometry, {
   textureWidth: 512,
   textureHeight: 512,
   waterNormals: new THREE.TextureLoader().load(
-    "../assets/textures/waternormals.jpg",
+    "texture/waternormals.jpg",
     function (texture) {
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     }

@@ -180,15 +180,15 @@ export function shootEnemy(object, type) {
   projectileEnemy.alive = true;
   projectileEnemy.castShadow = true;
   projectileEnemies.push(projectileEnemy);
-  projectileEnemy.position.set(
-    object.position.x,
-    object.position.y,
-    object.position.z + 3
-  );
-  
+
+    projectileEnemy.position.set(
+      object.position.x,
+      object.position.y,
+      object.position.z + 3
+    )
   let projectileDestination = new THREE.Vector3(
     player.position.x,
-    player.position.y,
+    player.position.y +3,
     player.position.z
   );
   enemyMissileSound.play();
@@ -201,11 +201,19 @@ export function shootEnemy(object, type) {
         projectileEnemy.translateY(0.1);
       }
     }, "5");
-  }
+  }else
+    projectileEnemy.rotateX(degreesToRadians(90));
+  
+
   // every 10 ms checks if the projectileEnemy hit any object or exit the screen
   setInterval(() => {
     if (projectileEnemy.position.y >= HEIGHT) {
-      projectileEnemy.translateZ(ENEMY_PROJECTILE_SPEED);
+      if(type == 2)
+        projectileEnemy.translateZ(ENEMY_PROJECTILE_SPEED);
+      else
+        projectileEnemy.translateY(ENEMY_PROJECTILE_SPEED);
+      
+      
     }
 
     // remove the projectile if exits the screen
