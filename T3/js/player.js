@@ -92,14 +92,23 @@ var clock = new THREE.Clock();
 export function keyboardUpdate() {
   keyboard.update();
   var moveDistance = PLAYER_SPEED * clock.getDelta();
-
+  console.log(player.rotation);
   // Keyboard.pressed - execute while is pressed
   // checks if the player is on the playable zone (in screen)
   if (keyboard.pressed("left") && player.position.x <= SCREEN_RIGHT_EDGE) {
-    player.translateZ(-moveDistance);
+    // player.translateZ(-moveDistance);
+    player.position.x += moveDistance;
+    player.rotateX(degreesToRadians(-1));
+  } else if (player.rotation.x < 0) {
+    player.rotateX(degreesToRadians(2));
   }
   if (keyboard.pressed("right") && player.position.x >= SCREEN_LEFT_EDGE) {
-    player.translateZ(moveDistance);
+    // player.translateZ(moveDistance);
+
+    player.position.x -= moveDistance;
+    player.rotateX(degreesToRadians(1));
+  } else if (player.rotation.x > 0) {
+    player.rotateX(degreesToRadians(-2));
   }
   if (keyboard.pressed("up") && player.position.z <= SCREEN_TOP_EDGE)
     player.translateX(moveDistance);
