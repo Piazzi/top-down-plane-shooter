@@ -74,8 +74,12 @@ function spawn(object, x, y, z) {
       object.alive = false;
       scene.remove(object);
       object.position.set(0, 0, OFF_SCREEN_BOTTOM);
-      shrink(playerGeometry);
-      grow(playerGeometry);
+      // shrink(playerGeometry);
+      // grow(playerGeometry);
+      player.children.forEach((mesh) => {
+        shrink(mesh);
+        grow(mesh);
+      });
     }
   }, "10");
 }
@@ -97,7 +101,10 @@ export function spawnEnemy(type) {
   });
 
   let randomPosition = getRandomNumber(SCREEN_LEFT_EDGE, SCREEN_RIGHT_EDGE);
-  let randomPositionLow = getRandomNumber(LEFT_OF_THE_RIVER, RIGHT_OF_THE_RIVER);
+  let randomPositionLow = getRandomNumber(
+    LEFT_OF_THE_RIVER,
+    RIGHT_OF_THE_RIVER
+  );
   let randomSpeed = getRandomNumber(MIN_ENEMY_SPEED, MAX_ENEMY_SPEED);
 
   if (type === 1) {
@@ -181,14 +188,14 @@ export function shootEnemy(object, type) {
   projectileEnemy.castShadow = true;
   projectileEnemies.push(projectileEnemy);
 
-    projectileEnemy.position.set(
-      object.position.x,
-      object.position.y,
-      object.position.z + 3
-    )
+  projectileEnemy.position.set(
+    object.position.x,
+    object.position.y,
+    object.position.z + 3
+  );
   let projectileDestination = new THREE.Vector3(
     player.position.x,
-    player.position.y +3,
+    player.position.y + 3,
     player.position.z
   );
   enemyMissileSound.play();
@@ -201,19 +208,13 @@ export function shootEnemy(object, type) {
         projectileEnemy.translateY(0.1);
       }
     }, "5");
-  }else
-    projectileEnemy.rotateX(degreesToRadians(90));
-  
+  } else projectileEnemy.rotateX(degreesToRadians(90));
 
   // every 10 ms checks if the projectileEnemy hit any object or exit the screen
   setInterval(() => {
     if (projectileEnemy.position.y >= HEIGHT) {
-      if(type == 2)
-        projectileEnemy.translateZ(ENEMY_PROJECTILE_SPEED);
-      else
-        projectileEnemy.translateY(ENEMY_PROJECTILE_SPEED);
-      
-      
+      if (type == 2) projectileEnemy.translateZ(ENEMY_PROJECTILE_SPEED);
+      else projectileEnemy.translateY(ENEMY_PROJECTILE_SPEED);
     }
 
     // remove the projectile if exits the screen
@@ -243,8 +244,12 @@ export function shootEnemy(object, type) {
       projectileEnemy.alive = false;
       scene.remove(projectileEnemy);
       projectileEnemy.position.set(0, 0, OFF_SCREEN_BOTTOM);
-      shrink(playerGeometry);
-      grow(playerGeometry);
+      // shrink(playerGeometry);
+      // grow(playerGeometry);
+      player.children.forEach((mesh) => {
+        shrink(mesh);
+        grow(mesh);
+      });
       // wait 200ms before removing the object so that the animation can play
     }
   }, "10");
