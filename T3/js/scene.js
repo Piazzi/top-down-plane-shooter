@@ -84,7 +84,7 @@ enemyMissileAudioLoader.load("sounds/missile2.wav", function (buffer) {
 
 // create the ground plane
 const environment = new THREE.TextureLoader();
-let textureEquirec = environment.load("../assets/textures/sky.jpg");
+let textureEquirec = environment.load("texture/sky.jpg");
 textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
 textureEquirec.encoding = THREE.sRGBEncoding;
 scene.background = textureEquirec;
@@ -95,7 +95,7 @@ let water = new Water(waterGeometry, {
   textureWidth: 512,
   textureHeight: 512,
   waterNormals: new THREE.TextureLoader().load(
-    "../assets/textures/waternormals.jpg",
+    "texture/waternormals.jpg",
     function (texture) {
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     }
@@ -111,7 +111,7 @@ let water2 = new Water(waterGeometry, {
   textureWidth: 512,
   textureHeight: 512,
   waterNormals: new THREE.TextureLoader().load(
-    "../assets/textures/waternormals.jpg",
+    "texture/waternormals.jpg",
     function (texture) {
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     }

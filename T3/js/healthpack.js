@@ -63,7 +63,7 @@ export function spawnHealthpack() {
   healthpacks.push(healthpack);
   healthpack.rotateZ(degreesToRadians(90));
   healthpack.rotateZ(degreesToRadians(90));
-  healthpack.position.set(randomPosition, HEIGHT + 3, OFF_SCREEN_TOP);
+  healthpack.position.set(randomPosition, HEIGHT + 1, OFF_SCREEN_TOP);
   healthpack.castShadow = true;
   healthpack.receiveShadow = true;
   healthpack.visible = true;
